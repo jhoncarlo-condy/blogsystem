@@ -51,10 +51,22 @@
                 <td>{{ $cat->description }}</td>
                 <td>
                     <!-- Button trigger edit modal -->
-                    <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#editModal{{ $cat->id }}">
-                      Launch
-                    </button>
-                        {{-- EDIT MODAL --}}
+                    <div class="form-row">
+
+                        <button type="button" class="btn btn-success" data-toggle="modal" data-target="#editModal{{ $cat->id }}">
+                            <i class="fas fa-edit"></i>Edit
+                          </button>
+
+                        <form action="{{ route('category.destroy',$cat->id) }}" method="POST">
+                            @csrf
+                            @method('DELETE')
+                            <button type="submit" class="btn btn-danger">
+                            <i class="fas fa-eraser"></i>Delete
+                            </button>
+                        </form>
+
+                    </div>
+                    {{-- EDIT MODAL --}}
                     <!-- Modal -->
                     <div class="modal fade" id="editModal{{ $cat->id }}" tabindex="-1" role="dialog" aria-labelledby="modelTitleId" aria-hidden="true">
                         <div class="modal-dialog" role="document">
@@ -66,7 +78,7 @@
                                         </button>
                                 </div>
                                 <div class="modal-body">
-                                    <form action="" method="post">
+                                    <form action="{{ route('category.update', $cat->id)  }} }}" method="post">
                                         @method('PUT')
                                         @csrf
                                         <div class="form-group">
@@ -74,14 +86,15 @@
                                           <input type="text" class="form-control" name="title"  aria-describedby="helpId" placeholder="" value="{{ $cat->title }}">
                                         </div>
                                         <div class="form-group">
-                                            <label for="description"></label>
-                                            <textarea name="description" id="" cols="60" rows="5" value="{{$cat->description}}"></textarea>
-                                          </div>
-                                    </form>
+                                          <label for="description"></label>
+                                          <textarea class="form-control" name="description" id="" col="60" rows="5" maxlength="100">{{ $cat->description }}</textarea>
+                                        </div>
+
                                 </div>
                                 <div class="modal-footer">
                                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                                    <button type="button" class="btn btn-primary">Save</button>
+                                    <button type="submit" class="btn btn-primary">Save</button>
+                                    </form>
                                 </div>
                             </div>
                         </div>
@@ -121,7 +134,7 @@
                     @endif
                     <div class="form-group">
                       <label for="description">Description</label>
-                      <textarea name="description" id="description" cols="60" rows="5" maxlength="100"></textarea>
+                      <textarea class="form-control" name="description" id="description" cols="60" rows="5" maxlength="100"></textarea>
 
                     {{-- @if ($errors->has('description'))
                           <strong class="text-danger">{{ $errors->first('description') }}</strong>
