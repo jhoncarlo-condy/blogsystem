@@ -55,7 +55,7 @@
           @yield('content-header')
 
           <!-- Main content -->
-          @yield('contentwrapper')
+          @yield('content-wrapper')
           <!-- /.content -->
         </div>
         <!-- /.content-wrapper -->

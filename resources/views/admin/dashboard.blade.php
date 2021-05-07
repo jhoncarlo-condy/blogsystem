@@ -14,9 +14,9 @@
         </div>
       </div>
     </div><!-- /.container-fluid -->
-  </section>
+</section>
 @endsection
-@section('contentwrapper')
+@section('content-wrapper')
 <section class="content">
     <div class="container-fluid">
       <!-- Small boxes (Stat box) -->
