@@ -8,7 +8,7 @@
         <a href="{{ route('dashboard') }}" class="nav-link">Dashboard</a>
       </li>
       <li class="nav-item d-none d-sm-inline-block">
-        <a href="#" class="nav-link">Category</a>
+        <a href="{{ route('category.index') }}" class="nav-link">Category</a>
       </li>
       <li class="nav-item d-none d-sm-inline-block">
         <a href="#" class="nav-link">Posts</a>

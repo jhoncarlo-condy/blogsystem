@@ -13,7 +13,7 @@
           {{-- <img src="../../dist/img/user2-160x160.jpg" class="img-circle elevation-2" alt="User Image"> --}}
         </div>
         <div class="info">
-          <a href="#" class="d-block">Alexander Pierce</a>
+          <a href="#" class="d-block">Administrator</a>
         </div>
       </div>
 
@@ -50,12 +50,12 @@
               <p>
                 Blog Management
                 <i class="fas fa-angle-left right"></i>
-                <span class="badge badge-info right">6</span>
+                <span class="badge badge-info right"></span>
               </p>
             </a>
             <ul class="nav nav-treeview">
               <li class="nav-item">
-                <a href="../layout/top-nav.html" class="nav-link">
+                <a href="{{ route('category.index') }}" class="nav-link">
                     <i class="fa fa-list-alt nav-icon" aria-hidden="true"></i>
                   <p>Category</p>
                 </a>

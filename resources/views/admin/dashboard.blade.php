@@ -40,7 +40,7 @@
           <!-- small box -->
           <div class="small-box bg-success">
             <div class="inner">
-              <h3>53<sup style="font-size: 20px">%</sup></h3>
+              <h3>2<sup style="font-size: 20px"></sup></h3>
 
               <p>Total Category</p>
             </div>
@@ -72,7 +72,7 @@
             <div class="inner">
               <h3>65</h3>
 
-              <p>Unique Visitors</p>
+              <p>Total Comments</p>
             </div>
             <div class="icon">
               <i class="ion ion-pie-graph"></i>

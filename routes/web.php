@@ -22,4 +22,6 @@ Auth::routes();
 
 
 Route::get('/dashboard', 'UserController@index')->name('dashboard');
+// Route::get('/category', 'CategoryController@index')->name('category');
+Route::resource('/category', 'CategoryController');
 
