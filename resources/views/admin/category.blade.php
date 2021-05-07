@@ -28,11 +28,79 @@
 </div>
 @endif
 <!-- Button trigger modal -->
-<button type="button" class="btn btn-primary btn-lg" data-toggle="modal" data-target="#modelId">
+<button type="button" class="btn btn-primary float-right my-2 mx-5" data-toggle="modal" data-target="#modelId">
   Add new category
 </button>
 
-<!-- Modal -->
+<div class="container">
+    <table class="table table-bordered">
+        <thead>
+            <tr>
+                <th>#</th>
+                <th>Title</th>
+                <th>Description</th>
+                <th>Action</th>
+            </tr>
+        </thead>
+        <tbody>
+
+            @foreach ($category as $key=>$cat)
+            <tr>
+                <td scope="row">{{ $key+1}}</td>
+                <td>{{ $cat->title }}</td>
+                <td>{{ $cat->description }}</td>
+                <td>
+                    <!-- Button trigger edit modal -->
+                    <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#editModal{{ $cat->id }}">
+                      Launch
+                    </button>
+                        {{-- EDIT MODAL --}}
+                    <!-- Modal -->
+                    <div class="modal fade" id="editModal{{ $cat->id }}" tabindex="-1" role="dialog" aria-labelledby="modelTitleId" aria-hidden="true">
+                        <div class="modal-dialog" role="document">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h5 class="modal-title">Edit Category: {{ $cat->title }}</h5>
+                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                            <span aria-hidden="true">&times;</span>
+                                        </button>
+                                </div>
+                                <div class="modal-body">
+                                    <form action="" method="post">
+                                        @method('PUT')
+                                        @csrf
+                                        <div class="form-group">
+                                          <label for="title"></label>
+                                          <input type="text"
+                                            class="form-control" name="title"  aria-describedby="helpId" placeholder="" value="{{ $cat->title }}">
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="description"></label>
+                                            <input type="text"
+                                              class="form-control" name="description"  aria-describedby="helpId" placeholder="" {{ $cat->description }}>
+                                          </div>
+                                    </form>
+                                </div>
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                                    <button type="button" class="btn btn-primary">Save</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                </td>
+
+            </tr>
+            @endforeach
+
+        </tbody>
+
+    </table>
+    {{ $category->links() }}
+</div>
+
+<!-- ADD Modal -->
 <div class="modal fade" id="modelId" tabindex="-1" role="dialog" aria-labelledby="modelTitleId" aria-hidden="true">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
@@ -72,4 +140,7 @@
         </div>
     </div>
 </div>
+
+
+
 @endsection
