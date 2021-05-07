@@ -71,7 +71,7 @@
 
           {{-- User --}}
           <li class="nav-item">
-            <a href="../widgets.html" class="nav-link">
+            <a href="{{ route('dashboard') }}" class="nav-link">
               <i class="nav-icon fa fa-users"></i>
 
               <p>
