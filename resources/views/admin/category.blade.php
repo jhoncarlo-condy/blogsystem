@@ -71,13 +71,11 @@
                                         @csrf
                                         <div class="form-group">
                                           <label for="title"></label>
-                                          <input type="text"
-                                            class="form-control" name="title"  aria-describedby="helpId" placeholder="" value="{{ $cat->title }}">
+                                          <input type="text" class="form-control" name="title"  aria-describedby="helpId" placeholder="" value="{{ $cat->title }}">
                                         </div>
                                         <div class="form-group">
                                             <label for="description"></label>
-                                            <input type="text"
-                                              class="form-control" name="description"  aria-describedby="helpId" placeholder="" {{ $cat->description }}>
+                                            <textarea name="description" id="" cols="60" rows="5" value="{{$cat->description}}"></textarea>
                                           </div>
                                     </form>
                                 </div>
