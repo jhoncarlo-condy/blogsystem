@@ -5,7 +5,7 @@
         <a class="nav-link" data-widget="pushmenu" href="#" role="button"><i class="fas fa-bars"></i></a>
       </li>
       <li class="nav-item d-none d-sm-inline-block">
-        <a href="{{ route('dashboard') }}" class="nav-link">Dashboard</a>
+        <a href="{{ route('users.dashboard') }}" class="nav-link">Dashboard</a>
       </li>
       <li class="nav-item d-none d-sm-inline-block">
         <a href="{{ route('category.index') }}" class="nav-link">Category</a>
@@ -14,7 +14,7 @@
         <a href="#" class="nav-link">Posts</a>
       </li>
       <li class="nav-item d-none d-sm-inline-block">
-        <a href="#" class="nav-link">Users</a>
+        <a href="{{ route('users.index') }}" class="nav-link">Users</a>
       </li>
     </ul>
 

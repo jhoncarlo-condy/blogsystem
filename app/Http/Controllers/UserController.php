@@ -17,7 +17,7 @@ class UserController extends Controller
     }
     public function index()
     {
-        return view ('admin.dashboard');
+        return view ('admin.users');
     }
 
     /**
@@ -28,6 +28,15 @@ class UserController extends Controller
     public function create()
     {
         //
+    }
+    /**
+     * Show the form for creating a new resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function dashboard()
+    {
+        return view ('admin.dashboard');
     }
 
     /**
@@ -49,7 +58,6 @@ class UserController extends Controller
      */
     public function show($id)
     {
-        //
     }
 
     /**

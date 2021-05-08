@@ -8,7 +8,7 @@
         </div>
         <div class="col-sm-6">
           <ol class="breadcrumb float-sm-right">
-            <li class="breadcrumb-item"><a href="{{ route('dashboard') }}">Administrator</a></li>
+            <li class="breadcrumb-item"><a href="{{ route('users.dashboard') }}">Administrator</a></li>
             <li class="breadcrumb-item active">Category</li>
           </ol>
         </div>
@@ -33,8 +33,8 @@
 </button>
 
 <div class="container">
-    <table class="table table-bordered">
-        <thead>
+    <table class="table">
+        <thead class="thead-dark">
             <tr>
                 <th>#</th>
                 <th>Title</th>
@@ -44,7 +44,7 @@
         </thead>
         <tbody>
 
-            @foreach ($category as $key=>$cat)
+            @forelse ($category as $key=>$cat)
             <tr>
                 <td scope="row">{{ $key+1}}</td>
                 <td>{{ $cat->title }}</td>
@@ -60,7 +60,7 @@
                         <form action="{{ route('category.destroy',$cat->id) }}" method="POST">
                             @csrf
                             @method('DELETE')
-                            <button type="submit" class="btn btn-danger">
+                            <button type="button" class="btn btn-danger" id="delete">
                             <i class="fas fa-eraser"></i>Delete
                             </button>
                         </form>
@@ -103,7 +103,13 @@
                 </td>
 
             </tr>
-            @endforeach
+            @empty
+            <tr>
+                <td> Empty Category </td>
+             </tr>
+
+
+            @endforelse
 
         </tbody>
 
@@ -153,5 +159,5 @@
 </div>
 
 
-
+{{-- <button type="button" id="sample">sweetalert</button> --}}
 @endsection

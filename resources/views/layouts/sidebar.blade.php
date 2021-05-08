@@ -35,7 +35,7 @@
           <!-- Add icons to the links using the .nav-icon class
                with font-awesome or any other icon font library -->
           <li class="nav-item  menu-open">
-            <a href="{{ route('dashboard') }}" class="nav-link">
+            <a href="{{ route('users.dashboard') }}" class="nav-link">
               <i class="nav-icon fas fa-tachometer-alt"></i>
               <p>
                 Dashboard
@@ -71,7 +71,7 @@
 
           {{-- User --}}
           <li class="nav-item">
-            <a href="{{ route('dashboard') }}" class="nav-link">
+            <a href="{{ route('users.index') }}" class="nav-link">
               <i class="nav-icon fa fa-users"></i>
 
               <p>

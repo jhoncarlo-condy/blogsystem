@@ -21,7 +21,10 @@ Route::get('/', function () {
 Auth::routes();
 
 
-Route::get('/dashboard', 'UserController@index')->name('dashboard');
-// Route::get('/category', 'CategoryController@index')->name('category');
+// Route::get('/dashboard', 'UserController@index')->name('dashboard');
+// Route::get('/category', '<Catego></Catego>ryController@index')->name('category');
+Route::resource('/users', 'UserController');
+Route::get('/dashboard', 'UserController@dashboard')->name('users.dashboard');
 Route::resource('/category', 'CategoryController');
+
 
