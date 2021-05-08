@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\User;
 use Illuminate\Http\Request;
 
 class UserController extends Controller
@@ -17,7 +18,8 @@ class UserController extends Controller
     }
     public function index()
     {
-        return view ('admin.users');
+        $users = User::paginate(5);
+        return view ('admin.users', compact('users'));
     }
 
     /**
@@ -47,7 +49,25 @@ class UserController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $request->validate([
+            'firstname' => 'required|string|max:255',
+            'lastname' => 'required|string|max:255',
+            'email' => 'required|string|email|max:255|unique:users',
+            'password' => 'required|string|min:6|confirmed',
+            'confirm_password' => 'required_with:password|same:password|string|min:6|confirmed',
+            'usertype' => 'required'
+        ]);
+
+        $users = new User;
+        $users->firstname = $request->firstname;
+        $users->lastname = $request->lastname;
+        $users->email = $request->email;
+        $users->password = $request->password;
+        $users->usertype = $request->usertype;
+        $users->save();
+        return redirect()->back()->with(['message'=>'User Added Successfully']);
+
+
     }
 
     /**
