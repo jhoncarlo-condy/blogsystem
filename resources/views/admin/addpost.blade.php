@@ -46,21 +46,15 @@
               <!-- /.form-group -->
               <div class="form-group">
                 <label>Author</label>
-                <input type="text" class="form-control" name="" id="" disabled>
-              </div>
+                <input type="text" class="form-control" name="" disabled value="{{ Auth::user()->firstname . " " . Auth::user()->lastname }}" placeholder="">
+                <input type="hidden" name="user_id" value="{{ Auth::user()->id }}">
+            </div>
               <!-- /.form-group -->
             </div>
             <!-- /.col -->
             <div class="col-md-6">
               <div class="form-group">
-
-                {{-- <label>Category</label>
-                <select class="select2" multiple="multiple" data-placeholder="Select a State" style="width: 100%;">
-                @foreach ($posts as $post)
-                    <option>{{ $post->category->id }}</option>
-                @endforeach
-
-                </select> --}}
+                <label>Upload Image</label>
 
               </div>
               <!-- /.form-group -->
@@ -77,8 +71,8 @@
                 <label>Category</label>
 
                 <select class="form-control select2 select2-danger" data-dropdown-css-class="select2-danger" style="width: 100%;">
-                    @foreach ($posts as $post)}
-                    <option value="{{ $post->category->id}}">{{ $post->category->id}}</option>
+                    @foreach ($category as $category)}
+                    <option value="{{ $category->id}}">{{ $category->title}}</option>
                     @endforeach
                 </select>
 
