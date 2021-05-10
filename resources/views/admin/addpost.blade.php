@@ -52,15 +52,16 @@
               <!-- /.form-group -->
             </div>
             <!-- /.col -->
-            <div class="col-md-6">
-              <div class="form-group">
                 <label>Upload Image</label>
-
-              </div>
+                <div class="file-drop-area">
+                     <span class="choose-file-button">Choose Files</span>
+                     <span class="file-message">or drag and drop files here</span>
+                      <input type="file" class="file-input" accept=".jfif,.jpg,.jpeg,.png,.gif" multiple>
+                </div>
+                <div id="divImageMediaPreview"> </div>
               <!-- /.form-group -->
 
               <!-- /.form-group -->
-            </div>
             <!-- /.col -->
           </div>
           <!-- /.row -->
@@ -154,5 +155,43 @@
                                 .catch( error => {
                                         console.error( error );
                                 } );
+</script>
+<script>
+$(document).on('change', '.file-input', function() {
+
+
+var filesCount = $(this)[0].files.length;
+
+var textbox = $(this).prev();
+
+if (filesCount === 1) {
+var fileName = $(this).val().split('\\').pop();
+textbox.text(fileName);
+} else {
+textbox.text(filesCount + ' files selected');
+}
+
+
+
+if (typeof (FileReader) != "undefined") {
+var dvPreview = $("#divImageMediaPreview");
+dvPreview.html("");
+$($(this)[0].files).each(function () {
+var file = $(this);
+var reader = new FileReader();
+reader.onload = function (e) {
+var img = $("<img />");
+img.attr("style", "width: 150px; height:100px; padding: 10px");
+img.attr("src", e.target.result);
+dvPreview.append(img);
+}
+reader.readAsDataURL(file[0]);
+});
+} else {
+alert("This browser does not support HTML5 FileReader.");
+}
+
+
+});
 </script>
 @endpush
