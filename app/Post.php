@@ -14,7 +14,7 @@ class Post extends Model
      */
     public function user()
     {
-        return $this->hasOne(User::class);
+        return $this->belongsTo(User::class);
     }
 
     /**
@@ -24,6 +24,6 @@ class Post extends Model
      */
     public function category()
     {
-        return $this->hasOne(Category::class);
+        return $this->belongsTo(Category::class);
     }
 }
