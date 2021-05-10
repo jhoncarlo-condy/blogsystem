@@ -40,7 +40,7 @@
           <!-- small box -->
           <div class="small-box bg-success">
             <div class="inner">
-              <h3>2<sup style="font-size: 20px"></sup></h3>
+              <h3>{{ $countcat }}<sup style="font-size: 20px"></sup></h3>
 
               <p>Total Category</p>
             </div>
@@ -55,7 +55,7 @@
           <!-- small box -->
           <div class="small-box bg-warning">
             <div class="inner">
-              <h3>44</h3>
+              <h3>{{ $countpost }}</h3>
 
               <p>Total Posts</p>
             </div>

@@ -2,7 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use App\Category;
 use App\User;
+use App\Post;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 
@@ -41,7 +43,9 @@ class UserController extends Controller
     {
 
         $countusers = User::where('usertype', 3)->count();
-        return view ('admin.dashboard', compact('countusers'));
+        $countcat = Category::count();
+        $countpost = Post::count();
+        return view ('admin.dashboard', compact('countusers','countcat','countpost'));
     }
 
     /**
