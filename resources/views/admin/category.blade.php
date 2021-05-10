@@ -40,7 +40,9 @@
                 <th>#</th>
                 <th>Title</th>
                 <th>Description</th>
+                @if(Auth::user()->usertype == '1')
                 <th>Action</th>
+                @endif
             </tr>
         </thead>
         <tbody>
@@ -50,14 +52,16 @@
                 <td scope="row">{{ $key+1}}</td>
                 <td>{{ $cat->title }}</td>
                 <td>{{ $cat->description }}</td>
+                @if(Auth::user()->usertype != '1')
+
+                @else
                 <td>
                     <!-- Button trigger edit modal -->
                     <div class="form-row">
-                        @if(Auth::user()->usertype == '1')
 
                         <button type="button" class="btn btn-success" data-toggle="modal" data-target="#editModal{{ $cat->id }}">
                             <i class="fas fa-edit"></i>Edit
-                          </button>
+                        </button>
 
                         <form action="{{ route('category.destroy',$cat->id) }}" method="POST">
                             @csrf
@@ -163,3 +167,4 @@
 
 {{-- <button type="button" id="sample">sweetalert</button> --}}
 @endsection
+

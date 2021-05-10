@@ -30,6 +30,8 @@
 @endif
 <!-- Button trigger modal -->
 @if (Auth::user()->usertype == '1')
+
+
 <button type="button" class="btn btn-primary float-right my-2 mx-5" data-toggle="modal" data-target="#modelId">
   Add new user
 </button>
@@ -50,7 +52,7 @@
 
             @forelse ($users as $key=>$user)
             <tr>
-                <td scope="row">{{ $key+1}}</td>
+                <td scope="row">{{ $user->id}}</td>
                 <td>{{ $user->firstname }}</td>
                 <td>{{ $user->lastname }}</td>
                 <td>{{ $user->email }}</td>
@@ -85,7 +87,7 @@
                     {{-- EDIT MODAL --}}
                     <!-- Modal -->
                     <div class="modal fade" id="editModal{{ $user->id }}" tabindex="-1" role="dialog" aria-labelledby="modelTitleId" aria-hidden="true">
-                        <div class="modal-dialog" role="document">
+                        <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable" role="document">
                             <div class="modal-content">
                                 <div class="modal-header">
                                     <h5 class="modal-title">Edit User: {{ $user->firstname }}</h5>
@@ -94,17 +96,78 @@
                                         </button>
                                 </div>
                                 <div class="modal-body">
-                                    <form action="" method="post">
-                                        @method('PUT')
+                                    <form action="" method="POST" id="category">
+                                        @method('POST')
                                         @csrf
                                         <div class="form-group">
-                                          <label for="title"></label>
-                                          <input type="text" class="form-control" name="title"  aria-describedby="helpId" placeholder="" value="">
+                                          <label for="firstname">First Name</label>
+                                          <input type="text" class="form-control" name="firstname" id="firstname" aria-describedby="helpId" placeholder=""
+                                            value="{{ $user->firstname }}">
+                                        </div>
+                                        @if ($errors->has('firstname'))
+                                                <strong class="text-danger">{{ $errors->first('firstname') }}</strong>
+                                        @endif
+                                        <div class="form-group">
+                                            <label for="lastname">Last Name</label>
+                                            <input type="text" class="form-control" name="lastname" id="lastname" aria-describedby="helpId" placeholder=""
+                                            value="{{ $user->lastname }}">
+                                        </div>
+                                        @if ($errors->has('lastname'))
+                                                <strong class="text-danger">{{ $errors->first('lastname') }}</strong>
+                                        @endif
+                                        <div class="form-group">
+                                            <label for="email">E-mail</label>
+                                            <input type="email" class="form-control" name="email" id="email" aria-describedby="helpId" placeholder=""
+                                            value="{{ $user->lastname }}">
+                                        </div>
+                                        @if ($errors->has('email'))
+                                                <strong class="text-danger">{{ $errors->first('email') }}</strong>
+                                        @endif
+                                        <div class="form-group">
+                                            <button type="button" class="btn btn-primary btn-sm" id="pass-btn">Change Password</button>
+                                        </div>
+                                        <div class="displaypass">
+                                            <div class="form-group">
+                                                <label for="oldpassword">Enter Old Password</label>
+                                                <input type="text" class="form-control" name="oldpassword" id="oldpassword" aria-describedby="helpId" placeholder=""
+                                                value="{{ $user->password }}">
+                                            </div>
+                                            <div class="form-group">
+                                                <label for="newpassword">Enter New Password</label>
+                                                <input type="text" class="form-control" name="newpassword" id="newpassword" aria-describedby="helpId" placeholder=""
+                                                value="{{ $user->password }}">
+                                            </div>
+                                            @if ($errors->has('password'))
+                                                    <strong class="text-danger">{{ $errors->first('password') }}</strong>
+                                            @endif
+                                            <div class="form-group">
+                                                <label for="confirm_password">Confirm Password</label>
+                                                <input type="password" class="form-control" name="confirm_password" id="confirm_password" aria-describedby="helpId" placeholder="">
+                                            </div>
+                                            @if ($errors->has('confirm_password'))
+                                                    <strong class="text-danger">{{ $errors->first('confirm_password') }}</strong>
+                                            @endif
+
                                         </div>
                                         <div class="form-group">
-                                          <label for="description"></label>
-                                          <textarea class="form-control" name="description" id="" col="60" rows="5" maxlength="100"></textarea>
+                                          <label for="usertype">Usertype</label>
+                                          <select class="form-control" name="usertype" id="usertype">
+                                            <option value="{{ $user->usertype }}"selected>
+                                                @if ($user->usertype == '1')
+                                                <span>SuperAdmin</span>
+                                                @elseif ($user->usertype == '2')
+                                                <span>Admin</span>
+                                                @elseif ($user->usertype == '3')
+                                                <span>User</span>
+                                                @endif
+                                            </option>
+                                            <option value="2">Admin</option>
+                                            <option value="3">User</option>
+                                          </select>
                                         </div>
+                                        @if ($errors->has('usertype'))
+                                                <strong class="text-danger">{{ $errors->first('usertype') }}</strong>
+                                        @endif
 
                                 </div>
                                 <div class="modal-footer">
@@ -135,7 +198,7 @@
 
 <!-- ADD Modal -->
 <div class="modal fade" id="modelId" tabindex="-1" role="dialog" aria-labelledby="modelTitleId" aria-hidden="true">
-    <div class="modal-dialog" role="document">
+    <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable" role="document">
         <div class="modal-content">
             <div class="modal-header">
                 <h5 class="modal-title">Add new user</h5>
@@ -177,11 +240,14 @@
                     @endif
                     <div class="form-group">
                         <label for="confirm_password">Confirm Password</label>
-                        <input type="password" class="form-control" name="confirm_password" id="confirm_password" aria-describedby="helpId" placeholder="">
+                        <input type="password" class="form-control" name="confirm_password" id="password_confirm" aria-describedby="helpId" placeholder="">
                     </div>
                     @if ($errors->has('confirm_password'))
                             <strong class="text-danger">{{ $errors->first('confirm_password') }}</strong>
                     @endif
+                    <div class="form-group">
+                        <i class="fas fa-eye reveal">Show Password</i>
+                    </div>
                     <div class="form-group">
                       <label for="usertype">Usertype</label>
                       <select class="form-control" name="usertype" id="usertype">
@@ -206,3 +272,28 @@
 
 
 @endsection
+@push('scripts')
+<script>
+$(document).ready(function()
+{
+    $(".displaypass").hide();
+    $("#pass-btn").click(function()
+    {
+        $(".displaypass").toggle();
+    })
+
+    $(".reveal").on('mousedown', function()
+    {
+
+        $("#password_confirm").attr("type","text");
+        $("#password").attr("type","text");
+    })
+    $(".reveal").on('mouseup', function()
+    {
+        $("#password").attr("type","password");
+        $("#password_confirm").attr("type","password");
+
+    })
+})
+</script>
+@endpush

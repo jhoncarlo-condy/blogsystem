@@ -45,6 +45,17 @@
         {
             color:red;
         }
+        /* .eye
+        {
+            position: absolute;
+            padding-right: 100&;
+            margin-left: 5px;
+            height: 25px;
+            display: flex;
+            align-items: center;
+
+
+        } */
     </style>
 
 </head>
@@ -141,5 +152,6 @@
         });
     });
 </script>
+@stack('scripts')
 </body>
 </html>
