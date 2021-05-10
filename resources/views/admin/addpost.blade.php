@@ -122,15 +122,16 @@
             </div>
             <!-- /.card-header -->
             <div class="card-body">
-              <textarea id="summernote">
-                Place <em>some</em> <u>text</u> <strong>here</strong>
-              </textarea>
+             <div class="editor">
+
             </div>
 
           </div>
         </div>
         <!-- /.col-->
       </div>
+
+    </div>
 </section>
 
 
@@ -140,11 +141,24 @@
 <script>
     $(document).ready(function() {
         $('#summernote').summernote({
+            placeholder: 'Enter some text here',
             height: 300,                 // set editor height
             minHeight: null,             // set minimum height of editor
             maxHeight: null,             // set maximum height of editor
-            focus: true                  // set focus to editable area after initializing summernote
+            focus: true,               // set focus to editable area after initializing summernote
+
         });
     });
-    </script>
+</script>
+<script src="https://cdn.ckeditor.com/ckeditor5/27.1.0/classic/ckeditor.js"></script>
+<script>
+          ClassicEditor
+                                .create( document.querySelector( '.editor' ) )
+                                .then( editor => {
+                                        console.log( editor );
+                                } )
+                                .catch( error => {
+                                        console.error( error );
+                                } );
+</script>
 @endpush
