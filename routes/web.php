@@ -26,5 +26,6 @@ Auth::routes();
 Route::resource('/users', 'UserController');
 Route::get('/dashboard', 'UserController@dashboard')->name('users.dashboard');
 Route::resource('/category', 'CategoryController');
+Route::resource('/post', 'PostController');
 
 

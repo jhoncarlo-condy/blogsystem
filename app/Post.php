@@ -3,8 +3,27 @@
 namespace App;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\HasOne;
 
 class Post extends Model
 {
-    //
+    /**
+     * Get the user associated with the Post
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\HasOne
+     */
+    public function user()
+    {
+        return $this->hasOne(User::class);
+    }
+
+    /**
+     * Get the user associated category()
+     *
+     * @return \Illuminate\Database\Category\Relations\HasOne
+     */
+    public function category()
+    {
+        return $this->hasOne(Category::class);
+    }
 }
