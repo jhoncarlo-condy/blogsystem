@@ -29,10 +29,11 @@
 </div>
 @endif
 <!-- Button trigger modal -->
+@if (Auth::user()->usertype == '1')
 <button type="button" class="btn btn-primary float-right my-2 mx-5" data-toggle="modal" data-target="#modelId">
-  Add new category
+  Add new user
 </button>
-
+@endif
 <div class="container">
     <table class="table">
         <thead class="thead-dark">
@@ -53,20 +54,24 @@
                 <td>{{ $user->firstname }}</td>
                 <td>{{ $user->lastname }}</td>
                 <td>{{ $user->email }}</td>
-                @if ($user->usertype = 1)
+                @if ($user->usertype == 1)
                 <td class="text-success">SuperAdmin</td>
-                @elseif ($user->usertype = 2)
+                @elseif ($user->usertype == 2)
                 <td class="text-warning">Admin</td>
-                @elseif ($user->usertype = 3)
-                <td class="text-success">User</td>
+                @elseif ($user->usertype == 3)
+                <td class="text-danger">User</td>
                 @endif
                 <td>
-                    <!-- Button trigger edit modal -->
                     <div class="form-row">
-
+                    {{-- view button --}}
+                        <button type="button" class="btn btn-primary">
+                            View
+                        </button>
+                    <!-- Button trigger edit modal -->
+                        @if (Auth::user()->usertype == '1')
                         <button type="button" class="btn btn-success" data-toggle="modal" data-target="#editModal{{ $user->id }}">
                             <i class="fas fa-edit"></i>Edit
-                          </button>
+                        </button>
 
                         <form action="" method="POST">
                             @csrf
@@ -75,7 +80,7 @@
                             <i class="fas fa-eraser"></i>Delete
                             </button>
                         </form>
-
+                        @endif
                     </div>
                     {{-- EDIT MODAL --}}
                     <!-- Modal -->
@@ -125,7 +130,7 @@
         </tbody>
 
     </table>
-    {{-- {{ $user->links() }} --}}
+    {{ $users->links() }}
 </div>
 
 <!-- ADD Modal -->
@@ -139,36 +144,44 @@
                     </button>
             </div>
             <div class="modal-body">
-                <form action="" method="POST" id="category">
+                <form action="{{ route('users.store') }}" method="POST" id="category">
                     @method('POST')
                     @csrf
                     <div class="form-group">
                       <label for="firstname">First Name</label>
                       <input type="text" class="form-control" name="firstname" id="firstname" aria-describedby="helpId" placeholder="">
                     </div>
-                    {{-- @if ($errors->has('title'))
-                            <strong class="text-danger">{{ $errors->first('title') }}</strong>
-                    @endif --}}
+                    @if ($errors->has('firstname'))
+                            <strong class="text-danger">{{ $errors->first('firstname') }}</strong>
+                    @endif
                     <div class="form-group">
                         <label for="lastname">Last Name</label>
                         <input type="text" class="form-control" name="lastname" id="lastname" aria-describedby="helpId" placeholder="">
                     </div>
-                    {{-- @if ($errors->has('description'))
-                          <strong class="text-danger">{{ $errors->first('description') }}</strong>
-
-                    @endif --}}
+                    @if ($errors->has('lastname'))
+                            <strong class="text-danger">{{ $errors->first('lastname') }}</strong>
+                    @endif
                     <div class="form-group">
                         <label for="email">E-mail</label>
                         <input type="email" class="form-control" name="email" id="email" aria-describedby="helpId" placeholder="">
                     </div>
+                    @if ($errors->has('email'))
+                            <strong class="text-danger">{{ $errors->first('email') }}</strong>
+                    @endif
                     <div class="form-group">
                         <label for="password">Password</label>
                         <input type="password" class="form-control" name="password" id="password" aria-describedby="helpId" placeholder="">
                     </div>
+                    @if ($errors->has('password'))
+                            <strong class="text-danger">{{ $errors->first('password') }}</strong>
+                    @endif
                     <div class="form-group">
                         <label for="confirm_password">Confirm Password</label>
                         <input type="password" class="form-control" name="confirm_password" id="confirm_password" aria-describedby="helpId" placeholder="">
                     </div>
+                    @if ($errors->has('confirm_password'))
+                            <strong class="text-danger">{{ $errors->first('confirm_password') }}</strong>
+                    @endif
                     <div class="form-group">
                       <label for="usertype">Usertype</label>
                       <select class="form-control" name="usertype" id="usertype">
@@ -177,6 +190,9 @@
                         <option value="3">User</option>
                       </select>
                     </div>
+                    @if ($errors->has('usertype'))
+                            <strong class="text-danger">{{ $errors->first('usertype') }}</strong>
+                    @endif
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>

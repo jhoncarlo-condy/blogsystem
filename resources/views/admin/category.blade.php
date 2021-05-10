@@ -28,10 +28,11 @@
 </div>
 @endif
 <!-- Button trigger modal -->
+@if(Auth::user()->usertype == '1')
 <button type="button" class="btn btn-primary float-right my-2 mx-5" data-toggle="modal" data-target="#modelId">
   Add new category
 </button>
-
+@endif
 <div class="container">
     <table class="table">
         <thead class="thead-dark">
@@ -52,6 +53,7 @@
                 <td>
                     <!-- Button trigger edit modal -->
                     <div class="form-row">
+                        @if(Auth::user()->usertype == '1')
 
                         <button type="button" class="btn btn-success" data-toggle="modal" data-target="#editModal{{ $cat->id }}">
                             <i class="fas fa-edit"></i>Edit
@@ -64,7 +66,7 @@
                             <i class="fas fa-eraser"></i>Delete
                             </button>
                         </form>
-
+                        @endif
                     </div>
                     {{-- EDIT MODAL --}}
                     <!-- Modal -->

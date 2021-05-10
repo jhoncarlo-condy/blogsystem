@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Hash;
 
 class UserController extends Controller
 {
@@ -53,8 +54,8 @@ class UserController extends Controller
             'firstname' => 'required|string|max:255',
             'lastname' => 'required|string|max:255',
             'email' => 'required|string|email|max:255|unique:users',
-            'password' => 'required|string|min:6|confirmed',
-            'confirm_password' => 'required_with:password|same:password|string|min:6|confirmed',
+            'password' => 'required|string|min:6',
+            'confirm_password' => 'required_with:password|same:password',
             'usertype' => 'required'
         ]);
 
@@ -62,7 +63,7 @@ class UserController extends Controller
         $users->firstname = $request->firstname;
         $users->lastname = $request->lastname;
         $users->email = $request->email;
-        $users->password = $request->password;
+        $users->password = Hash::make($request->password);
         $users->usertype = $request->usertype;
         $users->save();
         return redirect()->back()->with(['message'=>'User Added Successfully']);
@@ -76,8 +77,10 @@ class UserController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show(User $users)
     {
+        $users = User::find($user->id);
+
     }
 
     /**
