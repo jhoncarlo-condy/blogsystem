@@ -39,7 +39,9 @@ class UserController extends Controller
      */
     public function dashboard()
     {
-        return view ('admin.dashboard');
+
+        $countusers = User::where('usertype', 3)->count();
+        return view ('admin.dashboard', compact('countusers'));
     }
 
     /**
