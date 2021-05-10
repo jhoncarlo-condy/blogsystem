@@ -18,116 +18,129 @@
 </section>
 @endsection
 @section('content-wrapper')
-<section class="content">
-    <div class="container-fluid">
-      <!-- SELECT2 EXAMPLE -->
-      <div class="card card-primary">
-        <div class="card-header">
-          <h3 class="card-title">Add Post</h3>
 
-          <div class="card-tools">
-            <button type="button" class="btn btn-tool" data-card-widget="collapse">
-              <i class="fas fa-minus"></i>
-            </button>
-            <button type="button" class="btn btn-tool" data-card-widget="remove">
-              <i class="fas fa-times"></i>
-            </button>
-          </div>
-        </div>
-        <!-- /.card-header -->
-        <div class="card-body">
-          <div class="row">
-            <div class="col-md-6">
-             <div class="form-group">
-               <label for="">Title</label>
-               <input type="text"
-                 class="form-control" name="" id="" aria-describedby="helpId" placeholder="">
-             </div>
-              <!-- /.form-group -->
-              <div class="form-group">
-                <label>Author</label>
-                <input type="text" class="form-control" name="" disabled value="{{ Auth::user()->firstname . " " . Auth::user()->lastname }}" placeholder="">
-                <input type="hidden" name="user_id" value="{{ Auth::user()->id }}">
-            </div>
-              <!-- /.form-group -->
-            </div>
-            <!-- /.col -->
-                <label>Upload Image</label>
-                <div class="file-drop-area">
-                     <span class="choose-file-button">Choose Files</span>
-                     <span class="file-message">or drag and drop files here</span>
-                      <input type="file" class="file-input" accept=".jfif,.jpg,.jpeg,.png,.gif" multiple>
-                </div>
-                <div id="divImageMediaPreview"> </div>
-              <!-- /.form-group -->
-
-              <!-- /.form-group -->
-            <!-- /.col -->
-          </div>
-          <!-- /.row -->
-
-          <div class="row">
-            <div class="col-12 col-sm-6">
-              <div class="form-group">
-                <label>Category</label>
-
-                <select class="form-control select2 select2-danger" data-dropdown-css-class="select2-danger" style="width: 100%;">
-                    @foreach ($category as $category)}
-                    <option value="{{ $category->id}}">{{ $category->title}}</option>
-                    @endforeach
-                </select>
-
-              </div>
-              <!-- /.form-group -->
-            </div>
-            <!-- /.col -->
-            <div class="col-12 col-sm-6">
-              {{-- <div class="form-group">
-                <label>Multiple (.select2-purple)</label>
-                <div class="select2-purple">
-                  <select class="select2" multiple="multiple" data-placeholder="Select a State" data-dropdown-css-class="select2-purple" style="width: 100%;">
-                    <option>Alabama</option>
-                    <option>Alaska</option>
-                    <option>California</option>
-                    <option>Delaware</option>
-                    <option>Tennessee</option>
-                    <option>Texas</option>
-                    <option>Washington</option>
-                  </select>
-                </div>
-              </div> --}}
-              <!-- /.form-group -->
-            </div>
-            <!-- /.col -->
-          </div>
-          <!-- /.row -->
-        </div>
-        <!-- /.card-body -->
-
-      </div>
-      <!-- /.card -->
-
-      <div class="row">
-        <div class="col-md-12">
-          <div class="card card-outline card-info">
+    <section class="content">
+        <div class="container-fluid">
+          <!-- SELECT2 EXAMPLE -->
+          <div class="card card-primary">
             <div class="card-header">
-              <h3 class="card-title">
-                Content
-              </h3>
+              <h3 class="card-title">Add Post</h3>
+
+              <div class="card-tools">
+                <button type="button" class="btn btn-tool" data-card-widget="collapse">
+                  <i class="fas fa-minus"></i>
+                </button>
+                <button type="button" class="btn btn-tool" data-card-widget="remove">
+                  <i class="fas fa-times"></i>
+                </button>
+              </div>
             </div>
+            <form action="{{ route('post.store') }}" method="POST">
+                @method('POST')
+                @csrf
             <!-- /.card-header -->
             <div class="card-body">
-             <div class="editor">
+              <div class="row">
+                <div class="col-md-6">
+                 <div class="form-group">
+                   <label for="">Title</label>
+                   <input type="text"
+                     class="form-control" name="title" id="" aria-describedby="helpId" placeholder="">
+                 </div>
+                  <!-- /.form-group -->
+                  <div class="form-group">
+                    <label>Author</label>
+                    <input type="text" class="form-control" name="" disabled value="{{ Auth::user()->firstname . " " . Auth::user()->lastname }}" placeholder="">
+                    <input type="hidden" name="user_id" value="{{ Auth::user()->id }}">
+                </div>
+                  <!-- /.form-group -->
+                </div>
+                <!-- /.col -->
+
+                  <!-- /.form-group -->
+                  <div class="mt-4 ml-4">
+                    <label>Upload Image</label>
+                    <div class="file-drop-area bordered">
+                         <span class="choose-file-button">Choose Files</span>
+                         <span class="file-message">or drag and drop files here</span>
+                          <input type="file" name="image" class="file-input" accept=".jfif,.jpg,.jpeg,.png,.gif" multiple>
+                    </div>
+                    <div  id="divImageMediaPreview"> </div>
+                  </div>
+                  <!-- /.form-group -->
+                <!-- /.col -->
+              </div>
+              <!-- /.row -->
+
+              <div class="row">
+                <div class="col-12 col-sm-6">
+                  <div class="form-group">
+                    <label>Category</label>
+
+                    <select class="form-control select2 select2-danger" name="category_id" data-dropdown-css-class="select2-danger" style="width: 100%;">
+                        @foreach ($category as $category)}
+                        <option value="{{ $category->id}}">{{ $category->title}}</option>
+                        @endforeach
+                    </select>
+
+                  </div>
+                  <!-- /.form-group -->
+                </div>
+                <!-- /.col -->
+                <div class="col-10 col-sm-4">
+
+                  {{-- <div class="form-group">
+                    <label>Multiple (.select2-purple)</label>
+                    <div class="select2-purple">
+                      <select class="select2" multiple="multiple" data-placeholder="Select a State" data-dropdown-css-class="select2-purple" style="width: 100%;">
+                        <option>Alabama</option>
+                        <option>Alaska</option>
+                        <option>California</option>
+                        <option>Delaware</option>
+                        <option>Tennessee</option>
+                        <option>Texas</option>
+                        <option>Washington</option>
+                      </select>
+                    </div>
+                  </div> --}}
+                  <!-- /.form-group -->
+                </div>
+                <!-- /.col -->
+              </div>
+              <!-- /.row -->
+            </div>
+            <!-- /.card-body -->
+            <div class="container mb-3">
+            <textarea id="summernote" name="description"></textarea>
 
             </div>
+            <!-- /.card -->
+            {{-- ckeditor --}}
+          {{-- <div class="row">
+            <div class="col-md-12">
+              <div class="card card-outline card-info">
+                <div class="card-header">
+                  <h3 class="card-title">
+                    Content
+                  </h3>
+                </div>
+                <!-- /.card-header -->
+                <div class="card-body">
+                 <div class="editor">
 
+                </div>
+
+              </div>
+            </div>
+            <!-- /.col-->
+          </div> --}}
+          <div class="form-group text-right mr-4">
+            <button type="submit" class="btn btn-primary">Add Post</button>
           </div>
+        </form>
         </div>
-        <!-- /.col-->
-      </div>
+    </section>
 
-    </div>
-</section>
 
 
 @endsection

@@ -40,7 +40,15 @@ class PostController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $post = new Post;
+        $post->title = $request->title;
+        $post->category_id = $request->category_id;
+        $post->user_id = $request->user_id;
+        $post->description = $request->description;
+        $request->comment;
+        $post->save();
+
+        return redirect()->back()->with(['message', 'Added Post Successfully']);
     }
 
     /**

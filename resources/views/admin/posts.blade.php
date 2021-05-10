@@ -64,8 +64,8 @@
                 <td>{{ $post->category->title }}</td>
                 <td>{{ $post->user->firstname }}</td>
                 <td>{{ $post->description }}</td>
-                <td>{{ $post->description }}</td>
-                <td>{{ $post->description }}</td>
+                <td>{{ $post->created_at }}</td>
+                <td>{{ $post->comment }}</td>
                 @if(Auth::user()->usertype != '1')
 
                 @else
