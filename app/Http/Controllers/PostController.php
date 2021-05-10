@@ -25,7 +25,8 @@ class PostController extends Controller
      */
     public function create()
     {
-        //
+        $posts = Post::all();
+        return view ('admin.addpost',compact('posts'));
     }
 
     /**
