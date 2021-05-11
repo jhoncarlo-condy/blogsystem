@@ -45,7 +45,6 @@
                 <th>Title</th>
                 <th>Category</th>
                 <th>Author</th>
-                <th>Description</th>
                 <th>Date Published</th>
                 <th>Time</th>
                 <th>View</th>
@@ -66,11 +65,10 @@
                 <td>{{ $post->title }}</td>
                 <td>{{ $post->category->title }}</td>
                 <td>{{ $post->user->firstname }}</td>
-                <td>{{ $post->description }}</td>
                 <td>{{ $post->created_at->format('d/m/Y') }}</td>
                 <td>{{ $post->created_at->format('H:i A') }}</td>
                 <td>
-                    <a name="" id="" href="#" role="button">
+                    <a name="" id="" href="{{ route('post.show', $post->id) }}" role="button">
                         <i class="fas fa-eye    "></i>
                         View
                     </a>

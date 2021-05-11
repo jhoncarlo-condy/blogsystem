@@ -59,7 +59,10 @@ class PostController extends Controller
      */
     public function show(Post $post)
     {
-        //
+        $category = Category::all();
+        $posts = Post::find($post->id);
+        $find = Category::find($posts->category_id);
+        return view ('admin.posts.viewpost', compact('posts','category','find'));
     }
 
     /**
@@ -72,7 +75,8 @@ class PostController extends Controller
     {
         $category = Category::all();
         $posts = Post::find($post->id);
-        return view ('admin.posts.editpost', compact('posts','category'));
+        $find = Category::find($posts->category_id);
+        return view ('admin.posts.editpost', compact('posts','category','find'));
 
     }
 
