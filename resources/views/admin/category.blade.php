@@ -19,6 +19,26 @@
 @section('content-wrapper')
 {{-- success message --}}
 @if (Session::has('message'))
+<script>
+$(document).ready(function(){
+    $(function() {
+    var Toast = Swal.mixin({
+      toast: true,
+      position: 'top-end',
+      showConfirmButton: false,
+      timer: 3000
+    });
+
+
+    $(function() {
+      Toast.fire({
+        icon: 'success',
+        title: 'Message: Operation Success',
+      })
+    });
+  });
+})
+</script>
 <div class="alert alert-success alert-dismissible fade show" role="alert">
     <button type="button" class="close" data-dismiss="alert" aria-label="Close">
         <span aria-hidden="true">&times;</span>
@@ -63,7 +83,7 @@
                             <i class="fas fa-edit"></i>Edit
                         </button>
 
-                        <form action="{{ route('category.destroy',$cat->id) }}" method="POST">
+                        <form id="delete-{{ $cat->id }}" action="{{ route('category.destroy',$cat->id) }}" method="POST">
                             @csrf
                             @method('DELETE')
                             <button type="button" class="btn btn-danger" id="delete">
@@ -167,4 +187,54 @@
 
 {{-- <button type="button" id="sample">sweetalert</button> --}}
 @endsection
+@push('category')
+<script>
+    $(document).ready(function()
+    {
+        $("#category").validate(
+            {
+                rules:
+                {
+                    title: "required",
+                    description:
+                    {
+                        required:true,
+                        maxlength:100,
+                    }
+                },
+                messages:
+                {
+                    description:{
+                        required: "Please enter description",
+                        maxlength: "description must be 100 characters or below"
+                    }
+                }
+            });
 
+        $("#delete").click(function(){
+            Swal.fire({
+                title: 'Are you sure?',
+                text: "You won't be able to revert this!",
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#3085d6',
+                cancelButtonColor: '#d33',
+                confirmButtonText: 'Yes, delete it!'
+            }).then((result) => {
+                if (result.isConfirmed) {
+
+
+                    Swal.fire(
+                    'Deleted!',
+                    'Your file has been deleted.',
+                    'success'
+                    )
+                }
+                })
+
+        });
+
+
+    });
+</script>
+@endpush

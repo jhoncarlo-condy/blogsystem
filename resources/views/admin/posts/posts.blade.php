@@ -46,12 +46,15 @@
                 <th>Category</th>
                 <th>Author</th>
                 <th>Description</th>
-                <th>Date&Time Published</th>
-                <th>Comments</th>
-
-
+                <th>Date Published</th>
+                <th>Time</th>
+                <th>View</th>
                 @if(Auth::user()->usertype == '1')
-                <th>Action</th>
+                <th>Edit</th>
+                <th>Delete</th>
+
+
+
                 @endif
             </tr>
         </thead>
@@ -64,15 +67,21 @@
                 <td>{{ $post->category->title }}</td>
                 <td>{{ $post->user->firstname }}</td>
                 <td>{{ $post->description }}</td>
-                <td>{{ $post->created_at }}</td>
-                <td>{{ $post->comment }}</td>
+                <td>{{ $post->created_at->format('d/m/Y') }}</td>
+                <td>{{ $post->created_at->format('H:i A') }}</td>
+                <td>
+                    <a name="" id="" href="#" role="button">
+                        <i class="fas fa-eye    "></i>
+                        View
+                    </a>
+                </td>
                 @if(Auth::user()->usertype != '1')
 
                 @else
                 <td>
                     <!-- Button trigger edit modal -->
                     <div class="form-row">
-                        <a href="">
+                        <a href="{{ route('post.edit',$post->id) }}">
                         <button type="button" class="btn btn-primary">
 
                             <i class="fas fa-edit">Edit</i>
@@ -81,7 +90,7 @@
                         <form action="{{ route('post.destroy',$post->id) }}" method="POST">
                             @csrf
                             @method('DELETE')
-                            <button type="button" class="btn btn-danger" id="delete">
+                            <button type="submit" class="btn btn-danger" id="delete" onclick="this.disabled=true;this.value='Sending, please wait...';this.form.submit();">
                             <i class="fas fa-eraser"></i>Delete
                             </button>
                         </form>

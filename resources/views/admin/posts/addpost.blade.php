@@ -45,7 +45,7 @@
                  <div class="form-group">
                    <label for="">Title</label>
                    <input type="text"
-                     class="form-control" name="title" id="" aria-describedby="helpId" placeholder="">
+                     class="form-control" name="title" id="" aria-describedby="helpId" placeholder="Enter title here">
                  </div>
                   <!-- /.form-group -->
                   <div class="form-group">
@@ -135,7 +135,7 @@
             <!-- /.col-->
           </div> --}}
           <div class="form-group text-right mr-4">
-            <button type="submit" class="btn btn-primary">Add Post</button>
+            <button type="submit" class="btn btn-primary" onclick="this.disabled=true;this.value='Sending, please wait...';this.form.submit();">Add Post</button>
           </div>
         </form>
         </div>

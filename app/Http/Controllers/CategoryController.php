@@ -86,12 +86,16 @@ class CategoryController extends Controller
     public function update(Request $request, Category $category)
     {
         $request->validate([
-            'title' => 'required|unique:categories,title',
+            'title' => 'required',
             'description' => 'required',
 
         ]);
 
-        Category::find($category->id)->update($request->all());
+        // Category::find($category->id)->update($request->all());
+        $cat = Category::find($category->id);
+        $cat->title = $request->title;
+        $cat->description = $request->description;
+        $cat->update();
 
         return redirect()->back()->with(['message' => 'Success updating category']);
     }

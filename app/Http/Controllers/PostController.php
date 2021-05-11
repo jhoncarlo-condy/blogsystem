@@ -17,7 +17,7 @@ class PostController extends Controller
     public function index()
     {
         $posts = Post::paginate(5);
-        return view ('admin.posts',compact('posts'));
+        return view ('admin.posts.posts',compact('posts'));
     }
 
     /**
@@ -29,7 +29,7 @@ class PostController extends Controller
     {
         $category = Category::all();
         $posts = Post::all();
-        return view ('admin.addpost',compact('posts','category'));
+        return view ('admin.posts.addpost',compact('posts','category'));
     }
 
     /**
@@ -48,7 +48,7 @@ class PostController extends Controller
         $request->comment;
         $post->save();
 
-        return redirect()->back()->with(['message', 'Added Post Successfully']);
+        return redirect('/post')->with(['message', 'Added Post Successfully']);
     }
 
     /**
@@ -70,7 +70,10 @@ class PostController extends Controller
      */
     public function edit(Post $post)
     {
-        //
+        $category = Category::all();
+        $posts = Post::find($post->id);
+        return view ('admin.posts.editpost', compact('posts','category'));
+
     }
 
     /**
@@ -93,6 +96,8 @@ class PostController extends Controller
      */
     public function destroy(Post $post)
     {
-        //
+        Post::find($post->id)->delete();
+        return redirect()->back()->with(['message', 'Deleted Post Successfully']);
+
     }
 }
