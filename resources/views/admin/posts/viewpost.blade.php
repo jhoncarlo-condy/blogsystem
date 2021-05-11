@@ -42,7 +42,9 @@
                 </div>
               </div>
               <div class="post-body mb-6">
-                {{ $posts->description }}
+                <div class="container col-12">
+                    {!! $posts->description !!}
+                </div>
                 {{-- <h3>Lorem Ipsum Dolor</h3>
                 <p>div Lorem ipsum dolor sit amet, consectetur adipisicing elit. Assumenda temporibus iusto voluptates deleniti similique rerum ducimus sint ex odio saepe. Sapiente quae pariatur ratione quis perspiciatis deleniti accusantium</p> --}}
 
