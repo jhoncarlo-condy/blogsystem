@@ -40,11 +40,19 @@ class PostController extends Controller
      */
     public function store(Request $request)
     {
+        return request()->validate([
+            'title' => 'required',
+            'category_id' => 'required',
+            'user_id' => 'required',
+            'description' => 'required',
+            'image' => 'image',
+        ]);
         $post = new Post;
         $post->title = $request->title;
         $post->category_id = $request->category_id;
         $post->user_id = $request->user_id;
         $post->description = $request->description;
+        $post->image = $request->image;
         $request->comment;
         $post->save();
 
@@ -61,8 +69,9 @@ class PostController extends Controller
     {
         $category = Category::all();
         $posts = Post::find($post->id);
+        $latest = Post::all()->sortByDesc('id');
         $find = Category::find($posts->category_id);
-        return view ('admin.posts.viewpost', compact('posts','category','find'));
+        return view ('admin.posts.viewpost', compact('posts','category','find','latest'));
     }
 
     /**

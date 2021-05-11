@@ -70,7 +70,6 @@
                 <td>
                     <a name="" id="" href="{{ route('post.show', $post->id) }}" role="button">
                         <i class="fas fa-eye    "></i>
-                        View
                     </a>
                 </td>
                 @if(Auth::user()->usertype != '1')
@@ -78,22 +77,21 @@
                 @else
                 <td>
                     <!-- Button trigger edit modal -->
-                    <div class="form-row">
-                        <a href="{{ route('post.edit',$post->id) }}">
-                        <button type="button" class="btn btn-primary">
-
-                            <i class="fas fa-edit">Edit</i>
-                        </button>
-                        </a>
-                        <form action="{{ route('post.destroy',$post->id) }}" method="POST">
+                    <a name="" id="" href="{{ route('post.edit', $post->id) }}" role="button">
+                        <i class="fas fa-edit    "></i>
+                    </a>
+                </td>
+                <td>
+                        <form id="deleteform" action="{{ route('post.destroy',$post->id) }}" method="POST">
                             @csrf
                             @method('DELETE')
-                            <button type="submit" class="btn btn-danger" id="delete" onclick="this.disabled=true;this.value='Sending, please wait...';this.form.submit();">
-                            <i class="fas fa-eraser"></i>Delete
-                            </button>
+                            <a href="javascript:;" onclick="document.getElementById('deleteform').submit();">
+                            <i class="fas fa-trash"></i>
+                            </a>
+                            <input type="hidden">
                         </form>
-                        @endif
-                    </div>
+                </td>
+                @endif
 
             </tr>
             @empty

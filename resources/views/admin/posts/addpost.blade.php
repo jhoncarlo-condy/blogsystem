@@ -121,7 +121,7 @@
                   <div class="form-group">
                     <label>Category</label>
 
-                    <select class="form-control select2 select2-danger" name="category_id" data-dropdown-css-class="select2-danger" style="width: 100%;">
+                    <select class="form-control " name="category_id" data-dropdown-css-class="select2-danger" style="width: 100%;">
                         @foreach ($category as $category)}
                         <option value="{{ $category->id}}">{{ $category->title}}</option>
                         @endforeach
@@ -192,6 +192,7 @@
 
 <script>
     $(document).ready(function() {
+        $('.select2').select2();
         $('#summernote').summernote({
             placeholder: 'Enter some text here',
             height: 300,                 // set editor height

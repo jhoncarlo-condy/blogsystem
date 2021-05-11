@@ -50,15 +50,16 @@
 
               </div>
               <div class="post-tags mt-6"><a href="#" class="tag">#{{ $find->title }}</a></div>
-              <div class="posts-nav d-flex justify-content-between align-items-stretch flex-column flex-md-row"><a href="#" class="prev-post text-left d-flex align-items-center">
+              {{-- <div class="posts-nav d-flex justify-content-between align-items-stretch flex-column flex-md-row"><a href="#" class="prev-post text-left d-flex align-items-center">
                   <div class="icon prev"><i class="fa fa-angle-left"></i></div>
                   <div class="text"><strong class="text-primary">Previous Post </strong>
-                    {{-- <h6>I Bought a Wedding Dress.</h6> --}}
+                    <h6>I Bought a Wedding Dress.</h6>
                   </div></a><a href="#" class="next-post text-right d-flex align-items-center justify-content-end">
                   <div class="text"><strong class="text-primary">Next Post </strong>
-                    {{-- <h6>I Bought a Wedding Dress.</h6> --}}
+                    <h6>I Bought a Wedding Dress.</h6>
                   </div>
-                  <div class="icon next"><i class="fa fa-angle-right">   </i></div></a></div>
+                  <div class="icon next"><i class="fa fa-angle-right">   </i></div></a>
+             </div> --}}
               <div class="post-comments">
                 <header>
                   <h3 class="h6">Post Comments<span class="no-of-comments">(3)</span></h3>
@@ -115,49 +116,42 @@
           </form>
         </div> --}}
         <!-- Widget [Latest Posts Widget]        -->
-        <div class="widget latest-posts">
+    <div class="widget latest-posts">
           <header>
             <h3 class="h6">Latest Posts</h3>
           </header>
-          <div class="blog-posts"><a href="#">
-              <div class="item d-flex align-items-center">
-                <div class="image"><img src="img/small-thumbnail-1.jpg" alt="..." class="img-fluid"></div>
-                <div class="title"><strong>Alberto Savoia Can Teach You About</strong>
-                  <div class="d-flex align-items-center">
-                    <div class="views"><i class="icon-eye"></i> 500</div>
-                    <div class="comments"><i class="icon-comment"></i>12</div>
-                  </div>
+          @foreach ($latest->take(3) as $count=>$latest)
+
+
+            <div class="blog-posts"><a href="#">
+            <div class="item d-flex align-items-center">
+            <div class="image"><img src="img/small-thumbnail-1.jpg" alt="..." class="img-fluid"></div>
+            <div class="title"><strong>{{ $latest->title }}</strong>
+                <div class="d-flex align-items-center">
+                <div class="views"><i class="icon-eye"></i>{{ $latest->created_at->format('d/m/Y')  }}</div>
+                <div class="comments"><i class="icon-comment"></i>{{ $latest->created_at->format('H:i A')  }}</div>
                 </div>
-              </div></a><a href="#">
-              <div class="item d-flex align-items-center">
-                <div class="image"><img src="img/small-thumbnail-2.jpg" alt="..." class="img-fluid"></div>
-                <div class="title"><strong>Alberto Savoia Can Teach You About</strong>
-                  <div class="d-flex align-items-center">
-                    <div class="views"><i class="icon-eye"></i> 500</div>
-                    <div class="comments"><i class="icon-comment"></i>12</div>
-                  </div>
-                </div>
-              </div></a><a href="#">
-              <div class="item d-flex align-items-center">
-                <div class="image"><img src="img/small-thumbnail-3.jpg" alt="..." class="img-fluid"></div>
-                <div class="title"><strong>Alberto Savoia Can Teach You About</strong>
-                  <div class="d-flex align-items-center">
-                    <div class="views"><i class="icon-eye"></i> 500</div>
-                    <div class="comments"><i class="icon-comment"></i>12</div>
-                  </div>
-                </div>
-              </div></a></div>
-        </div>
-        <!-- Widget [Categories Widget]-->
+            </div>
+            </div></a><a href="#">
+            </div>
+
+
+
+        @endforeach
+
+
+
+    </div>
+    <!-- Widget [Categories Widget]-->
         <div class="widget categories">
           <header>
             <h3 class="h6">Categories</h3>
           </header>
-          <div class="item d-flex justify-content-between"><a href="#">Growth</a><span>12</span></div>
-          <div class="item d-flex justify-content-between"><a href="#">Local</a><span>25</span></div>
-          <div class="item d-flex justify-content-between"><a href="#">Sales</a><span>8</span></div>
-          <div class="item d-flex justify-content-between"><a href="#">Tips</a><span>17</span></div>
-          <div class="item d-flex justify-content-between"><a href="#">Local</a><span>25</span></div>
+          @forelse ($category as $cat)
+          <div class="item d-flex justify-content-between"><a href="#">{{ $cat->title }}</a><span>1</span></div>
+          @empty
+          <div class="item d-flex justify-content-between"><a href="#">No Categories Found</a><span></span></div>
+          @endforelse
         </div>
         <!-- Widget [Tags Cloud Widget]-->
         {{-- <div class="widget tags">
