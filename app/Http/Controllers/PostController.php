@@ -40,23 +40,24 @@ class PostController extends Controller
      */
     public function store(Request $request)
     {
-        return request()->validate([
+         $request->validate([
             'title' => 'required',
             'category_id' => 'required',
             'user_id' => 'required',
             'description' => 'required',
-            'image' => 'image',
+            // 'image' => 'image',
         ]);
         $post = new Post;
         $post->title = $request->title;
         $post->category_id = $request->category_id;
         $post->user_id = $request->user_id;
         $post->description = $request->description;
-        $post->image = $request->image;
-        $request->comment;
         $post->save();
+        // $post->image = $request->image;
+        return redirect(route('post.index'))->with(['message'=>'Added new post']);
 
-        return redirect('/post')->with(['message', 'Added Post Successfully']);
+
+
     }
 
     /**
@@ -71,7 +72,8 @@ class PostController extends Controller
         $posts = Post::find($post->id);
         $latest = Post::all()->sortByDesc('id');
         $find = Category::find($posts->category_id);
-        return view ('admin.posts.viewpost', compact('posts','category','find','latest'));
+        // $num = Post::find('category_id', '6')->count();
+        return view ('admin.posts.viewpost', compact('posts','category','find','latest','num'));
     }
 
     /**
@@ -110,7 +112,7 @@ class PostController extends Controller
     public function destroy(Post $post)
     {
         Post::find($post->id)->delete();
-        return redirect()->back()->with(['message', 'Deleted Post Successfully']);
+        return redirect()->back()->with(['message' => 'Deleted Post Successfully']);
 
     }
 }

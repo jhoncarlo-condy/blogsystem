@@ -3,14 +3,14 @@
 <section class="content-header">
     <div class="container-fluid">
       <div class="row mb-2">
-        <div class="col-sm-6">
+        <div class="ml-2">
           {{-- <h1>Add Post</h1> --}}
         </div>
-        <div class="col-sm-6">
-          <ol class="breadcrumb float-sm-right">
+        <div class="col-sm-8">
+          <ol class="breadcrumb">
             <li class="breadcrumb-item"><a href="{{ route('users.dashboard') }}">Administrator</a></li>
-            <li class="breadcrumb-item">Post</li>
-            <li class="breadcrumb-item">{{ $find->title }}</li>
+            <li class="breadcrumb-item active">Post</li>
+            <li class="breadcrumb-item active">{{ $find->title }}</li>
             <li class="breadcrumb-item active">{{ $posts->title }}</li>
           </ol>
         </div>
@@ -145,8 +145,9 @@
     <!-- Widget [Categories Widget]-->
         <div class="widget categories">
           <header>
-            <h3 class="h6">Categories</h3>
+            <h3 class="h6">Categories <h3>
           </header>
+
           @forelse ($category as $cat)
           <div class="item d-flex justify-content-between"><a href="#">{{ $cat->title }}</a><span>1</span></div>
           @empty

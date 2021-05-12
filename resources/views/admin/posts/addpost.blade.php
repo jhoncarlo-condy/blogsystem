@@ -66,6 +66,15 @@
     <section class="content">
         <div class="container-fluid">
           <!-- SELECT2 EXAMPLE -->
+          @if ($errors->any())
+                <div class="alert alert-danger">
+                    <ul>
+                        @foreach ($errors->all() as $error)
+                            <li>{{ $error }}</li>
+                        @endforeach
+                    </ul>
+                </div>
+            @endif
           <div class="card card-primary">
             <div class="card-header">
               <h3 class="card-title">Add Post</h3>
@@ -79,7 +88,7 @@
                 </button>
               </div>
             </div>
-            <form action="{{ route('post.store') }}" method="POST" enctype="multipart/form-data">
+            <form action="{{ route('post.store') }}" method="POST" >
                 @method('POST')
                 @csrf
             <!-- /.card-header -->
@@ -179,7 +188,7 @@
             <!-- /.col-->
           </div> --}}
           <div class="form-group text-right mr-4">
-            <button type="submit" class="btn btn-primary" onclick="this.disabled=true;this.value='Sending, please wait...';this.form.submit();">Add Post</button>
+            <button type="submit" class="btn btn-primary">Add Post</button>
           </div>
         </form>
         </div>
