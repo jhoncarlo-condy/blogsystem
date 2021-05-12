@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Controllers\Image;
 use App\Post;
 use App\Category;
 
@@ -45,14 +46,27 @@ class PostController extends Controller
             'category_id' => 'required',
             'user_id' => 'required',
             'description' => 'required',
-            // 'image' => 'image',
+            'image' => 'file|image|max:5000',
         ]);
+
+        if ($request->hasFile('image')) {
+            // $image = $request->file('image');
+            // $filename = $image->getClientOriginalExtension();
+            // Image::make($image)->resize(300,300)->save(storage_path('public/storage'.$filename));
+            // $post->image = $filename;
+            // $post->save();
+
+          $upload =  $request->image->store('images', 'public');
+        }
+
         $post = new Post;
         $post->title = $request->title;
         $post->category_id = $request->category_id;
         $post->user_id = $request->user_id;
         $post->description = $request->description;
+        $post->image = $upload;
         $post->save();
+
         // $post->image = $request->image;
         return redirect(route('post.index'))->with(['message'=>'Added new post']);
 

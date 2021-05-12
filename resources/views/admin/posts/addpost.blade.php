@@ -88,7 +88,7 @@
                 </button>
               </div>
             </div>
-            <form action="{{ route('post.store') }}" method="POST" >
+            <form action="{{ route('post.store') }}" method="POST" enctype="multipart/form-data">
                 @method('POST')
                 @csrf
             <!-- /.card-header -->
@@ -116,7 +116,7 @@
                     <div class="file-drop-area bordered">
                          <span class="choose-file-button">Choose Files</span>
                          <span class="file-message">or drag and drop files here</span>
-                          <input type="file" name="image" class="file-input" accept=".jfif,.jpg,.jpeg,.png,.gif" multiple>
+                          <input type="file" name="image" class="file-input" accept=".jfif,.jpg,.jpeg,.png,.gif" >
                     </div>
                     <div  id="divImageMediaPreview"> </div>
                   </div>

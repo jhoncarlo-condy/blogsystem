@@ -25,7 +25,7 @@
       <main class="post blog-post col-lg-8">
         <div class="container">
           <div class="post-single">
-            <div class="post-thumbnail"><img src="img/blog-post-3.jpeg" alt="..." class="img-fluid"></div>
+            <div class="post-thumbnail"><img src="{{ asset('storage/'. $posts->image) }}" alt="..." class="img-fluid"></div>
             <div class="post-details">
               <div class="post-meta d-flex justify-content-between">
                 <div class="category"><a href="#">{{ $find->title }}</a></div>
