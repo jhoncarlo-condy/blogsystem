@@ -1,46 +1,46 @@
 @extends('layouts.app')
 @push('css')
 <style>
-     .file-drop-area {
-            position: relative;
-            display: flex;
-            align-items: center;
-            max-width: 100%;
-            padding: 25px;
-            border: 4px dashed rgba(255, 255, 255, 0.4);
-            border-radius: 3px;
-            transition: .2s
-        }
+.file-drop-area {
+    position: relative;
+    display: flex;
+    align-items: center;
+    max-width: 100%;
+    padding: 25px;
+    border: 1px dashed rgba(255, 255, 255, 0.4);
+    border-radius: 3px;
+    transition: .2s
+}
 
-        .choose-file-button {
-            flex-shrink: 0;
-            background-color: rgba(255, 255, 255, 0.04);
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            border-radius: 3px;
-            padding: 8px 15px;
-            margin-right: 10px;
-            font-size: 12px;
-            text-transform: uppercase
-        }
+.choose-file-button {
+    flex-shrink: 0;
+    background-color: rgba(255, 255, 255, 0.04);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 3px;
+    padding: 8px 15px;
+    margin-right: 10px;
+    font-size: 12px;
+    text-transform: uppercase
+}
 
-        .file-message {
-            font-size: small;
-            font-weight: 300;
-            line-height: 1.4;
-            white-space: nowrap;
-            overflow: hidden;
-            text-overflow: ellipsis
-        }
+.file-message {
+    font-size: small;
+    font-weight: 300;
+    line-height: 1.4;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis
+}
 
-        .file-input {
-            position: absolute;
-            left: 0;
-            top: 0;
-            height: 100%;
-            widows: 100%;
-            cursor: pointer;
-            opacity: 0
-        }
+.file-input {
+    position: absolute;
+    left: 0;
+    top: 0;
+    height: 100%;
+    widows: 100%;
+    cursor: pointer;
+    opacity: 0
+}
 
 </style>
 @endpush
@@ -79,8 +79,8 @@
                 </button>
               </div>
             </div>
-            <form action="{{ route('post.store') }}" method="POST">
-                @method('POST')
+            <form action="{{ route('post.update',$posts->id) }}" method="POST" enctype="multipart/form-data">
+                @method('PATCH')
                 @csrf
             <!-- /.card-header -->
             <div class="card-body">
@@ -102,14 +102,34 @@
                 <!-- /.col -->
 
                   <!-- /.form-group -->
+
                   <div class="mt-4 ml-4">
-                    <label>Upload Image</label>
+                        <label>Recent Image:</label>
+                        <div class="container">
+                            @if ($posts->image)
+                            <img style="height:100px;width:200px;"src="{{ asset('storage/'.$posts->image) }}" class="img-thumbnail" alt="">
+                            @else
+                            <span>None</span>
+                            @endif
+
+                        </div>
+                            @if ($posts->image)
+                            <label>Replace Image</label>
+                            @else
+                            <label>Upload Image</label>
+                            @endif
+
+
                     <div class="file-drop-area bordered">
                          <span class="choose-file-button">Choose Files</span>
                          <span class="file-message">or drag and drop files here</span>
-                          <input type="file" name="image" class="file-input" accept=".jfif,.jpg,.jpeg,.png,.gif" multiple>
+                          <input type="file" name="image" class="file-input" accept=".jfif,.jpg,.jpeg,.png,.gif" value="{{  $posts->image }}">
                     </div>
-                    <div  id="divImageMediaPreview"> </div>
+                    <div  id="divImageMediaPreview">
+
+
+
+                    </div>
                   </div>
                   <!-- /.form-group -->
                 <!-- /.col -->

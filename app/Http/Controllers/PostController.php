@@ -49,13 +49,8 @@ class PostController extends Controller
             'image' => 'file|image|max:5000',
         ]);
 
-        if ($request->hasFile('image')) {
-            // $image = $request->file('image');
-            // $filename = $image->getClientOriginalExtension();
-            // Image::make($image)->resize(300,300)->save(storage_path('public/storage'.$filename));
-            // $post->image = $filename;
-            // $post->save();
-
+        if ($request->hasFile('image'))
+        {
           $upload =  $request->image->store('images', 'public');
         }
 
@@ -114,7 +109,42 @@ class PostController extends Controller
      */
     public function update(Request $request, Post $post)
     {
-        //
+        $request->validate([
+            'title' => 'required',
+            'category_id' => 'required',
+            'user_id' => 'required',
+            'description' => 'required',
+            'image' => 'file|image|max:5000',
+        ]);
+
+
+        if ($request->hasFile('image')) {
+
+
+            $upload =  $request->image->store('images', 'public');
+            $post = Post::find($post->id);
+            $post->title = $request->title;
+            $post->category_id = $request->category_id;
+            $post->user_id = $request->user_id;
+            $post->description = $request->description;
+            $post->image = $upload;
+            $post->update();
+
+        }
+        else {
+
+            $post = Post::find($post->id);
+            $post->title = $request->title;
+            $post->category_id = $request->category_id;
+            $post->user_id = $request->user_id;
+            $post->description = $request->description;
+            $post->update();
+        }
+
+
+
+
+        return redirect(route('post.index'))->with(['message'=>'Updating post success']);
     }
 
     /**
