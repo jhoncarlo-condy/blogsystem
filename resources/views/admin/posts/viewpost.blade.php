@@ -25,7 +25,12 @@
       <main class="post blog-post col-lg-8">
         <div class="container">
           <div class="post-single">
-            <div class="post-thumbnail"><img src="{{ asset('storage/'. $posts->image) }}" alt="..." class="img-fluid"></div>
+            <div class="post-thumbnail">
+                @if ($posts->image)
+                <img src="{{ asset('storage/'. $posts->image) }}" alt="..." class="img-fluid">
+                @else
+                @endif
+            </div>
             <div class="post-details">
               <div class="post-meta d-flex justify-content-between">
                 <div class="category"><a href="#">{{ $find->title }}</a></div>
@@ -152,11 +157,9 @@
             <h3 class="h6">Categories <h3>
           </header>
 
-          @forelse ($category as $cat)
+          @foreach ($category as $cat)
           <div class="item d-flex justify-content-between"><a href="#">{{ $cat->title }}</a><span>1</span></div>
-          @empty
-          <div class="item d-flex justify-content-between"><a href="#">No Categories Found</a><span></span></div>
-          @endforelse
+          @endforeach
         </div>
         <!-- Widget [Tags Cloud Widget]-->
         {{-- <div class="widget tags">

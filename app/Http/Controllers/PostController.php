@@ -15,6 +15,12 @@ class PostController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
+    public function __construct()
+    {
+        $this->middleware('auth');
+        $this->middleware('admin');
+
+    }
     public function index()
     {
         $posts = Post::paginate(5);

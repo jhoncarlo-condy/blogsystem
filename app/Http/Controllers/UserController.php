@@ -18,6 +18,8 @@ class UserController extends Controller
     public function __construct()
     {
         $this->middleware('auth');
+
+
     }
     public function index()
     {
@@ -85,7 +87,7 @@ class UserController extends Controller
      */
     public function show(User $users)
     {
-        $users = User::find($user->id);
+        // $users = User::find($user->id);
 
     }
 
