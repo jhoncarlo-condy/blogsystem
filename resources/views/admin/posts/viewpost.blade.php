@@ -123,9 +123,13 @@
           @foreach ($latest->take(3) as $count=>$latest)
 
 
-            <div class="blog-posts"><a href="#">
+            <div class="blog-posts"><a href="{{ url('post/'.$latest->id) }}">
             <div class="item d-flex align-items-center">
-            <div class="image"><img src="img/small-thumbnail-1.jpg" alt="..." class="img-fluid"></div>
+            @if ($latest->image)
+            <div class="image"><img src="{{ asset('storage/'.$latest->image) }}" alt="..." class="img-fluid"></div>
+            @else
+
+            @endif
             <div class="title"><strong>{{ $latest->title }}</strong>
                 <div class="d-flex align-items-center">
                 <div class="views"><i class="icon-eye"></i>{{ $latest->created_at->format('d/m/Y')  }}</div>
