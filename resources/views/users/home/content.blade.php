@@ -1,5 +1,12 @@
 @extends('users.layouts.app')
-@include('users.home.navbar')
+@section('link')
+<li class="nav-item"><a href="{{ route('blog.index') }}" class="nav-link active">Home</a>
+</li>
+<li class="nav-item"><a href="blog.html" class="nav-link ">Categories</a>
+</li>
+<li class="nav-item"><a href="post.html" class="nav-link ">Profile</a>
+</li>
+@endsection
 @section('content')
 <div class="container">
     <div class="row">

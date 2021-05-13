@@ -77,7 +77,7 @@
     @stack('css')
 </head>
 <body>
-
+    @include('users.layouts.navbar')
     @yield('content')
     @include('users.layouts.footer')
 </body>

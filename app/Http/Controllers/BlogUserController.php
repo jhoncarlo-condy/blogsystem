@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Category;
 use App\Post;
 use App\User;
 use Illuminate\Http\Request;
@@ -16,9 +17,10 @@ class BlogUserController extends Controller
 
     public function index()
     {
-        $content = Post::orderBy('id','desc')->paginate(4);
+        $content = Post::orderBy('id','desc')->paginate(6);
         $latest = Post::all()->sortByDesc('id');
-        return view('users.home.content',compact('latest','content'));
+        $categories = Category::all();
+        return view('users.home.content',compact('latest','content','categories'));
     }
 
     /**
