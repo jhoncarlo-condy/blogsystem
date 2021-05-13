@@ -33,4 +33,4 @@ Route::middleware(['auth', 'admin'])->group(function () {
     Route::resource('/post', 'PostController');
 });
 
-Route::get('/blog/users', 'BlogUserController@index');
+Route::resource('/blog', 'BlogUserController');

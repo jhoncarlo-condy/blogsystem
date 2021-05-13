@@ -1,4 +1,4 @@
-@extends('users.layouts.app')
+{{-- @extends('users.layouts.app')
 @section('content-header')
 
 @endsection
@@ -284,4 +284,4 @@
   <!-- JavaScript files-->
 
 
-@endsection
+@endsection --}}

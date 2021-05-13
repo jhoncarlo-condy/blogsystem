@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Post;
+use App\User;
 use Illuminate\Http\Request;
 
 class BlogUserController extends Controller
@@ -11,12 +13,12 @@ class BlogUserController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function __construct()
-    {
-    }
+
     public function index()
     {
-        return view('users.index');
+        $content = Post::orderBy('id','desc')->paginate(4);
+        $latest = Post::all()->sortByDesc('id');
+        return view('users.home.content',compact('latest','content'));
     }
 
     /**

@@ -40,7 +40,7 @@
                   {{-- <div class="avatar"><img src="img/avatar-1.jpg" alt="..." class="img-fluid"></div> --}}
                   <i class="fas fa-user fa-sm"></i><div class="title"><span>{{ Auth::user()->firstname . " ". Auth::user()->lastname . " "}} </span></div></a>
                 <div class="d-flex align-items-center flex-wrap">
-                  <div class="date"><i class="fas fa-calendar fa-xs"></i>{{ $posts->created_at->format('d/m/Y')  }}</div>
+                  <div class="date"><i class="fas fa-calendar fa-xs"></i>{{ $posts->created_at->format('m/d/Y')  }}</div>
                   <div class="date"><i class="fas fa-clock fa-xs"></i>{{ $posts->created_at->format('H:i A') }}</div>
                   {{-- <div class="views"></div> --}}
                   <div class="comments meta-last"><i class="fas fa-comment fa-xs"></i>12</div>
@@ -137,8 +137,8 @@
             @endif
             <div class="title"><strong>{{ $latest->title }}</strong>
                 <div class="d-flex align-items-center">
-                <div class="views"><i class="icon-eye"></i>{{ $latest->created_at->format('d/m/Y')  }}</div>
-                <div class="comments"><i class="icon-comment"></i>{{ $latest->created_at->format('H:i A')  }}</div>
+                <div class="views"><i class="fas fa-calendar fa-xs"></i>{{ $latest->created_at->format('d/m/Y')  }}</div>
+                <div class="comments"><i class="fas fa-clock fa-xs"></i>{{ $latest->created_at->format('H:i A')  }}</div>
                 </div>
             </div>
             </div></a><a href="#">
