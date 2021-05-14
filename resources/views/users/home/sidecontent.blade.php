@@ -7,7 +7,7 @@
         </header>
         @forelse ($myrecent->take(3) as $recent)
         <div class="blog-posts">
-          <a href="#">
+          <a href="{{ route('blog.show',$recent->id) }}">
             <div class="item d-flex align-items-center">
               <div class="image">
                   @if ($recent->image)
@@ -36,7 +36,7 @@
       </header>
       @forelse ($latest->take(3) as $latest)
       <div class="blog-posts">
-        <a href="#">
+        <a href="{{ route('blog.show',$latest->id) }}">
           <div class="item d-flex align-items-center">
             <div class="image">
                 @if ($latest->image)
