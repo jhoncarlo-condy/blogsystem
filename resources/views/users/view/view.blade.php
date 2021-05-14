@@ -1,8 +1,8 @@
-@extends('user.layouts.app')
+@extends('users.layouts.app')
 @section('link')
-<li class="nav-item"><a href="{{ route('blog.index') }}" class="nav-link">Home</a>
+<li class="nav-item"><a href="{{ route('blog.index') }}" class="nav-link active">Home</a>
 </li>
-<li class="nav-item"><a href="blog.html" class="nav-link active">Categories</a>
+<li class="nav-item"><a href="blog.html" class="nav-link">Categories</a>
 </li>
 <li class="nav-item"><a href="post.html" class="nav-link ">Profile</a>
 </li>
@@ -22,14 +22,21 @@
             </div>
             <div class="post-details">
               <div class="post-meta d-flex justify-content-between">
-                <div class="category"><a href="#">{{ $find->title }}</a></div>
+                <div class="category">
+                    <a href="#">
+                        {{ $posts->category->title }}
+                    </a>
+                </div>
               </div>
-              <h1>{{ $posts->title }}<a href="#"><i class="fa fa-bookmark-o"></i></a></h1>
+              <h1><a href="#"><i class="fa fa-bookmark-o"></i></a></h1>
               <div class="post-footer d-flex align-items-center flex-column flex-sm-row"><a href="#" class="author d-flex align-items-center flex-wrap">
                   {{-- <div class="avatar"><img src="img/avatar-1.jpg" alt="..." class="img-fluid"></div> --}}
-                  <i class="fas fa-user fa-sm"></i><div class="title"><span>{{ Auth::user()->firstname . " ". Auth::user()->lastname . " "}} </span></div></a>
+                  <i class="fas fa-user fa-sm"></i><div class="title">
+                    <span>
+                        {{ $posts->user->firstname . " " . $posts->user->lastname }}
+                    </span></div></a>
                 <div class="d-flex align-items-center flex-wrap">
-                  <div class="date"><i class="fas fa-calendar fa-xs"></i>{{ $posts->created_at->format('m/d/Y')  }}</div>
+                  <div class="date"><i class="fas fa-calendar fa-xs"></i>{{ $posts->created_at->format('m/d/Y') }}</div>
                   <div class="date"><i class="fas fa-clock fa-xs"></i>{{ $posts->created_at->format('H:i A') }}</div>
                   {{-- <div class="views"></div> --}}
                   <div class="comments meta-last"><i class="fas fa-comment fa-xs"></i>12</div>
@@ -43,7 +50,7 @@
                 <p>div Lorem ipsum dolor sit amet, consectetur adipisicing elit. Assumenda temporibus iusto voluptates deleniti similique rerum ducimus sint ex odio saepe. Sapiente quae pariatur ratione quis perspiciatis deleniti accusantium</p> --}}
 
               </div>
-              <div class="post-tags mt-6"><a href="#" class="tag">#{{ $find->title }}</a></div>
+              <div class="post-tags mt-6"><a href="#" class="tag">#</a></div>
               {{-- <div class="posts-nav d-flex justify-content-between align-items-stretch flex-column flex-md-row"><a href="#" class="prev-post text-left d-flex align-items-center">
                   <div class="icon prev"><i class="fa fa-angle-left"></i></div>
                   <div class="text"><strong class="text-primary">Previous Post </strong>

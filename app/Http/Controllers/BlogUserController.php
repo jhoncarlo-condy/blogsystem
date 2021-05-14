@@ -52,7 +52,11 @@ class BlogUserController extends Controller
      */
     public function show($id)
     {
-        //
+        $posts = Post::find($id);
+        $category = Category::all();
+        $latest = Post::all()->sortByDesc('id');
+        // $find = Category::find($posts);
+        return view ('users.view.view',compact('posts','latest','category'));
     }
 
     /**

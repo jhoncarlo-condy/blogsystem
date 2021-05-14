@@ -27,8 +27,8 @@
                 <div class="post-details">
                   <div class="post-meta d-flex justify-content-between">
                     <div class="date meta-last">{{ $cont->created_at->format('m d') . "|" . $cont->created_at->format('Y') }}</div>
-                    <div class="category"><a href="#">{{ $cont->category->title }}</a></div>
-                  </div><a href="post.html">
+                    <div class="category"><a href="">{{ $cont->category->title }}</a></div>
+                  </div><a href="{{ route('blog.show', $cont->id) }}">
                     <h3 class="h4">{{ $cont->title }}</h3></a>
                   <p class="text-muted">{!! $cont->description !!}</p>
                   <footer class="post-footer d-flex align-items-center"><a href="#" class="author d-flex align-items-center flex-wrap">

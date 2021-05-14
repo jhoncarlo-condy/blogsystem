@@ -20,7 +20,7 @@
       <div class="container">
         <!-- Navbar Brand -->
         <div class="navbar-header d-flex align-items-center justify-content-between">
-          <!-- Navbar Brand --><a href="index.html" class="navbar-brand">Blog Management System</a>
+          <!-- Navbar Brand --><a href="{{ route('blog.index') }}" class="navbar-brand">Blog Management System</a>
           <!-- Toggle Button-->
           <button type="button" data-toggle="collapse" data-target="#navbarcollapse" aria-controls="navbarcollapse" aria-expanded="false" aria-label="Toggle navigation" class="navbar-toggler"><span></span><span></span><span></span></button>
         </div>
@@ -34,6 +34,9 @@
                 </a>
 
                 <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
+                    @if (Auth::user()->usertype != 3)
+                    <a class="dropdown-item" href="{{ route('users.dashboard') }}">Admin Dashboard</a>
+                    @endif
                     <a class="dropdown-item" href="{{ route('logout') }}"
                        onclick="event.preventDefault();
                                      document.getElementById('logout-form').submit();">
