@@ -20,8 +20,9 @@ class BlogUserController extends Controller
     {
         $content = Post::orderBy('id','desc')->paginate(6);
         $latest = Post::all()->sortByDesc('id');
+        $myrecent = Post::where('user_id', Auth::user()->id)->orderBy('created_at','desc')->get();
         $categories = Category::all();
-        return view('users.home.content',compact('latest','content','categories'));
+        return view('users.home.content',compact('latest','content','categories','myrecent'));
     }
 
 

@@ -45,10 +45,10 @@
                   <footer class="post-footer d-flex align-items-center"><a href="#" class="author d-flex align-items-center flex-wrap">
                       {{-- <div class="avatar"><img src="img/avatar-3.jpg" alt="..." class="img-fluid"></div> --}}
                       <div class="title">
-                          <span>{{ $cont->user->firstname }}</span>
+                          <i class="fas fa-user fa-xs"></i><span>{{ $cont->user->firstname }}</span>
                       </div></a>
-                    <div class="date"><i class="icon-clock"></i>{{ $cont->created_at->diffForHumans() }}</div>
-                    <div class="comments meta-last"><i class="icon-comment"></i>12</div>
+                    <div class="date"><i class="fas fa-clock fa-xs"></i>{{ $cont->created_at->diffForHumans() }}</div>
+                    <div class="comments meta-last"><i class="fas fa-comment fa-xs"></i></i>12</div>
                   </footer>
                 </div>
               </div>

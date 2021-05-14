@@ -1,18 +1,35 @@
 
 <aside class="col-lg-4">
-    <!-- Widget [Search Bar Widget]-->
-    <div class="widget search">
-      <header>
-        <h3 class="h6">Search the blog</h3>
-      </header>
-      <form action="#" class="search-form">
-        <div class="form-group">
-          <input type="search" placeholder="What are you looking for?">
-          <button type="submit" class="submit"><i class="icon-search"></i></button>
+
+    <div class="widget latest-posts">
+        <header>
+          <h3 class="h6">Your Recent Posts</h3>
+        </header>
+        @forelse ($myrecent->take(3) as $recent)
+        <div class="blog-posts">
+          <a href="#">
+            <div class="item d-flex align-items-center">
+              <div class="image">
+                  @if ($recent->image)
+                  <img src="{{ url('storage/'.$recent->image) }}" alt="..." class="img-fluid">
+                  @else
+
+                  @endif
+              </div>
+              <div class="title"><strong>{{ $recent->title }}</strong>
+                <div class="d-flex align-items-center">
+                  <div class="views"><i class="fas fa-user fa-xs"></i>Me</div>
+                  <div class="comments"><i class="fas fa-clock fa-xs"></i>{{ $recent->created_at->diffForHumans() }}</div>
+                </div>
+              </div>
+            </div>
+          </a>
         </div>
-      </form>
-    </div>
-    <!-- Widget [Latest Posts Widget]        -->
+        @empty
+
+        @endforelse
+      </div>
+
     <div class="widget latest-posts">
       <header>
         <h3 class="h6">Latest Posts</h3>
@@ -47,10 +64,11 @@
         <h3 class="h6">Categories</h3>
       </header>
       @forelse ( $categories->take(7) as $category )
-      <div class="item d-flex justify-content-between"><a href="#">{{ $category->title }}</a><span>12</span></div>
+      <div class="item d-flex justify-content-between"><a href="#">{{ $category->title }}</a></div>
       @empty
       <div class="item d-flex justify-content-between"><a href="#">No Categories Available</div>
       @endforelse
+      <a href="#"><div class=" d-flex justify-content-between">See All&rarr;</a></div>
       {{-- {{ $categories->links() }} --}}
     </div>
     <!-- Widget [Tags Cloud Widget]-->
