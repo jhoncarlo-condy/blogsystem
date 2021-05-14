@@ -34,3 +34,5 @@ Route::middleware(['auth', 'admin'])->group(function () {
 });
 
 Route::resource('/blog', 'BlogUserController');
+Route::get('/blog/categories/list','BlogUserController@viewcat')->name('categories');
+Route::get('/blog/profile/view', 'BlogUserController@profile')->name('profile');

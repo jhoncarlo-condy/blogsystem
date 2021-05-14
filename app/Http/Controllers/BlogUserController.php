@@ -6,6 +6,7 @@ use App\Category;
 use App\Post;
 use App\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class BlogUserController extends Controller
 {
@@ -22,6 +23,7 @@ class BlogUserController extends Controller
         $categories = Category::all();
         return view('users.home.content',compact('latest','content','categories'));
     }
+
 
     /**
      * Show the form for creating a new resource.
@@ -58,6 +60,20 @@ class BlogUserController extends Controller
         // $find = Category::find($posts);
         return view ('users.view.view',compact('posts','latest','category'));
     }
+
+    public function viewcat()
+    {
+        $categories = Category::all();
+        $posts = Post::all()->sortByDesc('category_id');
+        return view ('users.categories.view',compact('categories','posts'));
+    }
+
+    public function profile()
+    {
+        $posts = Post::where('user_id', Auth::user()->id)->latest('id')->get();
+        return view ('users.profile.view', compact('posts','last'));
+    }
+
 
     /**
      * Show the form for editing the specified resource.

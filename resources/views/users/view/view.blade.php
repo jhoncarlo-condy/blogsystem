@@ -2,9 +2,9 @@
 @section('link')
 <li class="nav-item"><a href="{{ route('blog.index') }}" class="nav-link active">Home</a>
 </li>
-<li class="nav-item"><a href="blog.html" class="nav-link">Categories</a>
+<li class="nav-item"><a href="{{ route('categories') }}" class="nav-link">Categories</a>
 </li>
-<li class="nav-item"><a href="post.html" class="nav-link ">Profile</a>
+<li class="nav-item"><a href="{{ route('profile') }}" class="nav-link ">Profile</a>
 </li>
 @endsection
 @section('content')

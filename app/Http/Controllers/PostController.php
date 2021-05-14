@@ -55,17 +55,18 @@ class PostController extends Controller
             'image' => 'file|image|max:5000',
         ]);
 
-        if ($request->hasFile('image'))
-        {
-          $upload =  $request->image->store('images', 'public');
-        }
 
         $post = new Post;
         $post->title = $request->title;
         $post->category_id = $request->category_id;
         $post->user_id = $request->user_id;
         $post->description = $request->description;
-        $post->image = $upload;
+        if ($request->hasFile('image'))
+        {
+          $upload =  $request->image->store('images', 'public');
+            $post->image = $upload;
+
+        }
         $post->save();
 
         // $post->image = $request->image;

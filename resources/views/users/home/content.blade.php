@@ -2,9 +2,9 @@
 @section('link')
 <li class="nav-item"><a href="{{ route('blog.index') }}" class="nav-link active">Home</a>
 </li>
-<li class="nav-item"><a href="blog.html" class="nav-link ">Categories</a>
+<li class="nav-item"><a href="{{ route('categories') }}" class="nav-link ">Categories</a>
 </li>
-<li class="nav-item"><a href="post.html" class="nav-link ">Profile</a>
+<li class="nav-item"><a href="{{ route('profile') }}" class="nav-link ">Profile</a>
 </li>
 @endsection
 @section('content')
@@ -19,7 +19,7 @@
             <div class="post col-xl-6">
                 <div class="post-thumbnail">
                     @if($cont->image)
-                    <a href="post.html">
+                    <a href="{{ route('blog.show',$cont->id) }}">
                      <img src="{{ asset('storage/'. $cont->image) }}"  class="img-thumbnail" style="height: 200px;">
                     </a>
                     @endif
@@ -30,7 +30,7 @@
                     <div class="category"><a href="">{{ $cont->category->title }}</a></div>
                   </div><a href="{{ route('blog.show', $cont->id) }}">
                     <h3 class="h4">{{ $cont->title }}</h3></a>
-                  <p class="text-muted">{!! $cont->description !!}</p>
+                  <p class="text-muted">See more ..</p>
                   <footer class="post-footer d-flex align-items-center"><a href="#" class="author d-flex align-items-center flex-wrap">
                       {{-- <div class="avatar"><img src="img/avatar-3.jpg" alt="..." class="img-fluid"></div> --}}
                       <div class="title">
