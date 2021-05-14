@@ -18,16 +18,16 @@
       </header>
       <div class="row">
 
-        @forelse ($posts->take(6) as $post)
+        @forelse ($categories->take(6) as $category)
         <div class="post col-md-4">
             <div class="post-thumbnail"><a href="post.html"><img src="img/blog-1.jpg" alt="..." class="img-fluid"></a></div>
             <div class="post-details">
               <div class="post-meta d-flex justify-content-between">
                 <div class="date">20 May | 2016</div>
-                <div class="category"><a href="#">{{ $post->category->title }}</a></div>
+                <div class="category"><a href="#">{{ $category->title }}</a></div>
               </div><a href="post.html">
-                <h3 class="h4">Ways to remember your important ideas</h3></a>
-              <p class="text-muted">Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore.</p>
+                <h3 class="h4">{{ $category->title }}</h3></a>
+                {{-- <p>{{ $category->posts->title }}</p> --}}
             </div>
           </div>
         @empty
