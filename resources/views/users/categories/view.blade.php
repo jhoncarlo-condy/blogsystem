@@ -8,15 +8,7 @@
 </li>
 @endsection
 @section('content')
-<section style="background: url('https://images.unsplash.com/photo-1481627834876-b7833e8f5570?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=541&q=80'); background-size: cover; background-position: center bottom" class="divider">
-    <div class="container">
-      <div class="row">
-        <div class="col-md-7">
-          <h2>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua</h2><a href="#" class="hero-link">View More</a>
-        </div>
-      </div>
-    </div>
-  </section>
+
   <!-- Latest Posts -->
   <section class="latest-posts">
     <div class="container">

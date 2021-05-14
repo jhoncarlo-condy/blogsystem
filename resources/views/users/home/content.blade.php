@@ -8,6 +8,15 @@
 </li>
 @endsection
 @section('content')
+<section style="background: url('https://images.unsplash.com/photo-1432821579285-1b649e5b1ce3?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=750&q=80'); background-size: cover; background-position: center center" class="hero">
+    <div class="container">
+      <div class="row">
+        <div class="col-lg-7">
+          <h1>Welcome to Creator's Blog <br>- An open source blogging website</h1>
+        </div>
+      </div><a href=".intro" class="continue link-scroll"><i class="fas fa-long-arrow-alt-down    "></i> See posts below</a>
+    </div>
+  </section>
 <div class="container">
     <div class="row">
       <!-- Latest Posts -->
@@ -20,8 +29,10 @@
                 <div class="post-thumbnail">
                     @if($cont->image)
                     <a href="{{ route('blog.show',$cont->id) }}">
-                     <img src="{{ asset('storage/'. $cont->image) }}"  class="img-thumbnail" style="height: 200px;">
+                     <img src="{{ asset('storage/'. $cont->image) }}"  class="img-thumbnail" style="height: 200px;width:400px;">
                     </a>
+                    @else
+                    <div style="height: 200px;"></div>
                     @endif
                 </div>
                 <div class="post-details">
@@ -36,7 +47,7 @@
                       <div class="title">
                           <span>{{ $cont->user->firstname }}</span>
                       </div></a>
-                    <div class="date"><i class="icon-clock"></i> 2 months ago</div>
+                    <div class="date"><i class="icon-clock"></i>{{ $cont->created_at->diffForHumans() }}</div>
                     <div class="comments meta-last"><i class="icon-comment"></i>12</div>
                   </footer>
                 </div>

@@ -43,7 +43,31 @@ class BlogUserController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $request->validate([
+            'title' => 'required',
+            'category_id' => 'required',
+            'user_id' => 'required',
+            'description' => 'required',
+            'image' => 'file|image|max:5000',
+        ]);
+
+
+        $post = new Post;
+        $post->title = $request->title;
+        $post->category_id = $request->category_id;
+        $post->user_id = $request->user_id;
+        $post->description = $request->description;
+        if ($request->hasFile('image'))
+        {
+          $upload =  $request->image->store('images', 'public');
+            $post->image = $upload;
+
+        }
+        $post->save();
+
+        // $post->image = $request->image;
+        return redirect()->back()->with(['message'=>'Added new post']);
+
     }
 
     /**
@@ -70,8 +94,9 @@ class BlogUserController extends Controller
 
     public function profile()
     {
+        $category = Category::all();
         $posts = Post::where('user_id', Auth::user()->id)->latest('id')->get();
-        return view ('users.profile.view', compact('posts','last'));
+        return view ('users.profile.view', compact('posts','category'));
     }
 
 
