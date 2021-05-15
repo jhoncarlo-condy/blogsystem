@@ -65,7 +65,9 @@
               <li class="page-item"><a href="#" class="page-link">3</a></li>
               <li class="page-item"><a href="#" class="page-link"> <i class="fa fa-angle-right"></i></a></li>
             </ul> --}}
-          {{ $content->links() }}
+            <div class="d-flex justify-content-center">
+                {{ $content->links() }}
+            </div>
 
           </nav>
         </div>

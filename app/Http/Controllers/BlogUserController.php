@@ -88,15 +88,17 @@ class BlogUserController extends Controller
 
     public function viewcat()
     {
-        $categories = Category::all();
-        $posts = Post::all()->sortByDesc('category_id');
-        return view ('users.categories.view',compact('categories','posts'));
+        $categories = Category::with(['posts' => function($query) {
+            $query->latest();
+        }])->get();
+
+        return view ('users.categories.view',compact('categories'));
     }
 
     public function profile()
     {
         $category = Category::all();
-        $posts = Post::where('user_id', Auth::user()->id)->latest('id')->get();
+        $posts = Post::where('user_id', Auth::user()->id)->latest('id')->paginate(4);
         return view ('users.profile.view', compact('posts','category'));
     }
 

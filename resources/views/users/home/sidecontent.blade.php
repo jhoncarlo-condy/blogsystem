@@ -68,7 +68,7 @@
       @empty
       <div class="item d-flex justify-content-between"><a href="#">No Categories Available</div>
       @endforelse
-      <a href="#"><div class=" d-flex justify-content-between">See All&rarr;</a></div>
+      <a href="{{ route('categories') }}"><div class=" d-flex justify-content-between">See All&rarr;</a></div>
       {{-- {{ $categories->links() }} --}}
     </div>
     <!-- Widget [Tags Cloud Widget]-->
