@@ -104,7 +104,40 @@
         @include('layouts.footer')
 
     </div>
+    <script>
+        function readURL(input) {
+   if (input.files && input.files[0]) {
 
+     var reader = new FileReader();
+
+     reader.onload = function(e) {
+       $('.image-upload-wrap').hide();
+
+       $('.file-upload-image').attr('src', e.target.result);
+       $('.file-upload-content').show();
+
+       $('.image-title').html(input.files[0].name);
+     };
+
+     reader.readAsDataURL(input.files[0]);
+
+   } else {
+     removeUpload();
+   }
+ }
+
+ function removeUpload() {
+   $('.file-upload-input').replaceWith($('.file-upload-input').clone());
+   $('.file-upload-content').hide();
+   $('.image-upload-wrap').show();
+ }
+ $('.image-upload-wrap').bind('dragover', function () {
+     $('.image-upload-wrap').addClass('image-dropping');
+   });
+   $('.image-upload-wrap').bind('dragleave', function () {
+     $('.image-upload-wrap').removeClass('image-dropping');
+ });
+ </script>
 {{-- bootstrap script --}}
 <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/js/bootstrap.bundle.min.js" integrity="sha384-Piv4xVNRyMGpqkS2by6br4gNJ7DXjqk09RmUpJ8jgGtD7zP9yug3goQfGII0yAns" crossorigin="anonymous"></script>
