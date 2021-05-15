@@ -42,7 +42,7 @@
                 @if ($latest->image)
                 <img src="{{ url('storage/'.$latest->image) }}" alt="..." class="img-fluid">
                 @else
-
+                <img class="img-fluid" src="https://upload.wikimedia.org/wikipedia/commons/1/14/No_Image_Available.jpg" alt="">
                 @endif
             </div>
             <div class="title"><strong>{{ $latest->title }}</strong>

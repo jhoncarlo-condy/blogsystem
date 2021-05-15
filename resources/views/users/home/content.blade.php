@@ -32,7 +32,7 @@
                      <img src="{{ asset('storage/'. $cont->image) }}"  class="img-thumbnail" style="height: 200px;width:400px;">
                     </a>
                     @else
-                    <div style="height: 200px;"></div>
+                    <img class="img-thumbnail" style="width:400px;height:200px;" src="https://upload.wikimedia.org/wikipedia/commons/1/14/No_Image_Available.jpg" alt="">
                     @endif
                 </div>
                 <div class="post-details">

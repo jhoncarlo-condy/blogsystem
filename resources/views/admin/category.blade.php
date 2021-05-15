@@ -187,7 +187,7 @@ $(document).ready(function(){
 
 {{-- <button type="button" id="sample">sweetalert</button> --}}
 @endsection
-@push('category')
+@push('scripts')
 <script>
     $(document).ready(function()
     {

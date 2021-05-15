@@ -8,16 +8,44 @@
 </li>
 @endsection
 @section('content')
+@if (Session::has('message'))
+ <div class="alert alert-success alert-dismissible fade show" role="alert">
+     <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+         <span aria-hidden="true">&times;</span>
+         <span class="sr-only">Close</span>
+     </button>
+     <strong>{{ session('message') }}</strong>
+ </div>
+ @endif
+ @if ($errors->any())
+ <div class="alert alert-danger">
+     <ul>
+         @foreach ($errors->all() as $error)
+             <li>{{ $error }}</li>
+         @endforeach
+     </ul>
+ </div>
+@endif
 <div class="container">
     <div class="row">
       <!-- Latest Posts -->
       <main class="post blog-post col-lg-8">
         <div class="container">
           <div class="post-single">
+              <div class="back mb-2">
+                <a name="" id="" class="btn btn-secondary" href="{{ route('blog.index')}}" role="button">Back</a>
+                <div class="edit-post float-right">
+                    @if ($posts->user_id == Auth::user()->id)
+                    <a name="" id="" class="btn btn-secondary" href="{{ route('blog.edit',$posts->id) }}" role="button">Edit Post</a>
+                    @endif
+                  </div>
+              </div>
+
             <div class="post-thumbnail">
                 @if ($posts->image)
                 <img src="{{ asset('storage/'. $posts->image) }}" alt="..." class="img-fluid">
                 @else
+                <img style="height: 400px;" src="https://upload.wikimedia.org/wikipedia/commons/1/14/No_Image_Available.jpg" alt="" class="img-fluid">
                 @endif
             </div>
             <div class="post-details">
@@ -50,7 +78,7 @@
                 <p>div Lorem ipsum dolor sit amet, consectetur adipisicing elit. Assumenda temporibus iusto voluptates deleniti similique rerum ducimus sint ex odio saepe. Sapiente quae pariatur ratione quis perspiciatis deleniti accusantium</p> --}}
 
               </div>
-              <div class="post-tags mt-6"><a href="#" class="tag">#</a></div>
+              <div class="post-tags mt-6"><a href="#" class="tag">#{{ $posts->category->title }}</a></div>
               {{-- <div class="posts-nav d-flex justify-content-between align-items-stretch flex-column flex-md-row"><a href="#" class="prev-post text-left d-flex align-items-center">
                   <div class="icon prev"><i class="fa fa-angle-left"></i></div>
                   <div class="text"><strong class="text-primary">Previous Post </strong>
@@ -119,7 +147,7 @@
                     @if ($latest->image)
                     <img src="{{ url('storage/'.$latest->image) }}" alt="..." class="img-fluid">
                     @else
-
+                    <img class="img-fluid" src="https://upload.wikimedia.org/wikipedia/commons/1/14/No_Image_Available.jpg" alt="">
                     @endif
                 </div>
                 <div class="title"><strong>{{ $latest->title }}</strong>
@@ -148,19 +176,7 @@
           <a href="#"><div class=" d-flex justify-content-between">See All&rarr;</a></div>
           {{-- {{ $categories->links() }} --}}
         </div>
-        <!-- Widget [Tags Cloud Widget]-->
-        {{-- <div class="widget tags">
-          <header>
-            <h3 class="h6">Tags</h3>
-          </header>
-          <ul class="list-inline">
-            <li class="list-inline-item"><a href="#" class="tag">#Business</a></li>
-            <li class="list-inline-item"><a href="#" class="tag">#Technology</a></li>
-            <li class="list-inline-item"><a href="#" class="tag">#Fashion</a></li>
-            <li class="list-inline-item"><a href="#" class="tag">#Sports</a></li>
-            <li class="list-inline-item"><a href="#" class="tag">#Economy</a></li>
-          </ul>
-        </div> --}}
+
       </aside>
 
     </div>

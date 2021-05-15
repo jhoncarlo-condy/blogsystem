@@ -113,7 +113,10 @@ class BlogUserController extends Controller
      */
     public function edit($id)
     {
-        //
+        $category = Category::all();
+        $posts = Post::find($id);
+        $find = Category::find($posts->category_id);
+        return view ('users.editpost.index', compact('posts','category','find'));
     }
 
     /**
@@ -125,7 +128,43 @@ class BlogUserController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $request->validate([
+            'title' => 'required',
+            'category_id' => 'required',
+            'user_id' => 'required',
+            'description' => 'required',
+            'image' => 'file|image|max:5000',
+        ]);
+
+
+        if ($request->hasFile('image')) {
+
+
+            $upload =  $request->image->store('images', 'public');
+            $post = Post::find($id);
+            $post->title = $request->title;
+            $post->category_id = $request->category_id;
+            $post->user_id = $request->user_id;
+            $post->description = $request->description;
+            $post->image = $upload;
+            $post->update();
+
+        }
+        else {
+
+            $post = Post::find($id);
+            $post->title = $request->title;
+            $post->category_id = $request->category_id;
+            $post->user_id = $request->user_id;
+            $post->description = $request->description;
+            $post->update();
+        }
+
+
+
+
+        return redirect(route('blog.show',$post->id))->with(['message'=>'Updating post success']);
+
     }
 
     /**
