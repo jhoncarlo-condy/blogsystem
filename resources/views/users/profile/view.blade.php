@@ -5,6 +5,120 @@
     {
         width:400px;
     }
+    .file-upload {
+  background-color: #ffffff;
+  width: 600px;
+  margin: 0 auto;
+  padding: 20px;
+}
+
+.file-upload-btn {
+  width: 100%;
+  margin: 0;
+  color: #fff;
+  background: #1FB264;
+  border: none;
+  padding: 10px;
+  border-radius: 4px;
+  border-bottom: 4px solid #15824B;
+  transition: all .2s ease;
+  outline: none;
+  text-transform: uppercase;
+  font-weight: 700;
+}
+
+.file-upload-btn:hover {
+  background: #1AA059;
+  color: #ffffff;
+  transition: all .2s ease;
+  cursor: pointer;
+}
+
+.file-upload-btn:active {
+  border: 0;
+  transition: all .2s ease;
+}
+
+.file-upload-content {
+  display: none;
+  text-align: center;
+}
+
+.file-upload-input {
+  position: absolute;
+  margin: 0;
+  padding: 0;
+  width: 100%;
+  height: 100%;
+  outline: none;
+  opacity: 0;
+  cursor: pointer;
+}
+
+.image-upload-wrap {
+  margin-top: 20px;
+  border: 4px dashed #1FB264;
+  position: relative;
+}
+
+.image-dropping,
+.image-upload-wrap:hover {
+  background-color: #1FB264;
+  border: 4px dashed #ffffff;
+}
+
+.image-title-wrap {
+  padding: 0 15px 15px 15px;
+  color: #222;
+}
+
+.drag-text {
+  text-align: center;
+}
+
+.drag-text h3 {
+  font-weight: 100;
+  text-transform: uppercase;
+  color: #15824B;
+  padding: 60px 0;
+}
+
+.file-upload-image {
+  max-height: 200px;
+  max-width: 200px;
+  margin: auto;
+  padding: 20px;
+}
+
+.remove-image {
+  width: 200px;
+  margin: 0;
+  color: #fff;
+  background: #cd4535;
+  border: none;
+  padding: 10px;
+  border-radius: 4px;
+  border-bottom: 4px solid #b02818;
+  transition: all .2s ease;
+  outline: none;
+  text-transform: uppercase;
+  font-weight: 700;
+}
+
+.remove-image:hover {
+  background: #c13b2a;
+  color: #ffffff;
+  transition: all .2s ease;
+  cursor: pointer;
+}
+
+.remove-image:active {
+  border: 0;
+  transition: all .2s ease;
+}
+
+
+
 </style>
 @endpush
 @section('link')
@@ -16,6 +130,35 @@
 </li>
 @endsection
 @section('content')
+<section style="background: url('https://images.unsplash.com/photo-1481627834876-b7833e8f5570?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=541&q=80'); background-size: cover; background-position: center bottom" class="divider">
+    <div class="container">
+      <div class="row">
+        <div class="col-md-7">
+          <h2>PROFILE</h2><a href="#" class="hero-link"></a>
+        </div>
+        <div class="col-md-7">
+        </div>
+      </div>
+    </div>
+</section>
+@if (Session::has('message'))
+ <div class="alert alert-success alert-dismissible fade show" role="alert">
+     <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+         <span aria-hidden="true">&times;</span>
+         <span class="sr-only">Close</span>
+     </button>
+     <strong>{{ session('message') }}</strong>
+ </div>
+ @endif
+ @if ($errors->any())
+ <div class="alert alert-danger">
+     <ul>
+         @foreach ($errors->all() as $error)
+             <li>{{ $error }}</li>
+         @endforeach
+     </ul>
+ </div>
+@endif
 <section class="content">
     <div class="container-fluid">
       <div class="row">
@@ -54,7 +197,9 @@
                         @else
                         <img style="width:200px;height:150px;" src="https://upload.wikimedia.org/wikipedia/commons/1/14/No_Image_Available.jpg" alt="">
                         @endif
-                            {!! $post->description !!}
+                            <div class="container">
+                                {!! $post->description !!}
+                            </div>
                             <li class="list-inline-item"><a href="#" class="tag">#{{ $post->category->title }}</a></li>
 
                         </div>
@@ -97,15 +242,7 @@
                               <!-- /.col -->
 
                                 <!-- /.form-group -->
-                                <div class="mt-4 ml-4">
-                                  <label>Upload Image</label>
-                                  <div class="file-drop-area bordered">
-                                       <span class="choose-file-button">Choose Files</span>
-                                       <span class="file-message">or drag and drop files here</span>
-                                        <input type="file" name="image" class="file-input" accept=".jfif,.jpg,.jpeg,.png,.gif" >
-                                  </div>
-                                  <div  id="divImageMediaPreview"> </div>
-                                </div>
+
                                 <!-- /.form-group -->
                               <!-- /.col -->
                             </div>
@@ -128,51 +265,36 @@
                               <!-- /.col -->
                               <div class="col-10 col-sm-4">
 
-                                {{-- <div class="form-group">
-                                  <label>Multiple (.select2-purple)</label>
-                                  <div class="select2-purple">
-                                    <select class="select2" multiple="multiple" data-placeholder="Select a State" data-dropdown-css-class="select2-purple" style="width: 100%;">
-                                      <option>Alabama</option>
-                                      <option>Alaska</option>
-                                      <option>California</option>
-                                      <option>Delaware</option>
-                                      <option>Tennessee</option>
-                                      <option>Texas</option>
-                                      <option>Washington</option>
-                                    </select>
-                                  </div>
-                                </div> --}}
-                                <!-- /.form-group -->
+
                               </div>
                               <!-- /.col -->
                             </div>
                             <!-- /.row -->
                           </div>
+                          <div class="file-upload">
+                            <button class="file-upload-btn" type="button" onclick="$('.file-upload-input').trigger( 'click' )">Add Image</button>
+
+                            <div class="image-upload-wrap">
+                              <input class="file-upload-input" name="image" type='file' onchange="readURL(this);" accept="image/*" />
+                              <div class="drag-text">
+                                <h3>Drag and drop a file or select add Image</h3>
+                              </div>
+                            </div>
+                            <div class="file-upload-content">
+                              <img class="file-upload-image" src="#" alt="your image" />
+                              <div class="image-title-wrap">
+                                <button type="button" onclick="removeUpload()" class="remove-image">Remove <span class="image-title">Uploaded Image</span></button>
+                              </div>
+                            </div>
+                          </div>
+
+
                           <!-- /.card-body -->
                           <div class="container mb-3">
                           <textarea id="summernote" name="description"></textarea>
 
                           </div>
-                          <!-- /.card -->
-                          {{-- ckeditor --}}
-                        {{-- <div class="row">
-                          <div class="col-md-12">
-                            <div class="card card-outline card-info">
-                              <div class="card-header">
-                                <h3 class="card-title">
-                                  Content
-                                </h3>
-                              </div>
-                              <!-- /.card-header -->
-                              <div class="card-body">
-                               <div class="editor">
 
-                              </div>
-
-                            </div>
-                          </div>
-                          <!-- /.col-->
-                        </div> --}}
                         <div class="form-group text-right mr-4">
                           <button type="submit" class="btn btn-primary">Add Post</button>
                         </div>
@@ -184,44 +306,23 @@
                 <div class="tab-pane" id="settings">
                   <form class="form-horizontal">
                     <div class="form-group row">
-                      <label for="inputName" class="col-sm-2 col-form-label">Name</label>
+                      <label for="inputName" class="col-sm-2 col-form-label">Old Password</label>
                       <div class="col-sm-10">
-                        <input type="email" class="form-control" id="inputName" placeholder="Name">
+                        <input type="text" class="form-control" id="inputName" placeholder="Old Password">
                       </div>
                     </div>
                     <div class="form-group row">
-                      <label for="inputEmail" class="col-sm-2 col-form-label">Email</label>
+                      <label for="inputEmail" class="col-sm-2 col-form-label">New Password</label>
                       <div class="col-sm-10">
-                        <input type="email" class="form-control" id="inputEmail" placeholder="Email">
+                        <input type="password" class="form-control" id="inputEmail" placeholder="New Password">
                       </div>
                     </div>
                     <div class="form-group row">
-                      <label for="inputName2" class="col-sm-2 col-form-label">Name</label>
-                      <div class="col-sm-10">
-                        <input type="text" class="form-control" id="inputName2" placeholder="Name">
-                      </div>
-                    </div>
-                    <div class="form-group row">
-                      <label for="inputExperience" class="col-sm-2 col-form-label">Experience</label>
-                      <div class="col-sm-10">
-                        <textarea class="form-control" id="inputExperience" placeholder="Experience"></textarea>
-                      </div>
-                    </div>
-                    <div class="form-group row">
-                      <label for="inputSkills" class="col-sm-2 col-form-label">Skills</label>
-                      <div class="col-sm-10">
-                        <input type="text" class="form-control" id="inputSkills" placeholder="Skills">
-                      </div>
-                    </div>
-                    <div class="form-group row">
-                      <div class="offset-sm-2 col-sm-10">
-                        <div class="checkbox">
-                          <label>
-                            <input type="checkbox"> I agree to the <a href="#">terms and conditions</a>
-                          </label>
+                        <label for="inputEmail" class="col-sm-2 col-form-label">Confirm Password</label>
+                        <div class="col-sm-10">
+                          <input type="password" class="form-control" id="inputEmail" placeholder="Confirm Password1">
                         </div>
                       </div>
-                    </div>
                     <div class="form-group row">
                       <div class="offset-sm-2 col-sm-10">
                         <button type="submit" class="btn btn-danger">Submit</button>
@@ -242,47 +343,10 @@
     </div><!-- /.container-fluid -->
   </section>
   <!-- Intro Section-->
- <div style=" height:10px;background-color: #e3dff0;">
 
  </div>
- @if (Session::has('message'))
- <div class="alert alert-success alert-dismissible fade show" role="alert">
-     <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-         <span aria-hidden="true">&times;</span>
-         <span class="sr-only">Close</span>
-     </button>
-     <strong>{{ session('message') }}</strong>
- </div>
- @endif
- @if ($errors->any())
- <div class="alert alert-danger">
-     <ul>
-         @foreach ($errors->all() as $error)
-             <li>{{ $error }}</li>
-         @endforeach
-     </ul>
- </div>
-@endif
-    {{-- <div class="row d-flex align-items-stretch">
-            <div class="image col-lg-5"><img src="img/featured-pic-2.jpeg" alt="..."></div>
-            <div class="text col-lg-7">
-              <div class="text-inner d-flex align-items-center">
-                <div class="content">
-                  <header class="post-header">
-                    <div class="category"><a href="#">Business</a><a href="#">Technology</a></div><a href="post.html">
-                      <h2 class="h4">{{ $post->title }}</h2></a>
-                  </header>
-                  <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrude consectetur adipisicing elit, sed do eiusmod tempor incididunt.</p>
-                  <footer class="post-footer d-flex align-items-center"><a href="#" class="author d-flex align-items-center flex-wrap">
-                      <div class="avatar"><img src="img/avatar-2.jpg" alt="..." class="img-fluid"></div>
-                      <div class="title"><span>John Doe</span></div></a>
-                    <div class="date"><i class="icon-clock"></i> 2 months ago</div>
-                    <div class="comments"><i class="icon-comment"></i>12</div>
-                  </footer>
-                </div>
-              </div>
-            </div>
-          </div> --}}
+
+
 
 
 
@@ -304,55 +368,37 @@
     });
 </script>
 <script>
-$(document).ready(function()
-{
-    $(".addpost").hide();
-    $(".hero-link").on('click',function()
-    {
-        $(".addpost").show();
-    });
-    $("#close").on('click',function()
-    {
-        $(".addpost").hide();
-    })
+    function readURL(input) {
+  if (input.files && input.files[0]) {
+
+    var reader = new FileReader();
+
+    reader.onload = function(e) {
+      $('.image-upload-wrap').hide();
+
+      $('.file-upload-image').attr('src', e.target.result);
+      $('.file-upload-content').show();
+
+      $('.image-title').html(input.files[0].name);
+    };
+
+    reader.readAsDataURL(input.files[0]);
+
+  } else {
+    removeUpload();
+  }
+}
+
+function removeUpload() {
+  $('.file-upload-input').replaceWith($('.file-upload-input').clone());
+  $('.file-upload-content').hide();
+  $('.image-upload-wrap').show();
+}
+$('.image-upload-wrap').bind('dragover', function () {
+    $('.image-upload-wrap').addClass('image-dropping');
+  });
+  $('.image-upload-wrap').bind('dragleave', function () {
+    $('.image-upload-wrap').removeClass('image-dropping');
 });
 </script>
-<script>
-    $(document).on('change', '.file-input', function() {
-
-
-    var filesCount = $(this)[0].files.length;
-
-    var textbox = $(this).prev();
-
-    if (filesCount === 1) {
-    var fileName = $(this).val().split('\\').pop();
-    textbox.text(fileName);
-    } else {
-    textbox.text(filesCount + ' files selected');
-    }
-
-
-
-    if (typeof (FileReader) != "undefined") {
-    var dvPreview = $("#divImageMediaPreview");
-    dvPreview.html("");
-    $($(this)[0].files).each(function () {
-    var file = $(this);
-    var reader = new FileReader();
-    reader.onload = function (e) {
-    var img = $("<img />");
-    img.attr("style", "width: 150px; height:100px; padding: 10px");
-    img.attr("src", e.target.result);
-    dvPreview.append(img);
-    }
-    reader.readAsDataURL(file[0]);
-    });
-    } else {
-    alert("This browser does not support HTML5 FileReader.");
-    }
-
-
-    });
-    </script>
 @endpush
