@@ -18,9 +18,14 @@
 
               <ul class="list-group list-group-unbordered mb-3">
                 <li class="list-group-item">
-                  <b>Posts</b> <a class="float-right">1,322</a>
+                  <b>Posts</b> <p class="float-right">{{ $count}}</p>
+                </li>
+                <li class="list-group-item">
+                    <b>Last Post</b> <p class="float-right">{{ $last->created_at->diffForHumans()}}</p>
                 </li>
               </ul>
+
+
 
               <a href="#" class="btn btn-primary btn-block"><b>Follow</b></a>
             </div>

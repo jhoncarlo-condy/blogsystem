@@ -190,17 +190,25 @@
                           <span class="description">{{ $post->created_at->diffForHumans() ." | ".$post->created_at->format('h:i A')}}</span>
                         </div>
                         <!-- /.user-block -->
-                        <h4>Title: {{ $post->title }}</h4>
+                        <a href="{{ route('blog.show',$post->id) }}"><h4>Title: {{ $post->title }}</h4></a>
                         <div class="widget tags">
                         @if ($post->image)
+                        <a href="{{ route('blog.show',$post->id) }}">
                         <img style="width:200px;height:150px;" src="{{ asset('storage/'.$post->image) }}" alt="">
+                        </a>
                         @else
+                        <a href="{{ route('blog.show',$post->id) }}">
                         <img style="width:200px;height:150px;" src="https://upload.wikimedia.org/wikipedia/commons/1/14/No_Image_Available.jpg" alt="">
+                        </a>
                         @endif
-                            <div class="container">
-                                {!! $post->description !!}
-                            </div>
-                            <li class="list-inline-item"><a href="#" class="tag">#{{ $post->category->title }}</a></li>
+                                <div class="container">
+                                <a href="{{ route('blog.show',$post->id) }}">
+
+                                    {!! $post->description !!}
+                                </a>
+                                </div>
+
+                            <li class="list-inline-item"><a href="{{ route('categories') }}" class="tag">#{{ $post->category->title }}</a></li>
 
                         </div>
 
