@@ -86,13 +86,22 @@ class BlogUserController extends Controller
         return view ('users.view.view',compact('posts','latest','category'));
     }
 
-    public function viewcat()
+    public function category()
     {
+        $lists = Category::all();
         $categories = Category::with(['posts' => function($query) {
             $query->latest();
         }])->get();
 
-        return view ('users.categories.view',compact('categories'));
+        return view ('users.categories.view',compact('categories','lists'));
+    }
+
+    public function viewcat($id)
+    {
+        $lists = Category::all();
+        $posts = Post::where('category_id',$id)->orderBy('id','desc')->paginate(4);
+
+        return view ('users.categories.category',compact('posts','lists'));
     }
 
     public function profile()

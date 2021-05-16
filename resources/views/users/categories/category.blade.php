@@ -28,16 +28,18 @@
  <div class="container">
     <div class="row">
       <main class="posts-listing col-lg-8">
-        <h3>Latest post from each category</h3>
+        <div class="category">
+        <h3>Post from category: {{ $posts[0]->category->title }}</h3>
+        </div>
         <div class="container">
           <div class="row">
             <!-- post -->
-            @forelse ($categories->take(6) as $category)
+            @forelse ($posts as $post)
             <div class="post col-xl-6">
                 <div class="post-thumbnail">
-                    @if($category->posts[0]->image)
-                    <a href="{{ route('blog.show',$category->posts[0]->id) }}">
-                        <img style="height: 150px;width:400px;" src="{{ asset('storage/'.$category->posts[0]->image) }}" alt="..." class="img-fluid"></a>
+                    @if($post->image)
+                    <a href="{{ route('blog.show',$post->id) }}">
+                        <img style="height: 150px;width:400px;" src="{{ asset('storage/'.$post->image) }}" alt="..." class="img-fluid"></a>
                     </a>
                     @else
                     <img style="height: 150px;width:400px;" src="https://upload.wikimedia.org/wikipedia/commons/1/14/No_Image_Available.jpg" alt="..." class="img-fluid"></a>
@@ -46,24 +48,26 @@
                 <div class="post-details">
                   <div class="post-meta d-flex justify-content-between">
                     <div class="date meta-last"></div>
-                    <div class="category"><a href="{{ route('blog.show',$category->posts[0]->id) }}">{{ $category->title }}</a></div>
-                  </div><a href="{{ route('blog.show',$category->posts[0]->id) }}">
-                    <h3 class="h4">{{ $category->title }}</h3></a>
-                  <p class="text-muted">{{ $category->posts[0]->title }}</p>
-                  <p class="text-muted"><a href="{{ route('blog.show',$category->posts[0]->id) }}"> See more ..</a></p>
+                    <div class="category"><a href="{{ route('blog.show',$post->id) }}">{{ $post->category->title }}</a></div>
+                  </div><a href="{{ route('blog.show', $post->id) }}">
+                    <h3 class="h4">{{ $post->title }}</h3></a>
+                  <p class="text-muted">See more ..</p>
                   <footer class="post-footer d-flex align-items-center"><a href="#" class="author d-flex align-items-center flex-wrap">
                       {{-- <div class="avatar"><img src="img/avatar-3.jpg" alt="..." class="img-fluid"></div> --}}
                       <div class="title">
-                          <i class="fas fa-user fa-xs"></i><span>{{ $category->posts[0]->user->firstname}}</span>
+                          <i class="fas fa-user fa-xs"></i><span>{{ $post->user->firstname}}</span>
                       </div></a>
-                    <div class="date"><i class="fas fa-clock fa-xs"></i>{{ $category->posts[0]->created_at->diffForHumans() }}</div>
+                    <div class="date"><i class="fas fa-clock fa-xs"></i>{{ $post->created_at->diffForHumans() }}</div>
                   </footer>
                 </div>
               </div>
             @empty
               Empty
             @endforelse
+
           </div>
+          {{ $posts->links() }}
+
           <!-- Pagination -->
           <nav aria-label="Page navigation example">
             {{-- <ul class="pagination pagination-template d-flex justify-content-center">
@@ -87,7 +91,7 @@
       <header>
         <h3 class="h6">Categories</h3>
       </header>
-      @forelse ( $categories->take(7) as $category )
+      @forelse ( $lists->take(7) as $category )
       <div class="item d-flex justify-content-between"><a href="{{ route('view',$category->id) }}">{{ $category->title }}</a></div>
       @empty
       <div class="item d-flex justify-content-between"><a href="#">No Categories Available</div>

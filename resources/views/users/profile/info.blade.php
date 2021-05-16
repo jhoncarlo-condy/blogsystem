@@ -18,10 +18,16 @@
 
               <ul class="list-group list-group-unbordered mb-3">
                 <li class="list-group-item">
-                  <b>Posts</b> <p class="float-right">{{ $count}}</p>
+                  <b>Posts</b> <p class="float-right">{{$count}}</p>
                 </li>
                 <li class="list-group-item">
-                    <b>Last Post</b> <p class="float-right">{{ $last->created_at->diffForHumans()}}</p>
+                    <b>Last Post</b> <p class="float-right">
+                     @if ($last >0)
+                     {{ $last->created_at->diffForHumans()}}
+                     @else
+                     0
+                     @endif
+                    </p>
                 </li>
               </ul>
 
