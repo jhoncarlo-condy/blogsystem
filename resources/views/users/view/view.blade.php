@@ -91,35 +91,45 @@
              </div> --}}
               <div class="post-comments">
                 <header>
-                  <h3 class="h6">Post Comments<span class="no-of-comments">(3)</span></h3>
+                  <h3 class="h6">Post Comments<span class="no-of-comments"></span></h3>
                 </header>
+
+                @forelse ($comments as $comment)
                 <div class="comment">
                   <div class="comment-header d-flex justify-content-between">
                     <div class="user d-flex align-items-center">
                       {{-- <div class="image"><img src="img/user.sv  g" alt="..." class="img-fluid rounded-circle"></div> --}}
-                      <div class="title"><strong>Jabi Hernandiz</strong><span class="date">May 2016</span></div>
+
+                      <div class="title"><strong>{{ $comment->user->firstname }}</strong>
+                        <span class="date">{{ $comment->created_at->diffForHumans() }}</span>
+                      </div>
                     </div>
                   </div>
                   <div class="comment-body">
-                    <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam.</p>
+                    <p>{{ $comment->comment }}</p>
                   </div>
+                  @empty
+
+                  @endforelse
                 </div>
+
 
               </div>
               <div class="add-comment">
                 <header>
                   <h3 class="h6">Leave a reply</h3>
                 </header>
-                <form action="#" class="commenting-form">
-                  <div class="row">
+                <form action="{{ route('comment.store') }}" method="POST" class="commenting-form">
+                    @csrf
+                    @method('POST')
+                    <div class="row">
                     <div class="form-group col-md-6">
-                      <input type="text" name="username" id="username" placeholder="Name" class="form-control">
-                    </div>
-                    <div class="form-group col-md-6">
-                      <input type="email" name="username" id="useremail" placeholder="Email Address (will not be published)" class="form-control">
+                        <input type="hidden" name="user_id" value="{{ Auth::user()->id }}">
+                        <input type="hidden" name="post_id" value="{{ $posts->id }}">
                     </div>
                     <div class="form-group col-md-12">
-                      <textarea name="usercomment" id="usercomment" placeholder="Type your comment" class="form-control"></textarea>
+                    <label for="">Comment as {{ Auth::user()->firstname }}</label>
+                      <textarea name="comment" id="usercomment" placeholder="Type your comment" class="form-control"></textarea>
                     </div>
                     <div class="form-group col-md-12">
                       <button type="submit" class="btn btn-secondary">Submit Comment</button>

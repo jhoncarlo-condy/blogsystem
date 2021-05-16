@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Category;
+use App\Comment;
 use App\Post;
 use App\User;
 use Illuminate\Http\Request;
@@ -82,8 +83,9 @@ class BlogUserController extends Controller
         $posts = Post::find($id);
         $category = Category::all();
         $latest = Post::all()->sortByDesc('id');
+        $comments = Comment::all()->where('post_id',$id)->sortByDesc('id');
         // $find = Category::find($posts);
-        return view ('users.view.view',compact('posts','latest','category'));
+        return view ('users.view.view',compact('posts','latest','category','comments'));
     }
 
     public function category()

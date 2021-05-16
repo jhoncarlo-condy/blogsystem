@@ -37,3 +37,4 @@ Route::resource('/blog', 'BlogUserController');
 Route::get('/blog/categories/list','BlogUserController@category')->name('categories');
 Route::get('/blog/categories/view/{id}','BlogUserController@viewcat')->name('view');
 Route::get('/blog/profile/view', 'BlogUserController@profile')->name('profile');
+Route::resource('/comment','CommentController');
