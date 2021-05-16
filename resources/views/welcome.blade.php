@@ -12,14 +12,13 @@
 
         <!-- Styles -->
         <style>
-            html, body {
-                background-color: #fff;
-                color: #636b6f;
-                font-family: 'Raleway', sans-serif;
-                font-weight: 100;
-                height: 100vh;
-                margin: 0;
+            body {
+            background-image: url('https://images.unsplash.com/photo-1518665750801-883c188a660d?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=667&q=80');
+            background-repeat: no-repeat;
+            background-attachment: fixed;
+            background-size: cover;
             }
+
 
             .full-height {
                 height: 100vh;
@@ -76,10 +75,12 @@
                     @endauth
                 </div>
             @endif --}}
+            <img style="height:150px;widht:150px;"src="https://www.pngkey.com/png/full/232-2326777_blogger-logo-icons-no-attribution-white-blog-icon.png" alt="">
 
             <div class="content">
+
                 <div class="title m-b-md">
-                    Blog Management System
+                    <label>Blog</label>
                 </div>
 
                 <div class="links">

@@ -1,7 +1,22 @@
 @extends('login.login')
 
 @section('content')
-<div class="container">
+<div class="col-md-12 ml-8 mt-4" style="color:white;">
+    <a href="{{ route('welcome') }}">
+    <button type="button" class="btn btn-primary"><i class="fas fa-arrow-left"></i>Back</button>
+    </a>
+
+   </div>
+<div class="login">
+	<h1>Login</h1>
+    <form method="POST" action="{{ route('login') }}" aria-label="{{ __('Login') }}">
+        @csrf
+    	<input type="text" name="email" placeholder="E-mail Address" required="required" />
+        <input type="password" name="password" placeholder="Password" required="required" />
+        <button type="submit" class="btn btn-primary btn-block btn-large">Log in</button>
+    </form>
+</div>
+{{-- <div class="container">
     <div class="row justify-content-center">
         <div class="col-md-8">
             <div class="card">
@@ -67,5 +82,5 @@
             </div>
         </div>
     </div>
-</div>
+</div> --}}
 @endsection
