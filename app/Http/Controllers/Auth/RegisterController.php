@@ -38,7 +38,7 @@ class RegisterController extends Controller
             return '/blog';
         }
         else {
-            return '/home';
+            return '/blog';
         }
     }
 
