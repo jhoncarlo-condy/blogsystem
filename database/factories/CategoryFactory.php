@@ -4,7 +4,7 @@ use Faker\Generator as Faker;
 
 $factory->define(App\Category::class, function (Faker $faker) {
     return [
-        'title' => $faker->word,
-        'description' => $faker->sentence,
+        'title' => $faker->sentence,
+        'description' => $faker->text,
     ];
 });
