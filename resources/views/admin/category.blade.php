@@ -86,7 +86,7 @@ $(document).ready(function(){
                         <form id="delete-{{ $cat->id }}" action="{{ route('category.destroy',$cat->id) }}" method="POST">
                             @csrf
                             @method('DELETE')
-                            <button type="button" class="btn btn-danger" id="delete">
+                            <button type="button" class="btn btn-danger delete">
                             <i class="fas fa-eraser"></i>Delete
                             </button>
                         </form>
@@ -104,7 +104,7 @@ $(document).ready(function(){
                                         </button>
                                 </div>
                                 <div class="modal-body">
-                                    <form action="{{ route('category.update', $cat->id)  }} }}" method="post">
+                                    <form  action="{{ route('category.update', $cat->id)  }}" id="editcategory" method="post">
                                         @method('PUT')
                                         @csrf
                                         <div class="form-group">
@@ -113,7 +113,7 @@ $(document).ready(function(){
                                         </div>
                                         <div class="form-group">
                                           <label for="description"></label>
-                                          <textarea class="form-control" name="description" id="" col="60" rows="5" maxlength="100">{{ $cat->description }}</textarea>
+                                          <textarea class="form-control" name="description" col="60" rows="5" maxlength="100">{{ $cat->description }}</textarea>
                                         </div>
 
                                 </div>
@@ -154,7 +154,7 @@ $(document).ready(function(){
                     </button>
             </div>
             <div class="modal-body">
-                <form action="{{ route('category.store') }}" method="POST" id="category">
+                <form action="{{ route('category.store') }}" method="POST" id="addcategory">
                     @method('POST')
                     @csrf
                     <div class="form-group">
@@ -191,7 +191,7 @@ $(document).ready(function(){
 <script>
     $(document).ready(function()
     {
-        $("#category").validate(
+        $("#addcategory").validate(
             {
                 rules:
                 {
@@ -204,13 +204,55 @@ $(document).ready(function(){
                 },
                 messages:
                 {
-                    description:{
+                    description:
+                    {
                         required: "Please enter description",
                         maxlength: "description must be 100 characters or below"
                     }
+                },
+                errorElement: 'span',
+                errorPlacement: function (error, element) {
+                error.addClass('invalid-feedback');
+                element.closest('.form-group').append(error);
+                },
+                highlight: function (element, errorClass, validClass) {
+                $(element).addClass('is-invalid');
+                },
+                unhighlight: function (element, errorClass, validClass) {
+                $(element).removeClass('is-invalid');
                 }
             });
-
+            $("#editcategory").validate(
+            {
+                rules:
+                {
+                    title: "required",
+                    description:
+                    {
+                        required:true,
+                        maxlength:100,
+                    }
+                },
+                messages:
+                {
+                    description:
+                    {
+                        required: "Please enter description",
+                        maxlength: "description must be 100 characters or below"
+                    }
+                },
+                errorElement: 'span',
+                errorPlacement: function (error, element) {
+                error.addClass('invalid-feedback');
+                element.closest('.form-group').append(error);
+                },
+                highlight: function (element, errorClass, validClass) {
+                $(element).addClass('is-invalid');
+                },
+                unhighlight: function (element, errorClass, validClass) {
+                $(element).removeClass('is-invalid');
+                }
+            });
         $("#delete").click(function(){
             Swal.fire({
                 title: 'Are you sure?',

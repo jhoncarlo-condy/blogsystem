@@ -22,11 +22,11 @@
                 </li>
                 <li class="list-group-item">
                     <b>Last Post</b> <p class="float-right">
-                     @if ($last >0)
-                     {{ $last->created_at->diffForHumans()}}
-                     @else
-                     0
-                     @endif
+                    @forelse ($last->take(1) as $last)
+                    {{ $last->created_at->diffForHumans()}}
+                    @empty
+                    0
+                    @endforelse
                     </p>
                 </li>
               </ul>

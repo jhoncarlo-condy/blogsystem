@@ -65,8 +65,8 @@
                 <td>{{ $post->title }}</td>
                 <td>{{ $post->category->title }}</td>
                 <td>{{ $post->user->firstname }}</td>
-                <td>{{ $post->created_at->format('d/m/Y') }}</td>
-                <td>{{ $post->created_at->format('H:i A') }}</td>
+                <td>{{ $post->created_at->format('m-d-Y') }}</td>
+                <td>{{ $post->created_at->format('h:i A') }}</td>
                 <td>
                     <a name="" id="" href="{{ route('post.show', $post->id) }}" role="button">
                         <i class="fas fa-eye    "></i>

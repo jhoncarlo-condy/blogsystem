@@ -129,6 +129,7 @@
         <div class="col-sm-6">
           <ol class="breadcrumb float-sm-right">
             <li class="breadcrumb-item"><a href="{{ route('users.dashboard') }}">Administrator</a></li>
+            <li class="breadcrumb-item active"><a href="{{ route('post.index') }}">Posts</a></li>
             <li class="breadcrumb-item active">Add Post</li>
           </ol>
         </div>
@@ -163,7 +164,7 @@
                 </button>
               </div>
             </div>
-            <form action="{{ route('post.store') }}" method="POST" enctype="multipart/form-data">
+            <form action="{{ route('post.store') }}" id="addpost" method="POST" enctype="multipart/form-data">
                 @method('POST')
                 @csrf
             <!-- /.card-header -->
@@ -229,10 +230,12 @@
                   </div>
                 </div>
               </div>
-            <div class="container mb-3">
-            <textarea id="summernote" name="description"></textarea>
-
-            </div>
+              <div class="mb-3 ml-2 mr-2">
+                <div class="form-group">
+                  <label for="description">Description</label>
+                  <textarea class="form-control" name="description" id="summernote" rows="3"></textarea>
+                </div>
+                </div>
             <!-- /.card -->
             {{-- ckeditor --}}
           {{-- <div class="row">
@@ -263,11 +266,9 @@
 
 
 @endsection
-@push('addpost')
-
+@push('scripts')
 <script>
     $(document).ready(function() {
-        $('.select2').select2();
         $('#summernote').summernote({
             placeholder: 'Enter some text here',
             height: 300,                 // set editor height
@@ -278,16 +279,45 @@
         });
     });
 </script>
-<script src="https://cdn.ckeditor.com/ckeditor5/27.1.0/classic/ckeditor.js"></script>
 <script>
-          ClassicEditor
-                                .create( document.querySelector( '.editor' ) )
-                                .then( editor => {
-                                        console.log( editor );
-                                } )
-                                .catch( error => {
-                                        console.error( error );
-                                } );
-</script>
+    $(document).ready(function()
+    {
+        $("#addpost").validate(
+            {
+                rules:
+                {
+                    title: "required",
+                    description:
+                    {
+                        required:true,
+                        maxlength:100,
+                    }
+                },
+                messages:
+                {
+                    description:
+                    {
+                        required: "Please enter description",
+                        maxlength: "description must be 100 characters or below"
+                    }
+                },
+                errorElement: 'span',
+                errorPlacement: function (error, element) {
+                error.addClass('invalid-feedback');
+                element.closest('.form-group').append(error);
+                },
+                highlight: function (element, errorClass, validClass) {
+                $(element).addClass('is-invalid');
+                },
+                unhighlight: function (element, errorClass, validClass) {
+                $(element).removeClass('is-invalid');
+                }
 
+
+            });
+
+
+
+    });
+</script>
 @endpush

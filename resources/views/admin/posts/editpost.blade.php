@@ -129,6 +129,7 @@
         <div class="col-sm-6">
           <ol class="breadcrumb float-sm-right">
             <li class="breadcrumb-item"><a href="{{ route('users.dashboard') }}">Administrator</a></li>
+            <li class="breadcrumb-item active"><a href="{{ route('post.index') }}">Posts</a></li>
             <li class="breadcrumb-item active">Edit Post</li>
           </ol>
         </div>
@@ -145,14 +146,7 @@
             <div class="card-header">
               <h3 class="card-title">Edit Post</h3>
 
-              <div class="card-tools">
-                <button type="button" class="btn btn-tool" data-card-widget="collapse">
-                  <i class="fas fa-minus"></i>
-                </button>
-                <button type="button" class="btn btn-tool" data-card-widget="remove">
-                  <i class="fas fa-times"></i>
-                </button>
-              </div>
+
             </div>
             <form action="{{ route('post.update',$posts->id) }}" method="POST" enctype="multipart/form-data">
                 @method('PATCH')
@@ -172,6 +166,17 @@
                     <input type="text" class="form-control" name="" disabled value="{{ Auth::user()->firstname . " " . Auth::user()->lastname }}" placeholder="">
                     <input type="hidden" name="user_id" value="{{ Auth::user()->id }}">
                 </div>
+                <div class="form-group">
+                    <label>Category</label>
+
+                    <select class="form-control select2 select2-danger" name="category_id" data-dropdown-css-class="select2-danger" style="width: 100%;">
+                        <option value="{{ $posts->category_id }}" selected="selected">{{ $find->title }}</option>
+                        @foreach ($category as $category)}
+                        <option value="{{ $category->id}}">{{ $category->title}}</option>
+                        @endforeach
+                    </select>
+
+                  </div>
                   <!-- /.form-group -->
                 </div>
                 <!-- /.col -->
@@ -206,20 +211,7 @@
               <!-- /.row -->
 
               <div class="row">
-                <div class="col-12 col-sm-6">
-                  <div class="form-group">
-                    <label>Category</label>
 
-                    <select class="form-control select2 select2-danger" name="category_id" data-dropdown-css-class="select2-danger" style="width: 100%;">
-                        <option value="{{ $posts->category_id }}" selected="selected">{{ $find->title }}</option>
-                        @foreach ($category as $category)}
-                        <option value="{{ $category->id}}">{{ $category->title}}</option>
-                        @endforeach
-                    </select>
-
-                  </div>
-                  <!-- /.form-group -->
-                </div>
 
 
                 <div class="file-upload">
@@ -291,53 +283,5 @@
         });
     });
 </script>
-<script src="https://cdn.ckeditor.com/ckeditor5/27.1.0/classic/ckeditor.js"></script>
-<script>
-          ClassicEditor
-                                .create( document.querySelector( '.editor' ) )
-                                .then( editor => {
-                                        console.log( editor );
-                                } )
-                                .catch( error => {
-                                        console.error( error );
-                                } );
-</script>
-<script>
-$(document).on('change', '.file-input', function() {
 
-
-var filesCount = $(this)[0].files.length;
-
-var textbox = $(this).prev();
-
-if (filesCount === 1) {
-var fileName = $(this).val().split('\\').pop();
-textbox.text(fileName);
-} else {
-textbox.text(filesCount + ' files selected');
-}
-
-
-
-if (typeof (FileReader) != "undefined") {
-var dvPreview = $("#divImageMediaPreview");
-dvPreview.html("");
-$($(this)[0].files).each(function () {
-var file = $(this);
-var reader = new FileReader();
-reader.onload = function (e) {
-var img = $("<img />");
-img.attr("style", "width: 150px; height:100px; padding: 10px");
-img.attr("src", e.target.result);
-dvPreview.append(img);
-}
-reader.readAsDataURL(file[0]);
-});
-} else {
-alert("This browser does not support HTML5 FileReader.");
-}
-
-
-});
-</script>
 @endpush

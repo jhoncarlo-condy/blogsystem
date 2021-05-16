@@ -107,7 +107,7 @@ class BlogUserController extends Controller
     public function profile()
     {
         $count = Post::where('user_id',Auth::user()->id)->count();
-        $last = Post::where('user_id',Auth::user()->id)->latest('id')->first();
+        $last = Post::where('user_id',Auth::user()->id)->latest('id')->get();
         $category = Category::all();
         $posts = Post::where('user_id', Auth::user()->id)->latest('id')->paginate(4);
         return view ('users.profile.view', compact('posts','category','count','last'));
