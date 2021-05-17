@@ -29,7 +29,7 @@
     <div class="row">
       <main class="posts-listing col-lg-8">
         <div class="category">
-        <h3>Post from category: {{ $posts[0]->category->title }}</h3>
+        <h3>Posts from category: {{ $posts[0]->category->title }}</h3>
         </div>
         <div class="container">
           <div class="row">

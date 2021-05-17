@@ -98,7 +98,7 @@
                 <div class="comment">
                   <div class="comment-header d-flex justify-content-between">
                     <div class="user d-flex align-items-center">
-                      {{-- <div class="image"><img src="img/user.sv  g" alt="..." class="img-fluid rounded-circle"></div> --}}
+                      <div class="image"><img src="https://thumbs.dreamstime.com/b/default-avatar-profile-icon-vector-social-media-user-portrait-176256935.jpg" alt="..." class="img-fluid rounded-circle"></div>
 
                       <div class="title"><strong>{{ $comment->user->firstname }}</strong>
                         <span class="date">{{ $comment->created_at->diffForHumans() }}</span>
@@ -163,7 +163,7 @@
                 <div class="title"><strong>{{ $latest->title }}</strong>
                   <div class="d-flex align-items-center">
                     <div class="views"><i class="fas fa-calendar fa-xs"></i>{{ $latest->created_at->format('m/d/Y')  }}</div>
-                    <div class="comments"><i class="fas fa-clock fa-xs"></i>{{ $latest->created_at->format('H:i A')  }}</div>
+                    <div class="comments"><i class="fas fa-clock fa-xs"></i>{{ $latest->created_at->format('h:i A')  }}</div>
                   </div>
                 </div>
               </div>
