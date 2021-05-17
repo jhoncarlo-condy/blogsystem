@@ -29,6 +29,7 @@
                 @if ($posts->image)
                 <img src="{{ asset('storage/'. $posts->image) }}" alt="..." class="img-fluid">
                 @else
+                <img style="height: 400px;" src="https://upload.wikimedia.org/wikipedia/commons/1/14/No_Image_Available.jpg" alt="" class="img-fluid">
                 @endif
             </div>
             <div class="post-details">
@@ -36,9 +37,9 @@
                 <div class="category"><a href="#">{{ $find->title }}</a></div>
               </div>
               <h1>{{ $posts->title }}<a href="#"><i class="fa fa-bookmark-o"></i></a></h1>
-              <div class="post-footer d-flex align-items-center flex-column flex-sm-row"><a href="#" class="author d-flex align-items-center flex-wrap">
+              <div class="post-footer d-flex align-items-center flex-column flex-sm-row"><a href="{{ route('users.viewprofile', $posts->user_id) }}" class="author d-flex align-items-center flex-wrap">
                   {{-- <div class="avatar"><img src="img/avatar-1.jpg" alt="..." class="img-fluid"></div> --}}
-                  <i class="fas fa-user fa-sm"></i><div class="title"><span>{{ Auth::user()->firstname . " ". Auth::user()->lastname . " "}} </span></div></a>
+                  <i class="fas fa-user fa-sm"></i><div class="title"><span>{{ $posts->user->firstname . " ". $posts->user->lastname . " "}} </span></div></a>
                 <div class="d-flex align-items-center flex-wrap">
                   <div class="date"><i class="fas fa-calendar fa-xs"></i>{{ $posts->created_at->format('m/d/Y')  }}</div>
                   <div class="date"><i class="fas fa-clock fa-xs"></i>{{ $posts->created_at->format('H:i A') }}</div>
@@ -65,7 +66,66 @@
                   </div>
                   <div class="icon next"><i class="fa fa-angle-right">   </i></div></a>
              </div> --}}
+             <div class="post-comments">
+                <header>
+                  <h3 class="h6">Post Comments<span class="no-of-comments">({{ $comments->count() }})</span></h3>
+                </header>
 
+                @forelse ($comments as $comment)
+                <div class="comment">
+                  <div class="comment-header d-flex justify-content-between">
+                    <div class="user d-flex align-items-center">
+                      {{-- <div class="image"><img src="img/user.sv  g" alt="..." class="img-fluid rounded-circle"></div> --}}
+
+                      <div class="title"><strong>{{ $comment->user->firstname }}</strong>
+                        <span class="date">{{ $comment->created_at->diffForHumans() }}</span>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="comment-body">
+                    <p>{{ $comment->comment }}</p>
+                  </div>
+                  @empty
+                  <div class="comment">
+                    <div class="comment-header d-flex justify-content-between">
+                      <div class="user d-flex align-items-center">
+                        {{-- <div class="image"><img src="img/user.sv  g" alt="..." class="img-fluid rounded-circle"></div> --}}
+
+                        <div class="title"><strong></strong>
+                          <span class="date"></span>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="comment-body">
+                      <p></p>
+                    </div>
+                  @endforelse
+                </div>
+
+
+              </div>
+              <div class="add-comment">
+                <header>
+                  <h3 class="h6">Leave a reply</h3>
+                </header>
+                <form action="{{ route('comment.store') }}" method="POST" class="commenting-form">
+                    @csrf
+                    @method('POST')
+                    <div class="row">
+                    <div class="form-group col-md-6">
+                        <input type="hidden" name="user_id" value="{{ Auth::user()->id }}">
+                        <input type="hidden" name="post_id" value="{{ $posts->id }}">
+                    </div>
+                    <div class="form-group col-md-12">
+                    <label for="">Comment as {{ Auth::user()->firstname }}</label>
+                      <textarea name="comment" id="usercomment" placeholder="Type your comment" class="form-control"></textarea>
+                    </div>
+                    <div class="form-group col-md-12">
+                      <button type="submit" class="btn btn-secondary">Submit Comment</button>
+                    </div>
+                  </div>
+                </form>
+              </div>
             </div>
           </div>
         </div>

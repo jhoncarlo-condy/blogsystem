@@ -57,9 +57,10 @@
                 </div>
               </div>
               <h1><a href="#"><i class="fa fa-bookmark-o"></i></a></h1>
-              <div class="post-footer d-flex align-items-center flex-column flex-sm-row"><a href="#" class="author d-flex align-items-center flex-wrap">
+              <div class="post-footer d-flex align-items-center flex-column flex-sm-row"><a href="{{ route('viewprofile',$posts->id) }}" class="author d-flex align-items-center flex-wrap">
                   {{-- <div class="avatar"><img src="img/avatar-1.jpg" alt="..." class="img-fluid"></div> --}}
                   <i class="fas fa-user fa-sm"></i><div class="title">
+
                     <span>
                         {{ $posts->user->firstname . " " . $posts->user->lastname }}
                     </span></div></a>
