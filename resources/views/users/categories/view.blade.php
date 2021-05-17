@@ -53,7 +53,7 @@
                     <h3 class="h4">{{ $cat->title }}</h3></a>
                   <p class="text-muted">{{ $cat->title }}</p>
                   <p class="text-muted"><a href="{{ route('blog.show',$cat->id) }}"> See more ..</a></p>
-                  <footer class="post-footer d-flex align-items-center"><a href="#" class="author d-flex align-items-center flex-wrap">
+                  <footer class="post-footer d-flex align-items-center"><a href="{{ route('viewprofile',$cat->user->id) }}" class="author d-flex align-items-center flex-wrap">
                       {{-- <div class="avatar"><img src="img/avatar-3.jpg" alt="..." class="img-fluid"></div> --}}
                       <div class="title">
                           <i class="fas fa-user fa-xs"></i><span>{{ $cat->user->firstname}}</span>

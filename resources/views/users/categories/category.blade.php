@@ -52,7 +52,7 @@
                   </div><a href="{{ route('blog.show', $post->id) }}">
                     <h3 class="h4">{{ $post->title }}</h3></a>
                   <p class="text-muted">See more ..</p>
-                  <footer class="post-footer d-flex align-items-center"><a href="#" class="author d-flex align-items-center flex-wrap">
+                  <footer class="post-footer d-flex align-items-center"><a href="{{ route('viewprofile',$post->id) }}" class="author d-flex align-items-center flex-wrap">
                       {{-- <div class="avatar"><img src="img/avatar-3.jpg" alt="..." class="img-fluid"></div> --}}
                       <div class="title">
                           <i class="fas fa-user fa-xs"></i><span>{{ $post->user->firstname}}</span>

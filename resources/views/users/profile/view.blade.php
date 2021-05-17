@@ -208,7 +208,7 @@
                                 </a>
                                 </div>
 
-                            <li class="list-inline-item"><a href="{{ route('categories') }}" class="tag">#{{ $post->category->title }}</a></li>
+                            <li class="list-inline-item"><a href="{{ route('view',$post->category->id) }}" class="tag">#{{ $post->category->title }}</a></li>
 
                         </div>
 

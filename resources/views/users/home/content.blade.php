@@ -46,7 +46,7 @@
                   <p class="text-muted">See more ..</p>
                   <footer class="post-footer d-flex align-items-center"><a href="#" class="author d-flex align-items-center flex-wrap">
                       {{-- <div class="avatar"><img src="img/avatar-3.jpg" alt="..." class="img-fluid"></div> --}}
-                      <a href="{{ route('viewprofile',$cont->id) }}">
+                      <a href="{{ route('viewprofile',$cont->user->id) }}">
                       <div class="title">
                           <i class="fas fa-user fa-xs"></i><span>{{ $cont->user->firstname }}</span>
                       </div></a>
