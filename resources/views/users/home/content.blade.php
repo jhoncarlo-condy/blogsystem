@@ -32,18 +32,21 @@
                      <img src="{{ asset('storage/'. $cont->image) }}"  class="img-thumbnail" style="height: 200px;width:400px;">
                     </a>
                     @else
+                    <a href="{{ route('blog.show', $cont->id) }}">
                     <img class="img-thumbnail" style="width:400px;height:200px;" src="https://upload.wikimedia.org/wikipedia/commons/1/14/No_Image_Available.jpg" alt="">
+                    </a>
                     @endif
                 </div>
                 <div class="post-details">
                   <div class="post-meta d-flex justify-content-between">
                     <div class="date meta-last">{{ $cont->created_at->format('m d') . "|" . $cont->created_at->format('Y') }}</div>
-                    <div class="category"><a href="">{{ $cont->title }}</a></div>
+                    <div class="category"><a href="{{ route('blog.show', $cont->id) }}">{{ $cont->category->title }}</a></div>
                   </div><a href="{{ route('blog.show', $cont->id) }}">
                     <h3 class="h4">{{ $cont->title }}</h3></a>
                   <p class="text-muted">See more ..</p>
                   <footer class="post-footer d-flex align-items-center"><a href="#" class="author d-flex align-items-center flex-wrap">
                       {{-- <div class="avatar"><img src="img/avatar-3.jpg" alt="..." class="img-fluid"></div> --}}
+                      <a href="{{ route('viewprofile',$cont->id) }}">
                       <div class="title">
                           <i class="fas fa-user fa-xs"></i><span>{{ $cont->user->firstname }}</span>
                       </div></a>

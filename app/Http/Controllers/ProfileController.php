@@ -65,7 +65,8 @@ class ProfileController extends Controller
         $category = Category::all();
         $posts = Post::where('user_id',$id)->latest('id')->paginate(4);
         $commentcount = Comment::where('user_id',$id)->count();
-        return view('users.profile.visitprofile',compact('count','last','category','posts','commentcount'));
+        $users = User::find($id);
+        return view('users.profile.visitprofile',compact('count','last','category','posts','commentcount','users'));
     }
 
     /**

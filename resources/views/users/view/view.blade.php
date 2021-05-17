@@ -52,7 +52,7 @@
               <div class="post-meta d-flex justify-content-between">
                 <div class="category">
                     <a href="#">
-                        {{ $posts->category->title }}
+                        {{ $posts->title }}
                     </a>
                 </div>
               </div>
@@ -67,7 +67,7 @@
                   <div class="date"><i class="fas fa-calendar fa-xs"></i>{{ $posts->created_at->format('m/d/Y') }}</div>
                   <div class="date"><i class="fas fa-clock fa-xs"></i>{{ $posts->created_at->format('H:i A') }}</div>
                   {{-- <div class="views"></div> --}}
-                  <div class="comments meta-last"><i class="fas fa-comment fa-xs"></i>{{ $commentcount }}</div>
+                  <div class="comments meta-last"><i class="fas fa-comment fa-xs"></i>{{ $comments->count() }}</div>
                 </div>
               </div>
               <div class="post-body mb-6">
@@ -91,14 +91,14 @@
              </div> --}}
               <div class="post-comments">
                 <header>
-                  <h3 class="h6">Post Comments<span class="no-of-comments"></span></h3>
+                  <h3 class="h6">Post Comments<span class="no-of-comments">({{ $comments->count() }})</span></h3>
                 </header>
 
                 @forelse ($comments as $comment)
                 <div class="comment">
                   <div class="comment-header d-flex justify-content-between">
                     <div class="user d-flex align-items-center">
-                      <div class="image"><img src="https://thumbs.dreamstime.com/b/default-avatar-profile-icon-vector-social-media-user-portrait-176256935.jpg" alt="..." class="img-fluid rounded-circle"></div>
+                      {{-- <div class="image"><img src="img/user.sv  g" alt="..." class="img-fluid rounded-circle"></div> --}}
 
                       <div class="title"><strong>{{ $comment->user->firstname }}</strong>
                         <span class="date">{{ $comment->created_at->diffForHumans() }}</span>
@@ -109,7 +109,19 @@
                     <p>{{ $comment->comment }}</p>
                   </div>
                   @empty
+                  <div class="comment">
+                    <div class="comment-header d-flex justify-content-between">
+                      <div class="user d-flex align-items-center">
+                        {{-- <div class="image"><img src="img/user.sv  g" alt="..." class="img-fluid rounded-circle"></div> --}}
 
+                        <div class="title"><strong></strong>
+                          <span class="date"></span>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="comment-body">
+                      <p></p>
+                    </div>
                   @endforelse
                 </div>
 
@@ -163,7 +175,7 @@
                 <div class="title"><strong>{{ $latest->title }}</strong>
                   <div class="d-flex align-items-center">
                     <div class="views"><i class="fas fa-calendar fa-xs"></i>{{ $latest->created_at->format('m/d/Y')  }}</div>
-                    <div class="comments"><i class="fas fa-clock fa-xs"></i>{{ $latest->created_at->format('h:i A')  }}</div>
+                    <div class="comments"><i class="fas fa-clock fa-xs"></i>{{ $latest->created_at->format('H:i A')  }}</div>
                   </div>
                 </div>
               </div>

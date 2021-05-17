@@ -152,14 +152,13 @@
               <div class="text-center">
                 <img class="profile-user-img img-fluid img-circle" src="https://thumbs.dreamstime.com/b/default-avatar-profile-icon-vector-social-media-user-portrait-176256935.jpg" alt="User profile picture">
               </div>
-              @forelse ($posts as $post)
 
-              <h3 class="profile-username text-center">{{ $post->user->firstname . " " . $post->user->lastname }}</h3>
+              <h3 class="profile-username text-center">{{ $users->firstname . " " . $users->lastname }}</h3>
 
               <p class="text-muted text-center">
-                  @if ($post->user->usertype  == 3)
+                  @if ($users->usertype  == 3)
                     User
-                  @elseif ($post->user->usertype  == 2)
+                  @elseif ($users->usertype  == 2)
                     Admin
                   @else
                     SuperAdmin
@@ -192,51 +191,11 @@
 
 
 
-              <a href="#" class="btn btn-primary btn-block"><b>Follow</b></a>
+              {{-- <a href="#" class="btn btn-primary btn-block"><b>Follow</b></a> --}}
             </div>
             <!-- /.card-body -->
           </div>
           <!-- /.card -->
-
-          <!-- About Me Box -->
-          <div class="card card-primary">
-            <div class="card-header">
-              <h3 class="card-title">About Me</h3>
-            </div>
-            <!-- /.card-header -->
-            <div class="card-body">
-              <strong><i class="fas fa-book mr-1"></i> Education</strong>
-
-              <p class="text-muted">
-                B.S. in Computer Science from the University of Tennessee at Knoxville
-              </p>
-
-              <hr>
-
-              <strong><i class="fas fa-map-marker-alt mr-1"></i> Location</strong>
-
-              <p class="text-muted">Malibu, California</p>
-
-              <hr>
-
-              <strong><i class="fas fa-pencil-alt mr-1"></i> Skills</strong>
-
-              <p class="text-muted">
-                <span class="tag tag-danger">UI Design</span>
-                <span class="tag tag-success">Coding</span>
-                <span class="tag tag-info">Javascript</span>
-                <span class="tag tag-warning">PHP</span>
-                <span class="tag tag-primary">Node.js</span>
-              </p>
-
-              <hr>
-
-              <strong><i class="far fa-file-alt mr-1"></i> Notes</strong>
-
-              <p class="text-muted">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam fermentum enim neque.</p>
-            </div>
-            <!-- /.card-body -->
-          </div>
 
           <!-- /.card -->
         </div>
@@ -252,6 +211,9 @@
               <div class="tab-content">
                 <div class="tab-pane active" id="activity">
                   <!-- Post -->
+                  @forelse ($posts as $post)
+
+
                     <div class="post">
                         <div class="user-block">
                           <img class="img-circle img-bordered-sm" src="https://thumbs.dreamstime.com/b/default-avatar-profile-icon-vector-social-media-user-portrait-176256935.jpg" alt="user image">
@@ -287,7 +249,7 @@
                         {{-- <input class="form-control form-control-sm" type="text" placeholder="Type a comment"> --}}
                       </div>
                     @empty
-                    You don't have any posts yet.
+                    User doesn't have any posts yet.
                     @endforelse
                   <!-- /.post -->
                   <div class="d-flex justify-content-center">
