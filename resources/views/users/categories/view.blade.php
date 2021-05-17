@@ -33,7 +33,7 @@
           <div class="row">
             <!-- post -->
             @forelse ($categories as $category)
-            @foreach ($category->posts[0] as $cat)
+            @foreach ($category->posts as $cat)
 
             <div class="post col-xl-6">
                 <div class="post-thumbnail">

@@ -312,23 +312,40 @@
                 <!-- /.tab-pane -->
 
                 <div class="tab-pane" id="settings">
-                  <form class="form-horizontal">
+                  <form method="POST" action="{{ route('changepassword') }}" class="form-horizontal">
+                    @csrf
+                    @method('POST')
+                    @if ($errors->has('oldpassword'))
+                    <span class="text-danger" role="alert">
+                        {{ $errors->first('oldpassword') }}
+                    </span><br>
+                    @endif
+                    @if ($errors->has('newpassword'))
+                    <span class="text-danger" role="alert">
+                        {{ $errors->first('newpassword') }}
+                    </span><br>
+                    @endif
+                    @if ($errors->has('confirmpassword'))
+                    <span class="text-danger" role="alert">
+                        {{ $errors->first('confirmpassword') }}
+                    </span><br>
+                    @endif
                     <div class="form-group row">
                       <label for="inputName" class="col-sm-2 col-form-label">Old Password</label>
                       <div class="col-sm-10">
-                        <input type="text" class="form-control" id="inputName" placeholder="Old Password">
+                        <input type="password" name="oldpassword" class="form-control" id="inputName" placeholder="Old Password">
                       </div>
                     </div>
                     <div class="form-group row">
                       <label for="inputEmail" class="col-sm-2 col-form-label">New Password</label>
                       <div class="col-sm-10">
-                        <input type="password" class="form-control" id="inputEmail" placeholder="New Password">
+                        <input type="password" name="newpassword" class="form-control" id="inputEmail" placeholder="New Password">
                       </div>
                     </div>
                     <div class="form-group row">
                         <label for="inputEmail" class="col-sm-2 col-form-label">Confirm Password</label>
                         <div class="col-sm-10">
-                          <input type="password" class="form-control" id="inputEmail" placeholder="Confirm Password1">
+                          <input type="password" name="confirmpassword" class="form-control" id="inputEmail" placeholder="Confirm Password">
                         </div>
                       </div>
                     <div class="form-group row">

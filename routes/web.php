@@ -33,6 +33,7 @@ Route::middleware(['auth', 'admin'])->group(function () {
     Route::resource('/post', 'PostController');
 });
 
+Route::post('/profile','ProfileController@store')->name('changepassword');
 Route::resource('/blog', 'BlogUserController');
 Route::get('/blog/categories/list','BlogUserController@category')->name('categories');
 Route::get('/blog/categories/view/{id}','BlogUserController@viewcat')->name('view');
