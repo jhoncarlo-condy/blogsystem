@@ -35,7 +35,7 @@ class PostController extends Controller
      */
     public function create()
     {
-        $category = Category::all();
+        $category = Category::where('blogmax', '<',5)->get();
         $posts = Post::all();
         return view ('admin.posts.addpost',compact('posts','category'));
     }
@@ -68,6 +68,9 @@ class PostController extends Controller
             $post->image = $upload;
 
         }
+        $category = Category::find($request->category_id);
+        $category->blogmax = $category->blogmax+1;
+        $category->update();
         $post->save();
 
         // $post->image = $request->image;
@@ -134,6 +137,14 @@ class PostController extends Controller
 
             $upload =  $request->image->store('images', 'public');
             $post = Post::find($post->id);
+            $category = Category::where('id',$post->category->id)->first();
+            $req = Category::where('id',$request->category_id)->first();
+            if ($post->category->id != $request->category_id) {
+                $category->blogmax = $category->blogmax-1;
+                $req->blogmax = $req->blogmax+1;
+                $category->update();
+                $req->update();
+            }
             $post->title = $request->title;
             $post->category_id = $request->category_id;
             $post->user_id = $request->user_id;
@@ -144,7 +155,16 @@ class PostController extends Controller
         }
         else {
 
+
             $post = Post::find($post->id);
+            $category = Category::where('id',$post->category->id)->first();
+            $req = Category::where('id',$request->category_id)->first();
+            if ($post->category->id != $request->category_id) {
+                $category->blogmax = $category->blogmax-1;
+                $req->blogmax = $req->blogmax+1;
+                $category->update();
+                $req->update();
+            }
             $post->title = $request->title;
             $post->category_id = $request->category_id;
             $post->user_id = $request->user_id;
@@ -166,8 +186,12 @@ class PostController extends Controller
      */
     public function destroy(Post $post)
     {
-        Post::find($post->id)->delete();
-        return redirect()->back()->with(['message' => 'Deleted Post Successfully']);
+        $post = Post::find($post->id);
+        $category = Category::where('id',$post->category->id)->first();
+        $category->blogmax = $category->blogmax-1;
+        $category->update();
+        $post->delete();
+        return redirect(route('post.index'))->with(['message' => 'Deleted Post Successfully']);
 
     }
 }

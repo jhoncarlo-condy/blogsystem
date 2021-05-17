@@ -255,13 +255,16 @@
                     @endif
                     <div class="form-group">
                         <label for="confirm_password">Confirm Password</label>
-                        <input type="password" class="form-control" name="confirm_password" id="password_confirm" aria-describedby="helpId" placeholder="">
+                        <div class="input-group">
+                        <input type="password" class="form-control" name="password_confirm" id="password_confirm" aria-describedby="helpId" placeholder="">
+
+                        </div>
                     </div>
-                    @if ($errors->has('confirm_password'))
-                            <strong class="text-danger">{{ $errors->first('confirm_password') }}</strong>
+                    @if ($errors->has('password_confirm'))
+                            <strong class="text-danger">{{ $errors->first('password_confirm') }}</strong>
                     @endif
                     <div class="form-group">
-                        <i class="fas fa-eye reveal">Show Password</i>
+                        <i class="fas fa-eye reveal"><label for="">Show Password</label></i>
                     </div>
                     <div class="form-group">
                       <label for="usertype">Usertype</label>
@@ -327,17 +330,21 @@ $(document).ready(function()
                         required:true,
                         minlength:6,
                     },
-                    confirm_password:
+                    password_confirm:
                     {
-                        equalTo:"password",
+                        equalTo:"#password",
                     }
                 },
                 messages:
                 {
+                    password_confirm:
+                    {
+                        equalTo: "Password and confirm password must match",
+                    },
                     password:
                     {
                         required: "Password field is required",
-                        maxlength: "description must be 100 characters or below"
+                        minlength: "Password must be at least 6 characters"
                     }
                 },
                 errorElement: 'span',
@@ -370,23 +377,6 @@ $(document).ready(function()
                     lastname: "required",
                     email: "required",
                     usertype: "required",
-                    password:
-                    {
-                        required:true,
-                        minlength:6,
-                    },
-                    confirm_password:
-                    {
-                        equalTo:"password",
-                    }
-                },
-                messages:
-                {
-                    password:
-                    {
-                        required: "Password field is required",
-                        maxlength: "description must be 100 characters or below"
-                    }
                 },
                 errorElement: 'span',
                 errorPlacement: function (error, element) {

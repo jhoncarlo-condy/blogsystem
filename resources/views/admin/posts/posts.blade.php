@@ -84,7 +84,7 @@
                 <td>
                         <form id="deleteform" action="{{ route('post.destroy',$post->id) }}" method="POST">
                             @csrf
-                            @method('DELETE')
+                            @method('delete')
                             <a href="javascript:;" onclick="document.getElementById('deleteform').submit();">
                             <i class="fas fa-trash"></i>
                             </a>

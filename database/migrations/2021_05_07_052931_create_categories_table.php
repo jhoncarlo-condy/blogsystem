@@ -17,6 +17,7 @@ class CreateCategoriesTable extends Migration
             $table->increments('id');
             $table->string('title')->unique();
             $table->text('description');
+            $table->integer('blogmax')->default(0);
             $table->timestamps();
         });
     }
