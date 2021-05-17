@@ -68,6 +68,8 @@
               Empty
             @endforelse
           </div>
+          {{ $categories->links() }}
+
           <!-- Pagination -->
           <nav aria-label="Page navigation example">
             {{-- <ul class="pagination pagination-template d-flex justify-content-center">
@@ -91,12 +93,14 @@
       <header>
         <h3 class="h6">Categories</h3>
       </header>
-      @forelse ( $lists->take(7) as $list )
-      <div class="item d-flex justify-content-between"><a href="{{ route('view',$list->id) }}">{{ $list->title }}</a></div>
+      @forelse ( $lists as $list )
+      <div class="item d-flex justify-content-between"><a href="{{ route('view',$list->id) }}">{{ $list->title }}</a>
+        <span>({{ $count->where('category_id',$list->id)->count() }})</span>
+      </div>
       @empty
       <div class="item d-flex justify-content-between"><a href="#">No Categories Available</div>
       @endforelse
-      <a href="{{ route('categories') }}"><div class=" d-flex justify-content-between">See All&rarr;</a></div>
+      {{-- <a href="{{ route('categories') }}"><div class=" d-flex justify-content-between">See All&rarr;</a></div> --}}
       {{-- {{ $categories->links() }} --}}
     </div>
 

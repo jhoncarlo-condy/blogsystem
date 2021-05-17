@@ -24,7 +24,8 @@ class BlogUserController extends Controller
         $commentcount = Comment::all();
         $myrecent = Post::where('user_id', Auth::user()->id)->orderBy('created_at','desc')->get();
         $categories = Category::all();
-        return view('users.home.content',compact('latest','content','categories','myrecent','commentcount'));
+        $count = Post::all();
+        return view('users.home.content',compact('latest','content','categories','myrecent','commentcount','count'));
     }
 
 
@@ -96,17 +97,18 @@ class BlogUserController extends Controller
         $lists = Category::all();
         $categories = Category::with(['posts' => function($query) {
             $query->latest();
-        }])->get();
+        }])->paginate(4);
+        $count = Post::all();
 
-        return view ('users.categories.view',compact('categories','lists'));
+        return view ('users.categories.view',compact('categories','lists','count'));
     }
 
     public function viewcat($id)
     {
         $lists = Category::all();
         $posts = Post::where('category_id',$id)->orderBy('id','desc')->paginate(4);
-
-        return view ('users.categories.category',compact('posts','lists'));
+        $count = Post::all();
+        return view ('users.categories.category',compact('posts','lists','count'));
     }
 
     public function profile()

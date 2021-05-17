@@ -64,7 +64,9 @@
         <h3 class="h6">Categories</h3>
       </header>
       @forelse ( $categories->take(7) as $category )
-      <div class="item d-flex justify-content-between"><a href="#">{{ $category->title }}</a></div>
+      <div class="item d-flex justify-content-between"><a href="#">{{ $category->title }}</a>
+        <span>({{ $count->where('category_id',$category->id)->count() }})</span>
+      </div>
       @empty
       <div class="item d-flex justify-content-between"><a href="#">No Categories Available</div>
       @endforelse
