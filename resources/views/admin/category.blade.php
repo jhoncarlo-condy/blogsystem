@@ -89,7 +89,7 @@ $(document).ready(function(){
                             @csrf
                             @method('DELETE')
                             <a href="javascript:;" onclick="document.getElementById('deleteform').submit();">
-                                <i class="fas fa-trash"></i>
+                            <i class="fas fa-trash"></i>
                             </a>
                         </form>
                         @endif

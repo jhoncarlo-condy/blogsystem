@@ -68,7 +68,7 @@
                 <td>
                     <div class="form-row">
                     {{-- view button --}}
-                    <a name="" id="" href="{{ route('viewprofile',$user->id) }}" role="button">
+                    <a name="" id="" href="{{ route('users.viewprofile',$user->id) }}" role="button">
                         <i class="fas fa-eye"></i>
                     </a>
                 </td>

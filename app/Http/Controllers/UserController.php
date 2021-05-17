@@ -52,6 +52,16 @@ class UserController extends Controller
         return view ('admin.dashboard', compact('countusers','countcat','countpost','commentcount'));
     }
 
+    public function viewprofile($id)
+    {
+        $count = Post::where('user_id',$id)->count();
+        $last = Post::where('user_id',$id)->latest('id')->get();
+        $category = Category::all();
+        $posts = Post::where('user_id',$id)->latest('id')->paginate(4);
+        $commentcount = Comment::where('user_id',$id)->count();
+        return view('admin.visitprofile',compact('count','last','category','posts','commentcount'));
+    }
+
     /**
      * Store a newly created resource in storage.
      *
