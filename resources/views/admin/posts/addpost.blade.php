@@ -138,19 +138,20 @@
 </section>
 @endsection
 @section('content-wrapper')
+@if ($errors->any())
+@foreach ($errors->all() as $error)
 
+<div class="alert alert-danger">
+            {{ $error }}
+
+
+</div>
+@endforeach
+@endif
     <section class="content">
         <div class="container-fluid">
           <!-- SELECT2 EXAMPLE -->
-          @if ($errors->any())
-                <div class="alert alert-danger">
-                    <ul>
-                        @foreach ($errors->all() as $error)
-                            <li>{{ $error }}</li>
-                        @endforeach
-                    </ul>
-                </div>
-            @endif
+
           <div class="card card-primary">
             <div class="card-header">
               <h3 class="card-title">Add Post</h3>

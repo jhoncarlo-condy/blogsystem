@@ -28,6 +28,16 @@
     <strong>{{ session('message') }}</strong>
 </div>
 @endif
+@if ($errors->any())
+@foreach ($errors->all() as $error)
+
+<div class="alert alert-danger">
+            {{ $error }}
+
+
+</div>
+@endforeach
+@endif
 <!-- Button trigger modal -->
 @if (Auth::user()->usertype == '1')
 
@@ -101,8 +111,8 @@
                                         </button>
                                 </div>
                                 <div class="modal-body">
-                                    <form action="" method="POST" id="category">
-                                        @method('POST')
+                                    <form action="{{ route('users.update',$user->id) }}" method="POST" id="edituser">
+                                        @method('PUT')
                                         @csrf
                                         <div class="form-group">
                                           <label for="firstname">First Name</label>
@@ -123,12 +133,12 @@
                                         <div class="form-group">
                                             <label for="email">E-mail</label>
                                             <input type="email" class="form-control" name="email" id="email" aria-describedby="helpId" placeholder=""
-                                            value="{{ $user->lastname }}">
+                                            value="{{ $user->email }}">
                                         </div>
                                         @if ($errors->has('email'))
                                                 <strong class="text-danger">{{ $errors->first('email') }}</strong>
                                         @endif
-                                        <div class="form-group">
+                                        {{-- <div class="form-group">
                                             <button type="button" class="btn btn-primary btn-sm" id="pass-btn">Change Password</button>
                                         </div>
                                         <div class="displaypass">
@@ -153,7 +163,7 @@
                                                     <strong class="text-danger">{{ $errors->first('confirm_password') }}</strong>
                                             @endif
 
-                                        </div>
+                                        </div> --}}
                                         <div class="form-group">
                                           <label for="usertype">Usertype</label>
                                           <select class="form-control" name="usertype" id="usertype">
@@ -212,7 +222,7 @@
                     </button>
             </div>
             <div class="modal-body">
-                <form action="{{ route('users.store') }}" method="POST" id="category">
+                <form id="adduser" action="{{ route('users.store') }}" method="POST" id="category">
                     @method('POST')
                     @csrf
                     <div class="form-group">
@@ -300,5 +310,101 @@ $(document).ready(function()
 
     })
 })
+</script>
+<script>
+    $(document).ready(function()
+    {
+        $("#adduser").validate(
+            {
+                rules:
+                {
+                    firstname: "required",
+                    lastname: "required",
+                    email: "required",
+                    usertype: "required",
+                    password:
+                    {
+                        required:true,
+                        minlength:6,
+                    },
+                    confirm_password:
+                    {
+                        equalTo:"password",
+                    }
+                },
+                messages:
+                {
+                    password:
+                    {
+                        required: "Password field is required",
+                        maxlength: "description must be 100 characters or below"
+                    }
+                },
+                errorElement: 'span',
+                errorPlacement: function (error, element) {
+                error.addClass('invalid-feedback');
+                element.closest('.form-group').append(error);
+                },
+                highlight: function (element, errorClass, validClass) {
+                $(element).addClass('is-invalid');
+                },
+                unhighlight: function (element, errorClass, validClass) {
+                $(element).removeClass('is-invalid');
+                }
+
+
+            });
+
+
+
+    });
+</script>
+<script>
+    $(document).ready(function()
+    {
+        $("#edituser").validate(
+            {
+                rules:
+                {
+                    firstname: "required",
+                    lastname: "required",
+                    email: "required",
+                    usertype: "required",
+                    password:
+                    {
+                        required:true,
+                        minlength:6,
+                    },
+                    confirm_password:
+                    {
+                        equalTo:"password",
+                    }
+                },
+                messages:
+                {
+                    password:
+                    {
+                        required: "Password field is required",
+                        maxlength: "description must be 100 characters or below"
+                    }
+                },
+                errorElement: 'span',
+                errorPlacement: function (error, element) {
+                error.addClass('invalid-feedback');
+                element.closest('.form-group').append(error);
+                },
+                highlight: function (element, errorClass, validClass) {
+                $(element).addClass('is-invalid');
+                },
+                unhighlight: function (element, errorClass, validClass) {
+                $(element).removeClass('is-invalid');
+                }
+
+
+            });
+
+
+
+    });
 </script>
 @endpush

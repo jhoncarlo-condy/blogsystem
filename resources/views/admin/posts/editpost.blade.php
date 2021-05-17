@@ -138,7 +138,16 @@
 </section>
 @endsection
 @section('content-wrapper')
+@if ($errors->any())
+@foreach ($errors->all() as $error)
 
+<div class="alert alert-danger">
+            {{ $error }}
+
+
+</div>
+@endforeach
+@endif
     <section class="content">
         <div class="container-fluid">
           <!-- SELECT2 EXAMPLE -->
@@ -148,7 +157,7 @@
 
 
             </div>
-            <form action="{{ route('post.update',$posts->id) }}" method="POST" enctype="multipart/form-data">
+            <form id="editpost" action="{{ route('post.update',$posts->id) }}" method="POST" enctype="multipart/form-data">
                 @method('PATCH')
                 @csrf
             <!-- /.card-header -->
@@ -235,9 +244,10 @@
               <!-- /.row -->
             </div>
             <!-- /.card-body -->
+            <div class="form-group">
             <div class="mb-3 ml-2 mr-2">
-            <textarea id="summernote" name="description">{{$posts->description }}</textarea>
-
+                <textarea id="summernote" name="description">{{$posts->description }}</textarea>
+            </div>
             </div>
             <!-- /.card -->
             {{-- ckeditor --}}
@@ -260,7 +270,7 @@
             <!-- /.col-->
           </div> --}}
           <div class="form-group text-right mr-4">
-            <button type="submit" class="btn btn-primary" onclick="this.disabled=true;this.value='Sending, please wait...';this.form.submit();">Edit Post</button>
+            <button type="submit" class="btn btn-primary">Edit Post</button>
           </div>
         </form>
         </div>
@@ -269,7 +279,7 @@
 
 
 @endsection
-@push('addpost')
+@push('scripts')
 
 <script>
     $(document).ready(function() {
@@ -283,5 +293,45 @@
         });
     });
 </script>
+<script>
+    $(document).ready(function()
+    {
+        $("#editpost").validate(
+            {
+                rules:
+                {
+                    title: "required",
+                    description:
+                    {
+                        required:true,
+                        maxlength:100,
+                    }
+                },
+                messages:
+                {
+                    description:
+                    {
+                        required: "Please enter description",
+                        maxlength: "description must be 100 characters or below"
+                    }
+                },
+                errorElement: 'span',
+                errorPlacement: function (error, element) {
+                error.addClass('invalid-feedback');
+                element.closest('.form-group').append(error);
+                },
+                highlight: function (element, errorClass, validClass) {
+                $(element).addClass('is-invalid');
+                },
+                unhighlight: function (element, errorClass, validClass) {
+                $(element).removeClass('is-invalid');
+                }
 
+
+            });
+
+
+
+    });
+</script>
 @endpush

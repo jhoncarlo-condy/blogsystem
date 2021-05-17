@@ -124,7 +124,21 @@ class UserController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $request->validate([
+            'firstname' => 'required|string|max:255',
+            'lastname' => 'required|string|max:255',
+            'email' => 'required|string|email|max:255',
+            'usertype' => 'required'
+        ]);
+
+        $users = User::find($id);
+        $users->firstname = $request->firstname;
+        $users->lastname = $request->lastname;
+        $users->email = $request->email;
+        $users->usertype = $request->usertype;
+        $users->update();
+        return redirect()->back()->with(['message'=>'User Updated Successfully']);
+
     }
 
     /**
