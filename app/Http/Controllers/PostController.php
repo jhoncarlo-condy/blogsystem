@@ -2,11 +2,12 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Controllers\Image;
 use App\Post;
+use App\Comment;
 use App\Category;
 
 use Illuminate\Http\Request;
+use App\Http\Controllers\Image;
 
 class PostController extends Controller
 {
@@ -88,8 +89,11 @@ class PostController extends Controller
         $posts = Post::find($post->id);
         $latest = Post::all()->sortByDesc('id');
         $find = Category::find($posts->category_id);
+        $comments = Comment::all()->where('post_id',$post->id)->sortByDesc('id');
+        $commentcount = Comment::all()->where('post_id',$post->id)->count();
+
         // $num = Post::find('category_id', '6')->count();
-        return view ('admin.posts.viewpost', compact('posts','category','find','latest','num'));
+        return view ('admin.posts.viewpost', compact('posts','category','find','latest','num','comments','commentcount'));
     }
 
     /**

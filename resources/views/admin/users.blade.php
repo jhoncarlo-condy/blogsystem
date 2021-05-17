@@ -54,7 +54,7 @@
 
             @forelse ($users as $key=>$user)
             <tr>
-                <td scope="row">{{ $user->id}}</td>
+                <td scope="row">{{ $key+1}}</td>
                 <td>{{ $user->firstname }}</td>
                 <td>{{ $user->lastname }}</td>
                 <td>{{ $user->email }}</td>
@@ -80,7 +80,7 @@
                         </a>
                 </td>
                 <td>
-                        <form action="" method="POST">
+                        <form id="deleteform" action="{{ route('users.destroy',$user->id) }}" method="POST">
                             @csrf
                             @method('DELETE')
                             <a href="javascript:;" onclick="document.getElementById('deleteform').submit();">

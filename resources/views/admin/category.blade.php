@@ -85,7 +85,7 @@ $(document).ready(function(){
                         </a>
                 </td>
                 <td>
-                        <form id="delete-{{ $cat->id }}" action="{{ route('category.destroy',$cat->id) }}" method="POST">
+                        <form id="deleteform" action="{{ route('category.destroy',$cat->id) }}" method="POST">
                             @csrf
                             @method('DELETE')
                             <a href="javascript:;" onclick="document.getElementById('deleteform').submit();">

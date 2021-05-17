@@ -61,7 +61,7 @@
 
             @forelse ($posts as $key=>$post)
             <tr>
-                <td scope="row">{{ $post->id}}</td>
+                <td scope="row">{{ $key+1}}</td>
                 <td>{{ $post->title }}</td>
                 <td>{{ $post->category->title }}</td>
                 <td>{{ $post->user->firstname }}</td>
