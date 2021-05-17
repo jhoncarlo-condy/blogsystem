@@ -115,7 +115,8 @@ class BlogUserController extends Controller
         $last = Post::where('user_id',Auth::user()->id)->latest('id')->get();
         $category = Category::all();
         $posts = Post::where('user_id', Auth::user()->id)->latest('id')->paginate(4);
-        return view ('users.profile.view', compact('posts','category','count','last'));
+        $commentcount = Comment::where('user_id',Auth::user()->id)->count();
+        return view ('users.profile.view', compact('posts','category','count','last','commentcount'));
     }
 
 

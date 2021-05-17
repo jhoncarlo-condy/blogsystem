@@ -42,10 +42,10 @@
             <div class="inner">
               <h3>{{ $countcat }}<sup style="font-size: 20px"></sup></h3>
 
-              <p>Total Category</p>
+              <p>Total Categories</p>
             </div>
             <div class="icon">
-              <i class="ion ion-stats-bars"></i>
+                <i class="fas fa-tags    "></i>
             </div>
             <a href="#" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
           </div>
@@ -60,7 +60,7 @@
               <p>Total Posts</p>
             </div>
             <div class="icon">
-              <i class="ion ion-person-add"></i>
+              <i class="fas fa-comment-alt    "></i>
             </div>
             <a href="#" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
           </div>
@@ -70,12 +70,12 @@
           <!-- small box -->
           <div class="small-box bg-danger">
             <div class="inner">
-              <h3>65</h3>
+              <h3>{{ $commentcount }}</h3>
 
               <p>Total Comments</p>
             </div>
             <div class="icon">
-              <i class="ion ion-pie-graph"></i>
+                <i class="fas fa-comment-dots    "></i>
             </div>
             <a href="#" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
           </div>

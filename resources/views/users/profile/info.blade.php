@@ -25,8 +25,17 @@
                     @forelse ($last->take(1) as $last)
                     {{ $last->created_at->diffForHumans()}}
                     @empty
-                    0
+                    n/a
                     @endforelse
+                    </p>
+                </li>
+                <li class="list-group-item">
+                    <b>Your total Comments</b> <p class="float-right">
+                    @if ($commentcount > 0 )
+                        {{ $commentcount }}
+                    @else
+                    0
+                    @endif
                     </p>
                 </li>
               </ul>
