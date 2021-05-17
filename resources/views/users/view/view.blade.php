@@ -67,7 +67,7 @@
                   <div class="date"><i class="fas fa-calendar fa-xs"></i>{{ $posts->created_at->format('m/d/Y') }}</div>
                   <div class="date"><i class="fas fa-clock fa-xs"></i>{{ $posts->created_at->format('H:i A') }}</div>
                   {{-- <div class="views"></div> --}}
-                  <div class="comments meta-last"><i class="fas fa-comment fa-xs"></i>12</div>
+                  <div class="comments meta-last"><i class="fas fa-comment fa-xs"></i>{{ $commentcount }}</div>
                 </div>
               </div>
               <div class="post-body mb-6">

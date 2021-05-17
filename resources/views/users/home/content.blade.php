@@ -38,7 +38,7 @@
                 <div class="post-details">
                   <div class="post-meta d-flex justify-content-between">
                     <div class="date meta-last">{{ $cont->created_at->format('m d') . "|" . $cont->created_at->format('Y') }}</div>
-                    <div class="category"><a href="">{{ $cont->category->title }}</a></div>
+                    <div class="category"><a href="{{ route('blog.show', $cont->id) }}">{{ $cont->category->title }}</a></div>
                   </div><a href="{{ route('blog.show', $cont->id) }}">
                     <h3 class="h4">{{ $cont->title }}</h3></a>
                   <p class="text-muted">See more ..</p>
@@ -48,7 +48,7 @@
                           <i class="fas fa-user fa-xs"></i><span>{{ $cont->user->firstname }}</span>
                       </div></a>
                     <div class="date"><i class="fas fa-clock fa-xs"></i>{{ $cont->created_at->diffForHumans() }}</div>
-                    <div class="comments meta-last"><i class="fas fa-comment fa-xs"></i></i>12</div>
+                    <div class="comments meta-last"><i class="fas fa-comment fa-xs"></i></i>{{ $commentcount->where('post_id',$cont->id)->count() }}</div>
                   </footer>
                 </div>
               </div>
