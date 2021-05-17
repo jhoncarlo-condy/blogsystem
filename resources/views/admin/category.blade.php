@@ -61,7 +61,8 @@ $(document).ready(function(){
                 <th>Title</th>
                 <th>Description</th>
                 @if(Auth::user()->usertype == '1')
-                <th>Action</th>
+                <th>Edit</th>
+                <th>Delete</th>
                 @endif
             </tr>
         </thead>
@@ -79,16 +80,17 @@ $(document).ready(function(){
                     <!-- Button trigger edit modal -->
                     <div class="form-row">
 
-                        <button type="button" class="btn btn-success" data-toggle="modal" data-target="#editModal{{ $cat->id }}">
-                            <i class="fas fa-edit"></i>Edit
-                        </button>
-
+                        <a name="" id="" href="#" role="button" data-toggle="modal" data-target="#editModal{{ $cat->id }}">
+                            <i class="fas fa-edit"></i>
+                        </a>
+                </td>
+                <td>
                         <form id="delete-{{ $cat->id }}" action="{{ route('category.destroy',$cat->id) }}" method="POST">
                             @csrf
                             @method('DELETE')
-                            <button type="button" class="btn btn-danger delete">
-                            <i class="fas fa-eraser"></i>Delete
-                            </button>
+                            <a href="javascript:;" onclick="document.getElementById('deleteform').submit();">
+                                <i class="fas fa-trash"></i>
+                            </a>
                         </form>
                         @endif
                     </div>

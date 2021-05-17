@@ -2,7 +2,10 @@
 
 namespace App\Http\Controllers;
 
+use App\Post;
 use App\User;
+use App\Comment;
+use App\Category;
 use Illuminate\Http\Request;
 use App\Rules\MatchOldPassword;
 use Illuminate\Support\Facades\Auth;
@@ -57,7 +60,12 @@ class ProfileController extends Controller
      */
     public function show($id)
     {
-        //
+        $count = Post::where('user_id',$id)->count();
+        $last = Post::where('user_id',$id)->latest('id')->get();
+        $category = Category::all();
+        $posts = Post::where('user_id',$id)->latest('id')->paginate(4);
+        $commentcount = Comment::where('user_id',$id)->count();
+        return view('users.profile.visitprofile',compact('count','last','category','posts','commentcount'));
     }
 
     /**

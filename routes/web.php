@@ -34,6 +34,7 @@ Route::middleware(['auth', 'admin'])->group(function () {
 });
 
 Route::post('/profile','ProfileController@store')->name('changepassword');
+Route::get('/profile/view/{id}','ProfileController@show')->name('viewprofile');
 Route::resource('/blog', 'BlogUserController');
 Route::get('/blog/categories/list','BlogUserController@category')->name('categories');
 Route::get('/blog/categories/view/{id}','BlogUserController@viewcat')->name('view');

@@ -45,7 +45,9 @@
                 <th>Last Name</th>
                 <th>E-mail</th>
                 <th>Usertype</th>
-                <th>Action</th>
+                <th>View</th>
+                <th>Edit</th>
+                <th>Delete</th>
             </tr>
         </thead>
         <tbody>
@@ -66,21 +68,24 @@
                 <td>
                     <div class="form-row">
                     {{-- view button --}}
-                        <button type="button" class="btn btn-primary">
-                            View
-                        </button>
+                    <a name="" id="" href="{{ route('viewprofile',$user->id) }}" role="button">
+                        <i class="fas fa-eye"></i>
+                    </a>
+                </td>
+                <td>
                     <!-- Button trigger edit modal -->
                         @if (Auth::user()->usertype == '1')
-                        <button type="button" class="btn btn-success" data-toggle="modal" data-target="#editModal{{ $user->id }}">
-                            <i class="fas fa-edit"></i>Edit
-                        </button>
-
+                        <a name="" id="" href="#" role="button" data-toggle="modal" data-target="#editModal{{ $user->id }}">
+                            <i class="fas fa-edit"></i>
+                        </a>
+                </td>
+                <td>
                         <form action="" method="POST">
                             @csrf
                             @method('DELETE')
-                            <button type="button" class="btn btn-danger" id="delete">
-                            <i class="fas fa-eraser"></i>Delete
-                            </button>
+                            <a href="javascript:;" onclick="document.getElementById('deleteform').submit();">
+                                <i class="fas fa-trash"></i>
+                            </a>
                         </form>
                         @endif
                     </div>

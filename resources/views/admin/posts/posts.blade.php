@@ -88,7 +88,6 @@
                             <a href="javascript:;" onclick="document.getElementById('deleteform').submit();">
                             <i class="fas fa-trash"></i>
                             </a>
-                            <input type="hidden">
                         </form>
                 </td>
                 @endif
