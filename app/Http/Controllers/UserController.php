@@ -58,8 +58,9 @@ class UserController extends Controller
         $last = Post::where('user_id',$id)->latest('id')->get();
         $category = Category::all();
         $posts = Post::where('user_id',$id)->latest('id')->paginate(4);
+        $users = User::find($id);
         $commentcount = Comment::where('user_id',$id)->count();
-        return view('admin.visitprofile',compact('count','last','category','posts','commentcount'));
+        return view('admin.visitprofile',compact('count','last','category','posts','commentcount','users'));
     }
 
     /**

@@ -10,7 +10,7 @@
             <li class="breadcrumb-item"><a href="{{ route('users.dashboard') }}">Administrator</a></li>
             <li class="breadcrumb-item active">Users</li>
             <li class="breadcrumb-item active">Profile</li>
-            <li class="breadcrumb-item active">{{ $posts[0]->user->firstname . " " . $posts[0]->user->lastname }}</li>
+            <li class="breadcrumb-item active">{{ $users->firstname . " " . $users->lastname }}</li>
           </ol>
         </div>
       </div>
@@ -40,14 +40,13 @@
               <div class="text-center">
                 <img class="profile-user-img img-fluid img-circle" src="https://thumbs.dreamstime.com/b/default-avatar-profile-icon-vector-social-media-user-portrait-176256935.jpg" alt="User profile picture">
               </div>
-              @forelse ($posts as $post)
 
-              <h3 class="profile-username text-center">{{ $post->user->firstname . " " . $post->user->lastname }}</h3>
+              <h3 class="profile-username text-center">{{ $users->firstname . " " . $users->lastname }}</h3>
 
               <p class="text-muted text-center">
-                  @if ($post->user->usertype  == 3)
-                    User
-                  @elseif ($post->user->usertype  == 2)
+                  @if ($users->usertype  == 3)
+                    <User></User>
+                  @elseif ($users->usertype  == 2)
                     Admin
                   @else
                     SuperAdmin
@@ -140,6 +139,7 @@
               <div class="tab-content">
                 <div class="tab-pane active" id="activity">
                   <!-- Post -->
+              @forelse ($posts as $post)
                     <div class="post">
                         <div class="user-block">
                           <img class="img-circle img-bordered-sm" src="https://thumbs.dreamstime.com/b/default-avatar-profile-icon-vector-social-media-user-portrait-176256935.jpg" alt="user image">
@@ -175,7 +175,7 @@
                         {{-- <input class="form-control form-control-sm" type="text" placeholder="Type a comment"> --}}
                       </div>
                     @empty
-                    You don't have any posts yet.
+                    User don't have any posts yet.
                     @endforelse
                   <!-- /.post -->
                   <div class="d-flex justify-content-center">
