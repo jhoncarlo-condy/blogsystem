@@ -17,21 +17,18 @@
   </section>
 @endsection
 @section('content-wrapper')
-{{-- success message --}}
 
+{{-- success message --}}
 @if (Session::has('error'))
-    <script>
-        $(document).ready(function()
-        {
-            Swal.fire({
-        position: 'top-end',
-        icon: 'success',
-        title: 'Your work has been saved',
-        showConfirmButton: false,
-        timer: 1500
-        });
-        });
-    </script>
+
+<div class="alert alert-danger alert-dismissible fade show" role="alert">
+    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+        <span aria-hidden="true">&times;</span>
+        <span class="sr-only">Close</span>
+    </button>
+    <strong>{{ session('error') }}</strong>
+</div>
+
 @endif
 @if (Session::has('message'))
 <script>
@@ -95,7 +92,7 @@ $(document).ready(function(){
                     <!-- Button trigger edit modal -->
                     <div class="form-row">
 
-                        <a name="" id="" href="#" role="button" data-toggle="modal" data-target="#editModal{{ $cat->id }}">
+                        <a name="" style="color:green;" id="" href="#" role="button" data-toggle="modal" data-target="#editModal{{ $cat->id }}">
                             <i class="fas fa-edit"></i>
                         </a>
                 </td>
@@ -209,6 +206,33 @@ $(document).ready(function(){
 {{-- <button type="button" id="sample">sweetalert</button> --}}
 @endsection
 @push('scripts')
+@if (Session::has('error'))
+
+<script>
+    $(document).ready(function()
+    {
+        swal({
+        title: "Error Deleting Category",
+        text: "There's still existing post with the category you selected",
+        type: "error",
+        closeOnConfirm: false
+        })
+    });
+</script>
+@elseif(Session::has('message'))
+
+<script>
+    $(document).ready(function()
+    {
+        swal({
+        title: "Success!",
+        text: "Operation Success",
+        type: "success",
+        closeOnConfirm: false
+        })
+    });
+</script>
+@endif
 <script>
     $(document).ready(function()
     {

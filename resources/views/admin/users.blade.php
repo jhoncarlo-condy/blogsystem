@@ -78,14 +78,14 @@
                 <td>
                     <div class="form-row">
                     {{-- view button --}}
-                    <a name="" id="" href="{{ route('users.viewprofile',$user->id) }}" role="button">
+                    <a name=""  id="" href="{{ route('users.viewprofile',$user->id) }}" role="button">
                         <i class="fas fa-eye"></i>
                     </a>
                 </td>
                 <td>
                     <!-- Button trigger edit modal -->
                         @if (Auth::user()->usertype == '1')
-                        <a name="" id="" href="#" role="button" data-toggle="modal" data-target="#editModal{{ $user->id }}">
+                        <a name="" style="color:green;" id="" href="#" role="button" data-toggle="modal" data-target="#editModal{{ $user->id }}">
                             <i class="fas fa-edit"></i>
                         </a>
                 </td>
@@ -93,9 +93,9 @@
                         <form id="deleteform" action="{{ route('users.destroy',$user->id) }}" method="POST">
                             @csrf
                             @method('DELETE')
-                            <a href="javascript:;" onclick="document.getElementById('deleteform').submit();">
-                                <i class="fas fa-trash"></i>
-                            </a>
+                            <button type="submit"  style="border: 0; background: none;color:red;">
+                                <i class="fas fa-trash    "></i>
+                            </button>
                         </form>
                         @endif
                     </div>

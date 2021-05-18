@@ -5,6 +5,9 @@
         <a class="nav-link" data-widget="pushmenu" href="#" role="button"><i class="fas fa-bars"></i></a>
       </li>
       <li class="nav-item d-none d-sm-inline-block">
+        <a href="{{ route('users.dashboard') }}" class="nav-link active"><h5>Blog Management System</h5></a>
+      </li>
+      <li class="nav-item d-none d-sm-inline-block">
         <a href="{{ route('users.dashboard') }}" class="nav-link">Dashboard</a>
       </li>
       <li class="nav-item d-none d-sm-inline-block">
@@ -16,6 +19,7 @@
       <li class="nav-item d-none d-sm-inline-block">
         <a href="{{ route('users.index') }}" class="nav-link">Users</a>
       </li>
+
     </ul>
 
     <!-- SEARCH FORM -->
@@ -146,6 +150,10 @@
                         </a>
 
                         <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
+                            <a class="dropdown-item" href="{{ route('blog.index') }}">
+                             Blog Home
+                            </a>
+
                             <a class="dropdown-item" href="{{ route('logout') }}"
                                onclick="event.preventDefault();
                                              document.getElementById('logout-form').submit();">

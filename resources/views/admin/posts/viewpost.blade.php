@@ -34,9 +34,9 @@
             </div>
             <div class="post-details">
               <div class="post-meta d-flex justify-content-between">
-                <div class="category"><a href="#">{{ $find->title }}</a></div>
+                <div class="category"><a href="{{ route('post.show',$find->id) }}">{{ $find->title }}</a></div>
               </div>
-              <h1>{{ $posts->title }}<a href="#"><i class="fa fa-bookmark-o"></i></a></h1>
+              <h1>{{ $posts->title }}<a href="{{ route('post.show',$find->id) }}"><i class="fa fa-bookmark-o"></i></a></h1>
               <div class="post-footer d-flex align-items-center flex-column flex-sm-row"><a href="{{ route('users.viewprofile', $posts->user_id) }}" class="author d-flex align-items-center flex-wrap">
                   {{-- <div class="avatar"><img src="img/avatar-1.jpg" alt="..." class="img-fluid"></div> --}}
                   <i class="fas fa-user fa-sm"></i><div class="title"><span>{{ $posts->user->firstname . " ". $posts->user->lastname . " "}} </span></div></a>
@@ -44,7 +44,7 @@
                   <div class="date"><i class="fas fa-calendar fa-xs"></i>{{ $posts->created_at->format('m/d/Y')  }}</div>
                   <div class="date"><i class="fas fa-clock fa-xs"></i>{{ $posts->created_at->format('H:i A') }}</div>
                   {{-- <div class="views"></div> --}}
-                  <div class="comments meta-last"><i class="fas fa-comment fa-xs"></i>12</div>
+                  <div class="comments meta-last"><i class="fas fa-comment fa-xs"></i>{{ $commentcount }}</div>
                 </div>
               </div>
               <div class="post-body mb-6">
@@ -172,7 +172,7 @@
       @empty
       <div class="item d-flex justify-content-between"><a href="#">No Categories Available</div>
       @endforelse
-      <a href="#"><div class=" d-flex justify-content-between">See All&rarr;</a></div>
+      <a href="{{ route('category.index') }}"><div class=" d-flex justify-content-between">See All&rarr;</a></div>
       {{-- {{ $categories->links() }} --}}
     </div>
     <!-- Widget [Tags Cloud Widget]-->

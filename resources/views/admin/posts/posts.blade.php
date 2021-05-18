@@ -33,7 +33,7 @@
 @if(Auth::user()->usertype == '1')
 <div class="">
     <a name="" id="" class="btn btn-primary float-right mr-5 mb-2" href="{{ route('post.create') }}" role="button">
-    <i class="fas fa-plus-circle">Add New Post</i>
+     Add New Post
     </a>
 </div>
 @endif
@@ -77,7 +77,7 @@
                 @else
                 <td>
                     <!-- Button trigger edit modal -->
-                    <a name="" id="" href="{{ route('post.edit', $post->id) }}" role="button">
+                    <a name="" id="" style="color:green;" href="{{ route('post.edit', $post->id) }}" role="button">
                         <i class="fas fa-edit    "></i>
                     </a>
                 </td>
@@ -85,9 +85,9 @@
                         <form id="deleteform" action="{{ route('post.destroy',$post->id) }}" method="POST">
                             @csrf
                             @method('delete')
-                            <a href="javascript:;" onclick="document.getElementById('deleteform').submit();">
-                            <i class="fas fa-trash"></i>
-                            </a>
+                            <button type="submit"  style="border: 0; background: none;color:red;">
+                                <i class="fas fa-trash    "></i>
+                            </button>
                         </form>
                 </td>
                 @endif
@@ -108,3 +108,19 @@
 </div>
 
 @endsection
+@push('scripts')
+@if(Session::has('message'))
+
+<script>
+    $(document).ready(function()
+    {
+        swal({
+        title: "Success!",
+        text: "Operation Success",
+        type: "success",
+        closeOnConfirm: false
+        })
+    });
+</script>
+@endif
+@endpush
