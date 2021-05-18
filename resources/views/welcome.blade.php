@@ -82,18 +82,21 @@
                 <div class="title m-b-md">
                     <label>Blog</label>
                 </div>
-
+                @if (Route::has('login'))
                 <div class="links">
-                    @if (Route::has('login'))
                         @auth
                             <a href="{{ url('/dashboard') }}">Home</a>
                         @else
                             <a href="{{ route('login') }}">Login</a>
-                            <a href="{{ route('register') }}">Register</a>
+                            <a href="{{ route('register') }}">Register</a><br><br>
+                            <div class="links container mt-4">
+                                <a href="{{ url('/dashboard') }}">Login as Guest</a>
+                            </div>
                         @endauth
                     </div>
-                @endif
                 </div>
+                @endif
+
             </div>
         </div>
     </body>
