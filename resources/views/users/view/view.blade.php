@@ -4,8 +4,10 @@
 </li>
 <li class="nav-item"><a href="{{ route('categories') }}" class="nav-link">Categories</a>
 </li>
+@if (Auth::user())
 <li class="nav-item"><a href="{{ route('profile') }}" class="nav-link ">Profile</a>
 </li>
+@endif
 @endsection
 @section('content')
 @if (Session::has('message'))
@@ -35,9 +37,12 @@
               <div class="back mb-2">
                 <a name="" id="" class="btn btn-secondary" href="{{ route('blog.index')}}" role="button">Back</a>
                 <div class="edit-post float-right">
-                    @if ($posts->user_id == Auth::user()->id)
-                    <a name="" id="" class="btn btn-secondary" href="{{ route('blog.edit',$posts->id) }}" role="button">Edit Post</a>
-                    @endif
+                   @if (Auth::user())
+                   @if ($posts->user_id == Auth::user()->id)
+                   <a name="" id="" class="btn btn-secondary" href="{{ route('blog.edit',$posts->id) }}" role="button">Edit Post</a>
+                   @else
+                   @endif
+                   @endif
                   </div>
               </div>
 
@@ -68,7 +73,7 @@
                   <div class="date"><i class="fas fa-calendar fa-xs"></i>{{ $posts->created_at->format('m/d/Y') }}</div>
                   <div class="date"><i class="fas fa-clock fa-xs"></i>{{ $posts->created_at->format('H:i A') }}</div>
                   {{-- <div class="views"></div> --}}
-                  <div class="comments meta-last"><i class="fas fa-comment fa-xs"></i>{{ $comments->count() }}</div>
+                  <div class="comments meta-last"><i class="fas fa-comment fa-xs"></i>{{ count($posts->comments) }}</div>
                 </div>
               </div>
               <div class="post-body mb-6">
@@ -92,24 +97,25 @@
              </div> --}}
               <div class="post-comments">
                 <header>
-                  <h3 class="h6">Post Comments<span class="no-of-comments">({{ $comments->count() }})</span></h3>
+                  <h3 class="h6">Post Comments<span class="no-of-comments">({{ count($posts->comments) }})</span></h3>
                 </header>
 
-                @forelse ($comments as $comment)
+                @forelse ($posts->comments as $postcomment)
                 <div class="comment">
                   <div class="comment-header d-flex justify-content-between">
                     <div class="user d-flex align-items-center">
                       {{-- <div class="image"><img src="img/user.sv  g" alt="..." class="img-fluid rounded-circle"></div> --}}
 
-                      <div class="title"><strong>{{ $comment->user->firstname }}</strong>
-                        <span class="date">{{ $comment->created_at->diffForHumans() }}</span>
+                      <div class="title"><strong>{{ $postcomment->user->firstname }}</strong>
+                        <span class="date">{{ $postcomment->created_at->diffForHumans() }}</span>
                       </div>
                     </div>
                   </div>
                   <div class="comment-body">
-                    <p>{{ $comment->comment }}</p>
+                    <p>{{ $postcomment->comment }}</p>
                   </div>
                   @empty
+                  {{-- if empty --}}
                   <div class="comment">
                     <div class="comment-header d-flex justify-content-between">
                       <div class="user d-flex align-items-center">
@@ -128,10 +134,37 @@
 
 
               </div>
+              @guest
+              <div class="add-comment">
+                <header>
+                  <h3 class="h6">You must login to leave a reply</h3>
+                </header>
+
+                <form action="" method="POST" class="commenting-form">
+
+                    <div class="row">
+                    <div class="form-group col-md-6">
+                        <input type="hidden" name="user_id" value="">
+                        <input type="hidden" name="post_id" value="">
+                    </div>
+                    <div class="form-group col-md-12">
+                    <label for=""></label>
+                      <textarea name="comment" id="usercomment" placeholder="Type your comment" class="form-control"></textarea>
+                    </div>
+                    <div class="form-group col-md-12">
+                      <a name="" id="" class="btn btn-secondary" href="{{ route('login') }}" role="button">Add Comment</a>
+                    </div>
+                  </div>
+                </form>
+
+              </div>
+              @endguest
+              @if (Auth::user())
               <div class="add-comment">
                 <header>
                   <h3 class="h6">Leave a reply</h3>
                 </header>
+
                 <form action="{{ route('comment.store') }}" method="POST" class="commenting-form">
                     @csrf
                     @method('POST')
@@ -149,7 +182,10 @@
                     </div>
                   </div>
                 </form>
+
               </div>
+              @endif
+
             </div>
           </div>
         </div>

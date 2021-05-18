@@ -4,8 +4,10 @@
 </li>
 <li class="nav-item"><a href="{{ route('categories') }}" class="nav-link ">Categories</a>
 </li>
+@if (Auth::user())
 <li class="nav-item"><a href="{{ route('profile') }}" class="nav-link ">Profile</a>
 </li>
+@endif
 @endsection
 @section('content')
 <section style="background: url('https://images.unsplash.com/photo-1432821579285-1b649e5b1ce3?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=750&q=80'); background-size: cover; background-position: center center" class="hero">

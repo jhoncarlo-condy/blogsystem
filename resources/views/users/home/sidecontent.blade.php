@@ -1,34 +1,36 @@
 
 <aside class="col-lg-4">
 
-    <div class="widget latest-posts">
-        <header>
-          <h3 class="h6">Your Recent Posts</h3>
-        </header>
-        @forelse ($myrecent->take(3) as $recent)
-        <div class="blog-posts">
-          <a href="{{ route('blog.show',$recent->id) }}">
-            <div class="item d-flex align-items-center">
-              <div class="image">
-                  @if ($recent->image)
-                  <img src="{{ url('storage/'.$recent->image) }}" alt="..." class="img-fluid">
-                  @else
-                  <img class="img-fluid" src="https://upload.wikimedia.org/wikipedia/commons/1/14/No_Image_Available.jpg" alt="">
-                  @endif
-              </div>
-              <div class="title"><strong>{{ $recent->title }}</strong>
-                <div class="d-flex align-items-center">
-                  <div class="views"><i class="fas fa-user fa-xs"></i>Me</div>
-                  <div class="comments"><i class="fas fa-clock fa-xs"></i>{{ $recent->created_at->diffForHumans() }}</div>
-                </div>
-              </div>
+@if (Auth::user())
+<div class="widget latest-posts">
+    <header>
+      <h3 class="h6">Your Recent Posts</h3>
+    </header>
+    @forelse ($myrecent->take(3) as $recent)
+    <div class="blog-posts">
+      <a href="{{ route('blog.show',$recent->id) }}">
+        <div class="item d-flex align-items-center">
+          <div class="image">
+              @if ($recent->image)
+              <img src="{{ url('storage/'.$recent->image) }}" alt="..." class="img-fluid">
+              @else
+              <img class="img-fluid" src="https://upload.wikimedia.org/wikipedia/commons/1/14/No_Image_Available.jpg" alt="">
+              @endif
+          </div>
+          <div class="title"><strong>{{ $recent->title }}</strong>
+            <div class="d-flex align-items-center">
+              <div class="views"><i class="fas fa-user fa-xs"></i>Me</div>
+              <div class="comments"><i class="fas fa-clock fa-xs"></i>{{ $recent->created_at->diffForHumans() }}</div>
             </div>
-          </a>
+          </div>
         </div>
-        @empty
+      </a>
+    </div>
+    @empty
 
-        @endforelse
-      </div>
+    @endforelse
+</div>
+@endif
 
     <div class="widget latest-posts">
       <header>

@@ -22,7 +22,9 @@ class BlogUserController extends Controller
         $content = Post::orderBy('id','desc')->paginate(6);
         $latest = Post::all()->sortByDesc('id');
         $commentcount = Comment::all();
+        if (Auth::user()) {
         $myrecent = Post::where('user_id', Auth::user()->id)->orderBy('created_at','desc')->get();
+        }
         $categories = Category::all();
         $count = Post::all();
         return view('users.home.content',compact('latest','content','categories','myrecent','commentcount','count'));
@@ -85,8 +87,8 @@ class BlogUserController extends Controller
         $posts = Post::find($id);
         $category = Category::all();
         $latest = Post::all()->sortByDesc('id');
-        $comments = Comment::all()->where('post_id',$id)->sortByDesc('id');
-        $commentcount = Comment::all()->where('post_id',$id)->count();
+        // $comments = Comment::all()->where('post_id',$id)->sortByDesc('id');
+        // $commentcount = Comment::all()->where('post_id',$id)->count();
 
         // $find = Category::find($posts);
         return view ('users.view.view',compact('posts','latest','category','comments','commentcount'));

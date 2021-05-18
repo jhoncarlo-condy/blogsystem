@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Post;
 use App\Comment;
 use Illuminate\Http\Request;
 
@@ -14,7 +15,8 @@ class CommentController extends Controller
      */
     public function index()
     {
-        //
+        $comments = Comment::all();
+        return view ('users.comment.comments',compact('comments'));
     }
 
     /**
@@ -44,7 +46,7 @@ class CommentController extends Controller
         $comment->post_id = $request->post_id;
         $comment->comment = $request->comment;
         $comment->save();
-        return redirect()->back()->with(['message','You comment has been added']);
+        return redirect()->back()->with(['message','Your comment has been added']);
 
 
 
@@ -57,9 +59,8 @@ class CommentController extends Controller
      * @param  \App\Comment  $comment
      * @return \Illuminate\Http\Response
      */
-    public function show(Comment $comment)
+    public function show(Comment $comment, Post $post)
     {
-        //
     }
 
     /**
