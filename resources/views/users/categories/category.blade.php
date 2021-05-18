@@ -8,10 +8,8 @@
 </li>
 <li class="nav-item"><a href="{{ route('categories') }}" class="nav-link active">Categories</a>
 </li>
-@if (Auth::user())
 <li class="nav-item"><a href="{{ route('profile') }}" class="nav-link ">Profile</a>
 </li>
-@endif
 @endsection
 @section('content')
 <section style="background: url('https://images.unsplash.com/photo-1481627834876-b7833e8f5570?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=541&q=80'); background-size: cover; background-position: center bottom" class="divider">
@@ -31,7 +29,8 @@
     <div class="row">
       <main class="posts-listing col-lg-8">
         <div class="category">
-        <h3>Posts from category: {{ $posts[0]->category->title }}</h3>
+        <h3>Posts from category: {{ $categories->title }}
+        </h3>
         </div>
         <div class="container">
           <div class="row">

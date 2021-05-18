@@ -27,15 +27,5 @@ class Post extends Model
         return $this->belongsTo(Category::class);
     }
 
-    /**
-     * Get all of the comments for the Post
-     *
-     * @return \Illuminate\Database\Eloquent\Relations\HasMany
-     */
-    public function comments()
-    {
-        return $this->hasMany(Comment::class)->orderBy('id','desc');
-    }
-
     protected $guarded = [''];
 }

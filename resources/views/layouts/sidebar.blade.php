@@ -11,10 +11,16 @@
       <!-- Sidebar user (optional) -->
       <div class="user-panel mt-3 pb-3 mb-3 d-flex">
         <div class="image">
-          {{-- <img src="../../dist/img/user2-160x160.jpg" class="img-circle elevation-2" alt="User Image"> --}}
+          <img src="https://banner2.cleanpng.com/20180425/zaw/kisspng-computer-icons-user-setting-icon-5ae14125465597.8284342815247117172881.jpg" class="img-circle elevation-2" alt="User Image">
         </div>
         <div class="info">
-          <a href="#" class="d-block">Super Admin</a>
+          <a href="#" class="d-block">
+              @if (Auth::user()->usertype == 1)
+                SuperAdmin
+              @elseif (Auth::user()->usertype == 2)
+                Admin
+              @endif
+          </a>
         </div>
       </div>
 
@@ -45,39 +51,8 @@
 
           </li>
 
-          {{-- <li class="nav-item">
-            <a href="#" class="nav-link">
-              <i class="nav-icon fas fa-copy"></i>
-              <p>
-                Blog Management
-                <i class="fas fa-angle-left right"></i>
-                <span class="badge badge-info right"></span>
-              </p>
-            </a>
-            <ul class="nav nav-treeview">
-              <li class="nav-item">
-                <a href="{{ route('category.index') }}" class="nav-link">
-                    <i class="fa fa-list-alt nav-icon" aria-hidden="true"></i>
-                  <p>Category</p>
-                </a>
-              </li>
-              <li class="nav-item">
-                <a href="../layout/top-nav-sidebar.html" class="nav-link">
-                    <i class="fas fa-sticky-note    nav-icon"></i>
-                  <p>Posts</p>
-                </a>
-              </li>
-            </ul>
-          </li> --}}
           <li class="nav-item menu-open">
-            <a href="#" class="nav-link active">
-                <i class="fas fa-tasks nav-icon"></i>
-                <p>
-                Blog Management
-                <i class="fas fa-angle-left right"></i>
-                <span class="badge badge-info right">6</span>
-              </p>
-            </a>
+
             <ul class="nav nav-treeview">
               <li class="nav-item">
                 <a href="{{ route('category.index') }}" class="nav-link">

@@ -66,7 +66,7 @@
         <h3 class="h6">Categories</h3>
       </header>
       @forelse ( $categories->take(7) as $category )
-      <div class="item d-flex justify-content-between"><a href="#">{{ $category->title }}</a>
+      <div class="item d-flex justify-content-between"><a href="{{ route('view',$category->id) }}">{{ $category->title }}</a>
         <span>({{ $count->where('category_id',$category->id)->count() }})</span>
       </div>
       @empty
@@ -75,17 +75,5 @@
       <a href="{{ route('categories') }}"><div class=" d-flex justify-content-between">See All&rarr;</a></div>
       {{-- {{ $categories->links() }} --}}
     </div>
-    <!-- Widget [Tags Cloud Widget]-->
-    {{-- <div class="widget tags">
-      <header>
-        <h3 class="h6">Tags</h3>
-      </header>
-      <ul class="list-inline">
-        <li class="list-inline-item"><a href="#" class="tag">#Business</a></li>
-        <li class="list-inline-item"><a href="#" class="tag">#Technology</a></li>
-        <li class="list-inline-item"><a href="#" class="tag">#Fashion</a></li>
-        <li class="list-inline-item"><a href="#" class="tag">#Sports</a></li>
-        <li class="list-inline-item"><a href="#" class="tag">#Economy</a></li>
-      </ul>
-    </div> --}}
+
   </aside>

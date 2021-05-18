@@ -134,7 +134,7 @@
                         {{-- <input class="form-control form-control-sm" type="text" placeholder="Type a comment"> --}}
                       </div>
                     @empty
-                    User don't have any posts yet.
+                    User doesn't have any posts yet.
                     @endforelse
                   <!-- /.post -->
                   <div class="d-flex justify-content-center">

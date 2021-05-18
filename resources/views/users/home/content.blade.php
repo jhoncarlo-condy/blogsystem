@@ -41,8 +41,8 @@
                 </div>
                 <div class="post-details">
                   <div class="post-meta d-flex justify-content-between">
-                    <div class="date meta-last">{{ $cont->created_at->format('m d') . "|" . $cont->created_at->format('Y') }}</div>
-                    <div class="category"><a href="{{ route('blog.show', $cont->id) }}">{{ $cont->category->title }}</a></div>
+                        <div class="date meta-last">{{ $cont->created_at->format('m d') . "|" . $cont->created_at->format('Y') }}</div>
+                        <div class="category"><a href="{{ route('blog.show', $cont->id) }}">{{ $cont->category->title }}</a></div>
                   </div><a href="{{ route('blog.show', $cont->id) }}">
                     <h3 class="h4">{{ $cont->title }}</h3></a>
                   <p class="text-muted">See more ..</p>

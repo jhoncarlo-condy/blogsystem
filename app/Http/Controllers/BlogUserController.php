@@ -22,7 +22,8 @@ class BlogUserController extends Controller
         $content = Post::orderBy('id','desc')->paginate(6);
         $latest = Post::all()->sortByDesc('id');
         $commentcount = Comment::all();
-        if (Auth::user()) {
+        if(Auth::user())
+        {
         $myrecent = Post::where('user_id', Auth::user()->id)->orderBy('created_at','desc')->get();
         }
         $categories = Category::all();
@@ -87,8 +88,8 @@ class BlogUserController extends Controller
         $posts = Post::find($id);
         $category = Category::all();
         $latest = Post::all()->sortByDesc('id');
-        // $comments = Comment::all()->where('post_id',$id)->sortByDesc('id');
-        // $commentcount = Comment::all()->where('post_id',$id)->count();
+        $comments = Comment::all()->where('post_id',$id)->sortByDesc('id');
+        $commentcount = Comment::all()->where('post_id',$id)->count();
 
         // $find = Category::find($posts);
         return view ('users.view.view',compact('posts','latest','category','comments','commentcount'));
@@ -108,9 +109,10 @@ class BlogUserController extends Controller
     public function viewcat($id)
     {
         $lists = Category::all();
+        $categories = Category::find($id);
         $posts = Post::where('category_id',$id)->orderBy('id','desc')->paginate(4);
         $count = Post::all();
-        return view ('users.categories.category',compact('posts','lists','count'));
+        return view ('users.categories.category',compact('posts','lists','count','categories'));
     }
 
     public function profile()
@@ -118,7 +120,7 @@ class BlogUserController extends Controller
         $count = Post::where('user_id',Auth::user()->id)->count();
         $last = Post::where('user_id',Auth::user()->id)->latest('id')->get();
         $category = Category::all();
-        $posts = Post::where('user_id', Auth::user()->id)->latest('id')->paginate(4);
+        $posts = Post::where('user_id', Auth::user()->id)->latest('id')->paginate(3);
         $commentcount = Comment::where('user_id',Auth::user()->id)->count();
         return view ('users.profile.view', compact('posts','category','count','last','commentcount'));
     }

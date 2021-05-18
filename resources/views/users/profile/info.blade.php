@@ -42,7 +42,7 @@
 
 
 
-              <a href="#" class="btn btn-primary btn-block"><b>Follow</b></a>
+              {{-- <a href="#" class="btn btn-primary btn-block"><b>Follow</b></a> --}}
             </div>
             <!-- /.card-body -->
           </div>
