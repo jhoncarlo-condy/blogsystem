@@ -5,8 +5,8 @@
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
         <meta name="viewport" content="width=device-width, initial-scale=1">
 
-        <title>Laravel</title>
-
+        <title>{{ config('app.name') }}</title>
+        <link rel="icon" href="https://www.pngkey.com/png/full/232-2326777_blogger-logo-icons-no-attribution-white-blog-icon.png">
         <!-- Fonts -->
         <link href="https://fonts.googleapis.com/css?family=Raleway:100,600" rel="stylesheet" type="text/css">
 
@@ -90,7 +90,7 @@
                             <a href="{{ route('login') }}">Login</a>
                             <a href="{{ route('register') }}">Register</a><br><br>
                             <div class="links container mt-4">
-                                <a href="{{ url('/dashboard') }}">Login as Guest</a>
+                                <a href="{{ url('/blog') }}">Login as Guest</a>
                             </div>
                         @endauth
                     </div>
