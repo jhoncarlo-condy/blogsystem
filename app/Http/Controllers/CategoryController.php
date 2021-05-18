@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Category;
+use App\Post;
+use Illuminate\Database\QueryException;
 use Illuminate\Http\Request;
 
 class CategoryController extends Controller
@@ -106,9 +108,15 @@ class CategoryController extends Controller
      * @param  \App\Category  $category
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Category $category)
+    public function destroy($id)
     {
-        Category::find($category->id)->delete();
-        return redirect()->back()->with(['message' => 'Category Deleted Successfully']);
+      $cat = Post::where('category_id', $id)->doesntExist();
+      if ($cat == true) {
+            Category::find($id)->delete();
+            return redirect()->back()->with(['message'=>'Category Deleted Successfully']);
+      }
+      else {
+          return redirect()->back()->with(['message'=>'Delete post with this category before deleting category']);
+      }
     }
 }

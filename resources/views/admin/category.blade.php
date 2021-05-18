@@ -18,6 +18,21 @@
 @endsection
 @section('content-wrapper')
 {{-- success message --}}
+
+@if (Session::has('error'))
+    <script>
+        $(document).ready(function()
+        {
+            Swal.fire({
+        position: 'top-end',
+        icon: 'success',
+        title: 'Your work has been saved',
+        showConfirmButton: false,
+        timer: 1500
+        });
+        });
+    </script>
+@endif
 @if (Session::has('message'))
 <script>
 $(document).ready(function(){
@@ -88,9 +103,13 @@ $(document).ready(function(){
                         <form id="deleteform" action="{{ route('category.destroy',$cat->id) }}" method="POST">
                             @csrf
                             @method('DELETE')
-                            <a href="javascript:;" onclick="document.getElementById('deleteform').submit();">
-                            <i class="fas fa-trash"></i>
-                            </a>
+
+                            {{-- <button class="btn"><i class="fa fa-close"></i></button> --}}
+                                <button type="submit"  style="border: 0; background: none;color:red;">
+                                 <i class="fas fa-trash    "></i>
+                                </button>
+
+                            <button  id="delete" disabled="disabled" type="submit" hidden="hidden"></button>
                         </form>
                         @endif
                     </div>
