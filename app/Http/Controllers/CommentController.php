@@ -59,8 +59,10 @@ class CommentController extends Controller
      * @param  \App\Comment  $comment
      * @return \Illuminate\Http\Response
      */
-    public function show(Comment $comment, Post $post)
+    public function show(Comment $comment, Post $posts,$id)
     {
+        $postcomments = Post::find($id);
+        return view ('users.view.allcomments',compact('postcomments'));
     }
 
     /**

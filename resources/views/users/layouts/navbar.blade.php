@@ -28,6 +28,10 @@
         <div id="navbarcollapse" class="collapse navbar-collapse">
           <ul class="navbar-nav ml-auto">
             @yield('link')
+            @guest
+            <li class="nav-item"><a href="{{ route('login') }}" class="nav-link ">Login</a>
+            </li>
+            @endguest
             @if (Auth::user())
             <li class="nav-item dropdown">
                 <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>

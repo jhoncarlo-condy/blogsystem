@@ -40,6 +40,11 @@ Route::get('/blog/categories/view/{id}','BlogUserController@viewcat')->name('vie
 Route::view('categories','users.categories.allcategory',[
     'datas'=> App\Category::all()
 ])->name('list');
+// Route::view('comments','users.view.allcomments',[
+//     'posts'=> App\Post::find($id)
+// ])->name('allcomments');
+Route::get('/comments/{id}', 'CommentController@show')->name('allcomments');
+
 Route::resource('/blog', 'BlogUserController');
 
 

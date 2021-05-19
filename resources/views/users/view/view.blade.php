@@ -1,4 +1,18 @@
 @extends('users.layouts.app')
+@push('scripts')
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js" integrity="sha512-894YE6QWD5I59HgZOGReFYm4dnWc1Qt5NtvYSaNcOP+u1T9qYdvdihz0PPSiiqn/+/3e7Jo4EaG7TubfWGUrMQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+<script>
+    $(document).ready(function()
+    {
+        $('#button').click(function()
+        {
+            $('#showall').load('{{ route('allcomments',$posts->id) }}').fadeIn("slow");
+            $('#button').hide();
+
+        });
+    });
+</script>
+@endpush
 @section('link')
 <li class="nav-item"><a href="{{ route('blog.index') }}" class="nav-link active">Home</a>
 </li>
@@ -95,13 +109,14 @@
                   </div>
                   <div class="icon next"><i class="fa fa-angle-right">   </i></div></a>
              </div> --}}
-              <div class="post-comments">
+              <div class="post-comments" >
                 <header>
-                  <h3 class="h6">Post Comments<span class="no-of-comments">({{ count($posts->comments) }})</span></h3>
+                  <h3 class="h6">Comments<span class="no-of-comments">({{ count($posts->comments) }})</span></h3>
                 </header>
 
-                @forelse ($posts->comments as $postcomment)
-                <div class="comment">
+                <div class="comment" id="showall">
+                @forelse ($posts->comments->take(2) as $postcomment)
+
                   <div class="comment-header d-flex justify-content-between">
                     <div class="user d-flex align-items-center">
                       {{-- <div class="image"><img src="img/user.sv  g" alt="..." class="img-fluid rounded-circle"></div> --}}
@@ -132,6 +147,9 @@
                   @endforelse
                 </div>
 
+                <div class="seemore-button">
+                    <button type="button" id="button" class="btn btn-secondary">See more</button>
+                </div>
 
               </div>
               @guest
