@@ -10,6 +10,12 @@
             $('#button').hide();
 
         });
+        $('#catbutton').click(function()
+        {
+            $('#showcat').load('{{ route('list') }}').fadeIn("slow");
+            $('#catbutton').hide();
+
+        });
     });
 </script>
 @endpush
@@ -241,7 +247,7 @@
           @endforelse
         </div>
         <!-- Widget [Categories Widget]-->
-        <div class="widget categories">
+        <div class="widget categories" id="showcat">
           <header>
             <h3 class="h6">Categories</h3>
           </header>
@@ -253,8 +259,13 @@
           @empty
           <div class="item d-flex justify-content-between"><a href="#">No Categories Available</div>
           @endforelse
-          <a href="{{ route('categories') }}"><div class=" d-flex justify-content-between">See All&rarr;</a></div>
-          {{-- {{ $categories->links() }} --}}
+          <div class=" d-flex justify-content-between">
+            <button type="button" id="catbutton" class="btn btn-secondary">
+              See All&rarr;
+            </button>
+
+            </div>
+            {{-- {{ $categories->links() }} --}}
         </div>
 
       </aside>

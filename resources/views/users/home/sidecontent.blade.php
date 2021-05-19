@@ -1,4 +1,16 @@
 
+@push('scripts')
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js" integrity="sha512-894YE6QWD5I59HgZOGReFYm4dnWc1Qt5NtvYSaNcOP+u1T9qYdvdihz0PPSiiqn/+/3e7Jo4EaG7TubfWGUrMQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+<script>
+    $(document).ready(function()
+    {
+        $('#button').click(function()
+        {
+            $('#showall').load('{{ route('list') }}').fadeIn("slow");
+        });
+    });
+</script>
+@endpush
 <aside class="col-lg-4">
 
 @if (Auth::user())
@@ -61,7 +73,7 @@
       @endforelse
     </div>
     <!-- Widget [Categories Widget]-->
-    <div class="widget categories">
+    <div class="widget categories" id="showall">
       <header>
         <h3 class="h6">Categories</h3>
       </header>
@@ -72,8 +84,13 @@
       @empty
       <div class="item d-flex justify-content-between"><a href="#">No Categories Available</div>
       @endforelse
-      <a href="{{ route('categories') }}"><div class=" d-flex justify-content-between">See All&rarr;</a></div>
       {{-- {{ $categories->links() }} --}}
+      <div class=" d-flex justify-content-between">
+        <button type="button" id="button" class="btn btn-secondary">
+          See All&rarr;
+        </button>
+
+        </div>
     </div>
 
   </aside>
