@@ -8,10 +8,6 @@
 </li>
 <li class="nav-item"><a href="{{ route('categories') }}" class="nav-link active">Categories</a>
 </li>
-@if (Auth::user())
-<li class="nav-item"><a href="{{ route('profile') }}" class="nav-link ">Profile</a>
-</li>
-@endif
 @endsection
 @section('content')
 <section style="background: url('https://images.unsplash.com/photo-1481627834876-b7833e8f5570?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=541&q=80'); background-size: cover; background-position: center bottom" class="divider">
@@ -30,18 +26,19 @@
  <div class="container">
     <div class="row">
       <main class="posts-listing col-lg-8">
-        <h3>Latest post from each category</h3>
+        <div class="category">
+        <h3>Posts from category: {{ $categories->title }}
+        </h3>
+        </div>
         <div class="container">
           <div class="row">
             <!-- post -->
-            @forelse ($categories as $category)
-            @foreach ($category->posts as $cat)
-
+            @forelse ($posts as $post)
             <div class="post col-xl-6">
                 <div class="post-thumbnail">
-                    @if($cat->image)
-                    <a href="{{ route('blog.show',$cat->id) }}">
-                        <img style="height: 150px;width:400px;" src="{{ asset('storage/'.$cat->image) }}" alt="..." class="img-fluid"></a>
+                    @if($post->image)
+                    <a href="{{ route('blog.show',$post->id) }}">
+                        <img style="height: 150px;width:400px;" src="{{ asset('storage/'.$post->image) }}" alt="..." class="img-fluid"></a>
                     </a>
                     @else
                     <img style="height: 150px;width:400px;" src="https://upload.wikimedia.org/wikipedia/commons/1/14/No_Image_Available.jpg" alt="..." class="img-fluid"></a>
@@ -50,27 +47,25 @@
                 <div class="post-details">
                   <div class="post-meta d-flex justify-content-between">
                     <div class="date meta-last"></div>
-                    <div class="category"><a href="{{ route('blog.show',$cat->id) }}">{{ $category->title }}</a></div>
-                  </div><a href="{{ route('blog.show',$category->id) }}">
-                    <h3 class="h4">{{ $cat->title }}</h3></a>
-                  <p class="text-muted">{{ $cat->title }}</p>
-                  <p class="text-muted"><a href="{{ route('blog.show',$cat->id) }}"> See more ..</a></p>
-                  <footer class="post-footer d-flex align-items-center"><a href="{{ route('viewprofile',$cat->user->id) }}" class="author d-flex align-items-center flex-wrap">
+                    <div class="category"><a href="{{ route('blog.show',$post->id) }}">{{ $post->category->title }}</a></div>
+                  </div><a href="{{ route('blog.show', $post->id) }}">
+                    <h3 class="h4">{{ $post->title }}</h3></a>
+                  <p class="text-muted">See more ..</p>
+                  <footer class="post-footer d-flex align-items-center"><a href="{{ route('viewprofile',$post->id) }}" class="author d-flex align-items-center flex-wrap">
                       {{-- <div class="avatar"><img src="img/avatar-3.jpg" alt="..." class="img-fluid"></div> --}}
                       <div class="title">
-                          <i class="fas fa-user fa-xs"></i><span>{{ $cat->user->firstname}}</span>
+                          <i class="fas fa-user fa-xs"></i><span>{{ $post->user->firstname}}</span>
                       </div></a>
-                    <div class="date"><i class="fas fa-clock fa-xs"></i>{{ $cat->created_at->diffForHumans() }}</div>
+                    <div class="date"><i class="fas fa-clock fa-xs"></i>{{ $post->created_at->diffForHumans() }}</div>
                   </footer>
                 </div>
               </div>
-            @endforeach
-
             @empty
               Empty
             @endforelse
+
           </div>
-          {{ $categories->links() }}
+          {{ $posts->links() }}
 
           <!-- Pagination -->
           <nav aria-label="Page navigation example">
@@ -95,14 +90,13 @@
       <header>
         <h3 class="h6">Categories</h3>
       </header>
-      @forelse ( $lists as $list )
-      <div class="item d-flex justify-content-between"><a href="{{ route('view',$list->id) }}">{{ $list->title }}</a>
-        <span>({{ $count->where('category_id',$list->id)->count() }})</span>
+      @forelse ( $lists as $category )
+      <div class="item d-flex justify-content-between"><a href="{{ route('view',$category->id) }}">{{ $category->title }}</a>
+        <span>({{ $count->where('category_id',$category->id)->count() }})</span>
       </div>
       @empty
       <div class="item d-flex justify-content-between"><a href="#">No Categories Available</div>
       @endforelse
-      {{-- <a href="{{ route('categories') }}"><div class=" d-flex justify-content-between">See All&rarr;</a></div> --}}
       {{-- {{ $categories->links() }} --}}
     </div>
 

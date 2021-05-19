@@ -97,13 +97,13 @@ class BlogUserController extends Controller
 
     public function category()
     {
-        $lists = Category::all();
+        $lists = Category::paginate(4);
         $categories = Category::with(['posts' => function($query) {
             $query->latest();
         }])->paginate(4);
         $count = Post::all();
 
-        return view ('users.categories.view',compact('categories','lists','count'));
+        return view ('users.categories.category',compact('categories','lists','count'));
     }
 
     public function viewcat($id)
@@ -112,7 +112,7 @@ class BlogUserController extends Controller
         $categories = Category::find($id);
         $posts = Post::where('category_id',$id)->orderBy('id','desc')->paginate(4);
         $count = Post::all();
-        return view ('users.categories.category',compact('posts','lists','count','categories'));
+        return view ('users.categories.view',compact('posts','lists','count','categories'));
     }
 
     public function profile()

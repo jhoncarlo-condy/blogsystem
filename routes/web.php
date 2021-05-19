@@ -11,6 +11,7 @@
 |
 */
 
+use App\Category;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 
@@ -36,6 +37,9 @@ Route::middleware(['auth', 'admin'])->group(function () {
 
 Route::get('/blog/categories/list','BlogUserController@category')->name('categories');
 Route::get('/blog/categories/view/{id}','BlogUserController@viewcat')->name('view');
+Route::view('categories','users.categories.allcategory',[
+    'datas'=> App\Category::all()
+])->name('list');
 Route::resource('/blog', 'BlogUserController');
 
 
