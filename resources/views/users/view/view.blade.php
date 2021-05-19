@@ -246,11 +246,14 @@
             <h3 class="h6">Categories</h3>
           </header>
           @forelse ( $category->take(7) as $category )
-          <div class="item d-flex justify-content-between"><a href="#">{{ $category->title }}</a></div>
+          <div class="item d-flex justify-content-between">
+              <a href="#">{{ $category->title }}</a>
+              <span>({{ $count->where('category_id',$category->id)->count() }})</span>
+          </div>
           @empty
           <div class="item d-flex justify-content-between"><a href="#">No Categories Available</div>
           @endforelse
-          <a href="#"><div class=" d-flex justify-content-between">See All&rarr;</a></div>
+          <a href="{{ route('categories') }}"><div class=" d-flex justify-content-between">See All&rarr;</a></div>
           {{-- {{ $categories->links() }} --}}
         </div>
 

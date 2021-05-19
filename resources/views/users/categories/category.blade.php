@@ -118,7 +118,7 @@
       @endforelse
 
       <div class=" d-flex justify-content-between">
-      <button type="button" id="button" class="btn btn-primary">
+      <button type="button" id="button" class="btn btn-secondary">
         See All&rarr;
       </button>
 
