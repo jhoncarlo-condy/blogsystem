@@ -7,6 +7,7 @@ use Illuminate\Database\Eloquent\Relations\HasOne;
 
 class Post extends Model
 {
+    protected $table = 'posts';
     /**
      * Get the user associated with the Post
      *

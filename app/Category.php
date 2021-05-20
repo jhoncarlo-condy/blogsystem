@@ -7,6 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 class Category extends Model
 {
     protected $fillable = ['title','description'];
+    protected $table = 'categories';
 
     /**
      * Get the user associated with the Category
