@@ -196,11 +196,17 @@ $(document).ready(function(){
                     <div class="form-group">
                       <label for="description">Description</label>
                       <textarea class="form-control" name="description" id="description" cols="60" rows="5" maxlength="100"></textarea>
-
-                    {{-- @if ($errors->has('description'))
+                    @if ($errors->has('description'))
                           <strong class="text-danger">{{ $errors->first('description') }}</strong>
 
-                    @endif --}}
+                    @endif
+                    <div class="form-group">
+                        <label for="blogmax">Max Blog Post</label>
+                        <input type="text" class="form-control" name="blogmax" id="blogmax" aria-describedby="helpId" placeholder="">
+                      </div>
+                      @if ($errors->has('blogmax'))
+                              <strong class="text-danger">{{ $errors->first('blogmax') }}</strong>
+                      @endif
                     </div>
 
             </div>

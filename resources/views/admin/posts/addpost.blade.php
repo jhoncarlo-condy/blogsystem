@@ -200,9 +200,11 @@
                     <label>Category</label>
 
                     <select class="form-control " name="category_id" data-dropdown-css-class="select2-danger" style="width: 100%;">
-                        @foreach ($category as $category)}
+                        @forelse ($categories as $category)}
                         <option value="{{ $category->id}}">{{ $category->title}}</option>
-                        @endforeach
+                        @empty
+                        empty
+                        @endforelse
                     </select>
 
                   </div>

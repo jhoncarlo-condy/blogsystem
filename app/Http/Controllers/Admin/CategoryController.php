@@ -11,7 +11,8 @@ use Illuminate\Http\Request;
 class CategoryController extends Controller
 {
     public function index()
-    {   $categories = Category::select('id','title','description')->paginate(5);
+    {
+        $categories = Category::select('id','title','description')->paginate(5);
         return view('admin.category',[
             'categories'=> $categories
         ]);
@@ -21,6 +22,7 @@ class CategoryController extends Controller
         $data = $request->validate([
             'title' => 'required|unique:categories',
             'description' => 'required',
+            'blogmax'=>'required'
         ]);
         Category::create($data);
         return redirect()->back()->with(['message'=>'Added new category']);

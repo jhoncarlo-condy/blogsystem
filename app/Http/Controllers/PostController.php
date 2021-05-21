@@ -8,14 +8,10 @@ use App\Category;
 
 use Illuminate\Http\Request;
 use App\Http\Controllers\Image;
+use Illuminate\Support\Facades\Storage;
 
 class PostController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
     public function __construct()
     {
         $this->middleware('auth');
@@ -24,57 +20,53 @@ class PostController extends Controller
     }
     public function index()
     {
-        $posts = Post::paginate(5);
-        return view ('admin.posts.posts',compact('posts'));
+        $posts = Post::select('id','title','category_id',
+            'user_id','description','created_at')->paginate(5);
+        return view ('admin.posts.posts',[
+            'posts' => $posts
+        ]);
     }
-
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
     public function create()
     {
-        $count = Category::count('blogmax');
-        $category = Category::where('blogmax', '<', $count)->get();
-        $posts = Post::all();
-        return view ('admin.posts.addpost',compact('posts','category'));
+        $select = Category::select('id','title','blogmax');
+        $categories = $select->where('blogmax','>', 0)->get();
+        return view ('admin.posts.addpost',[
+            'categories'=>$categories
+        ]);
     }
-
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
     public function store(Request $request)
     {
-         $request->validate([
+         $data = $request->validate([
             'title' => 'required',
             'category_id' => 'required',
             'user_id' => 'required',
             'description' => 'required',
             'image' => 'file|image|max:5000',
         ]);
-
-
-        $post = new Post;
-        $post->title = $request->title;
-        $post->category_id = $request->category_id;
-        $post->user_id = $request->user_id;
-        $post->description = $request->description;
-        if ($request->hasFile('image'))
+        if($request->hasfile('image'))
         {
-          $upload =  $request->image->store('images', 'public');
-            $post->image = $upload;
-
+        Storage::put('images', $data['image']);
         }
-        $category = Category::find($request->category_id);
-        $category->blogmax = $category->blogmax+1;
+        Post::create($data);
+        $category = Category::find($data['category_id']);
+        $category->blogmax --;
         $category->update();
-        $post->save();
+        // $post = new Post;
+        // $post->title = $request->title;
+        // $post->category_id = $request->category_id;
+        // $post->user_id = $request->user_id;
+        // $post->description = $request->description;
+        // if ($request->hasFile('image'))
+        // {
+        //   $upload =  $request->image->store('images', 'public');
+        //     $post->image = $upload;
 
-        // $post->image = $request->image;
+        // }
+        // $category = Category::find($request->category_id);
+        // $category->blogmax = $category->blogmax+1;
+        // $category->update();
+        // $post->save();
+
         return redirect(route('post.index'))->with(['message'=>'Added new post']);
 
 
@@ -89,15 +81,17 @@ class PostController extends Controller
      */
     public function show(Post $post)
     {
-        $category = Category::all();
-        $posts = Post::find($post->id);
-        $latest = Post::all()->sortByDesc('id');
-        $find = Category::find($posts->category_id);
-        $comments = Comment::all()->where('post_id',$post->id)->sortByDesc('id');
-        $commentcount = Comment::all()->where('post_id',$post->id)->count();
 
-        // $num = Post::find('category_id', '6')->count();
-        return view ('admin.posts.viewpost', compact('posts','category','find','latest','num','comments','commentcount'));
+        $latest = Post::select('id','title','image','created_at')->orderBy('id','desc')->get();
+        $categories = Category::select('title')->get();
+        $comments = $post->comments()->orderBy('id','desc')->get();
+        return view ('admin.posts.show', [
+            'post' => $post,
+            'latest' => $latest,
+            'categories' => $categories,
+            'comments' => $comments
+
+        ]);
     }
 
     /**
