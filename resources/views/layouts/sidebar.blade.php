@@ -11,7 +11,7 @@
       <!-- Sidebar user (optional) -->
       <div class="user-panel mt-3 pb-3 mb-3 d-flex">
         <div class="image">
-          <img src="https://banner2.cleanpng.com/20180425/zaw/kisspng-computer-icons-user-setting-icon-5ae14125465597.8284342815247117172881.jpg" class="img-circle elevation-2" alt="User Image">
+          <img style="height:40px;width:40px;" src="https://banner2.cleanpng.com/20180425/zaw/kisspng-computer-icons-user-setting-icon-5ae14125465597.8284342815247117172881.jpg" class="img-circle elevation-2" alt="User Image">
         </div>
         <div class="info">
           <a href="#" class="d-block">

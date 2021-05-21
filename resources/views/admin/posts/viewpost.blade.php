@@ -1,4 +1,24 @@
 @extends('layouts.app')
+@push('scripts')
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js" integrity="sha512-894YE6QWD5I59HgZOGReFYm4dnWc1Qt5NtvYSaNcOP+u1T9qYdvdihz0PPSiiqn/+/3e7Jo4EaG7TubfWGUrMQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+<script>
+    $(document).ready(function()
+    {
+        $('#button').click(function()
+        {
+            $('#showall').load('{{ route('allcomments',$posts->id) }}').fadeIn("slow");
+            $('#button').hide();
+
+        });
+        $('#catbutton').click(function()
+        {
+            $('#showcat').load('{{ route('list') }}').fadeIn("slow");
+            $('#catbutton').hide();
+
+        });
+    });
+</script>
+@endpush
 @section('content-header')
 <section class="content-header">
     <div class="container-fluid">

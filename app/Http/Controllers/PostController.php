@@ -35,7 +35,8 @@ class PostController extends Controller
      */
     public function create()
     {
-        $category = Category::where('blogmax', '<',5)->get();
+        $count = Category::count('blogmax');
+        $category = Category::where('blogmax', '<', $count)->get();
         $posts = Post::all();
         return view ('admin.posts.addpost',compact('posts','category'));
     }

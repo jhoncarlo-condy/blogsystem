@@ -28,8 +28,12 @@
         <div id="navbarcollapse" class="collapse navbar-collapse">
           <ul class="navbar-nav ml-auto">
             @yield('link')
+            <li class="nav-item"><a href="{{ route('profile') }}" class="nav-link ">Profile</a>
+            </li>
             @guest
             <li class="nav-item"><a href="{{ route('login') }}" class="nav-link ">Login</a>
+            </li>
+            <li class="nav-item"><a href="{{ route('register') }}" class="nav-link ">Register</a>
             </li>
             @endguest
             @if (Auth::user())

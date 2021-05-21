@@ -17,6 +17,15 @@
   </section>
 @endsection
 @section('content-wrapper')
+@if ($errors->has('title'))
+<div class="alert alert-danger alert-dismissible fade show" role="alert">
+    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+        <span aria-hidden="true">&times;</span>
+        <span class="sr-only">Close</span>
+    </button>
+    <strong>{{ $errors->first('title') }}</strong>
+</div>
+@endif
 
 {{-- success message --}}
 @if (Session::has('error'))
@@ -206,6 +215,20 @@ $(document).ready(function(){
 {{-- <button type="button" id="sample">sweetalert</button> --}}
 @endsection
 @push('scripts')
+@if ($errors->has('title'))
+
+<script>
+    $(document).ready(function()
+    {
+        swal({
+        title: "Error Adding Category",
+        text: "The title has already been taken",
+        type: "error",
+        closeOnConfirm: false
+        })
+    });
+</script>
+@endif
 @if (Session::has('error'))
 
 <script>

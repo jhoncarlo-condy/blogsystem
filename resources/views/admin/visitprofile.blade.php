@@ -10,7 +10,7 @@
             <li class="breadcrumb-item"><a href="{{ route('users.dashboard') }}">Administrator</a></li>
             <li class="breadcrumb-item active">Users</li>
             <li class="breadcrumb-item active">Profile</li>
-            <li class="breadcrumb-item active">{{ $users->firstname . " " . $users->lastname }}</li>
+            <li class="breadcrumb-item active">{{ $user->firstname . " " . $user->lastname }}</li>
           </ol>
         </div>
       </div>
@@ -41,12 +41,12 @@
                 <img class="profile-user-img img-fluid img-circle" src="https://thumbs.dreamstime.com/b/default-avatar-profile-icon-vector-social-media-user-portrait-176256935.jpg" alt="User profile picture">
               </div>
 
-              <h3 class="profile-username text-center">{{ $users->firstname . " " . $users->lastname }}</h3>
+              <h3 class="profile-username text-center">{{ $user->firstname . " " . $user->lastname }}</h3>
 
               <p class="text-muted text-center">
-                  @if ($users->usertype  == 3)
-                    <User></User>
-                  @elseif ($users->usertype  == 2)
+                  @if ($user->usertype  == 3)
+                    User
+                  @elseif ($user->usertype  == 2)
                     Admin
                   @else
                     SuperAdmin
@@ -59,11 +59,7 @@
                 </li>
                 <li class="list-group-item">
                     <b>Last Post</b> <p class="float-right">
-                    @forelse ($last->take(1) as $last)
-                    {{ $last->created_at->diffForHumans()}}
-                    @empty
-                    n/a
-                    @endforelse
+                   {{ $last->created_at->diffForHumans() }}
                     </p>
                 </li>
                 <li class="list-group-item">

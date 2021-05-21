@@ -1,7 +1,8 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Admin;
 
+use App\Http\Controllers\Controller;
 use App\Post;
 use App\User;
 use App\Comment;
@@ -24,8 +25,11 @@ class UserController extends Controller
     }
     public function index()
     {
-        $users = User::paginate(5);
-        return view ('admin.users', compact('users'));
+        $select = User::select('id','firstname','lastname','email','usertype');
+        $users = $select->paginate(5);
+        return view ('admin.users', [
+            'users'=> $users
+        ]);
     }
 
     /**
@@ -45,22 +49,16 @@ class UserController extends Controller
     public function dashboard()
     {
 
-        $countusers = User::where('usertype', 3)->count();
+        $countusers = User::count('usertype',3);
         $countcat = Category::count();
         $countpost = Post::count();
         $commentcount = Comment::count();
-        return view ('admin.dashboard', compact('countusers','countcat','countpost','commentcount'));
-    }
-
-    public function viewprofile($id)
-    {
-        $count = Post::where('user_id',$id)->count();
-        $last = Post::where('user_id',$id)->latest('id')->get();
-        $category = Category::all();
-        $posts = Post::where('user_id',$id)->latest('id')->paginate(4);
-        $users = User::find($id);
-        $commentcount = Comment::where('user_id',$id)->count();
-        return view('admin.visitprofile',compact('count','last','category','posts','commentcount','users'));
+        return view ('admin.dashboard', [
+            'countusers' => $countusers,
+            'countcat' => $countcat,
+            'countpost' => $countpost,
+            'commentcount' => $commentcount,
+        ]);
     }
 
     /**
@@ -97,9 +95,25 @@ class UserController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show(User $users)
+    public function show(User $user)
     {
-        // $users = User::find($user->id);
+        $posts = Post::select('title','category','user_id','description','image','created_at');
+
+
+        $count = $posts->count('user_id',$user);
+        $last = $user->posts()->latest('id')->first();
+        $posts = $user->posts()->latest('id')->paginate(2);
+        $commentcount = $user->comments()->count();
+
+        return view('admin.visitprofile',[
+            'user'=>$user,
+            'count'=>$count,
+            'last' => $last,
+            'posts'=> $posts,
+            'commentcount' => $commentcount,
+
+        ]);
+
 
     }
 

@@ -28,9 +28,8 @@ Auth::routes();
 
 
 Route::middleware(['auth', 'admin'])->group(function () {
-    Route::resource('/users', 'UserController');
-    Route::get('/dashboard', 'UserController@dashboard')->name('users.dashboard');
-    Route::get('/dashboard/profile/{id}', 'UserController@viewprofile')->name('users.viewprofile');
+    Route::resource('/admin/users', 'Admin\UserController');
+    Route::get('/admin/dashboard', 'Admin\UserController@dashboard')->name('users.dashboard');
     Route::resource('/category', 'CategoryController');
     Route::resource('/post', 'PostController');
 });
