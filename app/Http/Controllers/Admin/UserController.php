@@ -31,21 +31,6 @@ class UserController extends Controller
             'users'=> $users
         ]);
     }
-
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        //
-    }
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
     public function dashboard()
     {
 
@@ -60,16 +45,9 @@ class UserController extends Controller
             'commentcount' => $commentcount,
         ]);
     }
-
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
     public function store(Request $request)
     {
-        $request->validate([
+        $data = $request->validate([
             'firstname' => 'required|string|max:255',
             'lastname' => 'required|string|max:255',
             'email' => 'required|string|email|max:255|unique:users',
@@ -77,24 +55,11 @@ class UserController extends Controller
             'usertype' => 'required'
         ]);
 
-        $users = new User;
-        $users->firstname = $request->firstname;
-        $users->lastname = $request->lastname;
-        $users->email = $request->email;
-        $users->password = Hash::make($request->password);
-        $users->usertype = $request->usertype;
-        $users->save();
+        User::create($data);
         return redirect()->back()->with(['message'=>'User Added Successfully']);
 
 
     }
-
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
     public function show(User $user)
     {
         $posts = Post::select('title','category','user_id','description','image','created_at');
@@ -116,40 +81,16 @@ class UserController extends Controller
 
 
     }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function edit($id)
+    public function update(Request $request, User $user)
     {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, $id)
-    {
-        $request->validate([
+        $data = $request->validate([
             'firstname' => 'required|string|max:255',
             'lastname' => 'required|string|max:255',
             'email' => 'required|string|email|max:255',
             'usertype' => 'required'
         ]);
 
-        $users = User::find($id);
-        $users->firstname = $request->firstname;
-        $users->lastname = $request->lastname;
-        $users->email = $request->email;
-        $users->usertype = $request->usertype;
-        $users->update();
+        $user->update($data);
         return redirect()->back()->with(['message'=>'User Updated Successfully']);
 
     }
@@ -162,7 +103,7 @@ class UserController extends Controller
      */
     public function destroy(User $user)
     {
-        User::find($user->id)->delete();
+        $user->delete();
         return redirect()->back()->with(['message' => 'User Deleted Successfully']);
     }
 }
