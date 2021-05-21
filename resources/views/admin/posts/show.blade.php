@@ -55,10 +55,10 @@
             <div class="post-details">
               <div class="post-meta d-flex justify-content-between">
                 <div class="category">
-                    <a href="{{ route('post.show',$post->category->id) }}">{{ $post->category->title }}</a>
+                    <a href="{{ route('posts.show',$post->category->id) }}">{{ $post->category->title }}</a>
                 </div>
               </div>
-              <h1>{{ $post->title }}<a href="{{ route('post.show',$post->category->id) }}"><i class="fa fa-bookmark-o"></i></a></h1>
+              <h1>{{ $post->title }}<a href="{{ route('posts.show',$post->category->id) }}"><i class="fa fa-bookmark-o"></i></a></h1>
               <div class="post-footer d-flex align-items-center flex-column flex-sm-row">
                   <a href="{{ route('users.show', $post->user_id) }}" class="author d-flex align-items-center flex-wrap">
                   {{-- <div class="avatar"><img src="img/avatar-1.jpg" alt="..." class="img-fluid"></div> --}}

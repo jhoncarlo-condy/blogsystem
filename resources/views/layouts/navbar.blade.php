@@ -14,7 +14,7 @@
         <a href="{{ route('categories.index') }}" class="nav-link">Category</a>
       </li>
       <li class="nav-item d-none d-sm-inline-block">
-        <a href="{{ route('post.index') }}" class="nav-link">Posts</a>
+        <a href="{{ route('posts.index') }}" class="nav-link">Posts</a>
       </li>
       <li class="nav-item d-none d-sm-inline-block">
         <a href="{{ route('users.index') }}" class="nav-link">Users</a>

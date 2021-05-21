@@ -32,7 +32,7 @@
 <!-- Button trigger modal -->
 @if(Auth::user()->usertype == '1')
 <div class="">
-    <a name="" id="" class="btn btn-primary float-right mr-5 mb-2" href="{{ route('post.create') }}" role="button">
+    <a name="" id="" class="btn btn-primary float-right mr-5 mb-2" href="{{ route('posts.create') }}" role="button">
      Add New Post
     </a>
 </div>
@@ -68,7 +68,7 @@
                 <td>{{ $post->created_at->format('m-d-Y') }}</td>
                 <td>{{ $post->created_at->format('h:i A') }}</td>
                 <td>
-                    <a name="" id="" href="{{ route('post.show', $post->id) }}" role="button">
+                    <a name="" id="" href="{{ route('posts.show', $post->id) }}" role="button">
                         <i class="fas fa-eye    "></i>
                     </a>
                 </td>
@@ -77,12 +77,12 @@
                 @else
                 <td>
                     <!-- Button trigger edit modal -->
-                    <a name="" id="" style="color:green;" href="{{ route('post.edit', $post->id) }}" role="button">
+                    <a name="" id="" style="color:green;" href="{{ route('posts.edit', $post->id) }}" role="button">
                         <i class="fas fa-edit    "></i>
                     </a>
                 </td>
                 <td>
-                        <form id="deleteform" action="{{ route('post.destroy',$post->id) }}" method="POST">
+                        <form id="deleteform" action="{{ route('posts.destroy',$post->id) }}" method="POST">
                             @csrf
                             @method('delete')
                             <button type="submit"  style="border: 0; background: none;color:red;">

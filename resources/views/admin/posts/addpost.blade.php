@@ -129,7 +129,7 @@
         <div class="col-sm-6">
           <ol class="breadcrumb float-sm-right">
             <li class="breadcrumb-item"><a href="{{ route('users.dashboard') }}">Administrator</a></li>
-            <li class="breadcrumb-item active"><a href="{{ route('post.index') }}">Posts</a></li>
+            <li class="breadcrumb-item active"><a href="{{ route('posts.index') }}">Posts</a></li>
             <li class="breadcrumb-item active">Add Post</li>
           </ol>
         </div>
@@ -165,7 +165,7 @@
                 </button>
               </div>
             </div>
-            <form action="{{ route('post.store') }}" id="addpost" method="POST" enctype="multipart/form-data">
+            <form action="{{ route('posts.store') }}" id="addpost" method="POST" enctype="multipart/form-data">
                 @method('POST')
                 @csrf
             <!-- /.card-header -->

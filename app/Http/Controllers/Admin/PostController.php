@@ -1,7 +1,8 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Admin;
 
+use App\Http\Controllers\Controller;
 use App\Post;
 use App\Comment;
 use App\Category;
@@ -67,18 +68,12 @@ class PostController extends Controller
         // $category->update();
         // $post->save();
 
-        return redirect(route('post.index'))->with(['message'=>'Added new post']);
+        return redirect(route('posts.index'))->with(['message'=>'Added new post']);
 
 
 
     }
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  \App\Post  $post
-     * @return \Illuminate\Http\Response
-     */
     public function show(Post $post)
     {
 
@@ -94,31 +89,19 @@ class PostController extends Controller
         ]);
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  \App\Post  $post
-     * @return \Illuminate\Http\Response
-     */
     public function edit(Post $post)
     {
-        $category = Category::all();
-        $posts = Post::find($post->id);
-        $find = Category::find($posts->category_id);
-        return view ('admin.posts.editpost', compact('posts','category','find'));
+        $query = Category::select('id','title','blogmax');
+        $categories= $query->where('blogmax','>',0)->get();
+        return view ('admin.posts.editpost', [
+            'post' => $post,
+            'categories'=>$categories
+        ]);
 
     }
-
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Post  $post
-     * @return \Illuminate\Http\Response
-     */
     public function update(Request $request, Post $post)
     {
-        $request->validate([
+        $data = $request->validate([
             'title' => 'required',
             'category_id' => 'required',
             'user_id' => 'required',
@@ -127,66 +110,71 @@ class PostController extends Controller
         ]);
 
 
-        if ($request->hasFile('image')) {
-
-
-            $upload =  $request->image->store('images', 'public');
-            $post = Post::find($post->id);
-            $category = Category::where('id',$post->category->id)->first();
-            $req = Category::where('id',$request->category_id)->first();
-            if ($post->category->id != $request->category_id) {
-                $category->blogmax = $category->blogmax-1;
-                $req->blogmax = $req->blogmax+1;
-                $category->update();
-                $req->update();
-            }
-            $post->title = $request->title;
-            $post->category_id = $request->category_id;
-            $post->user_id = $request->user_id;
-            $post->description = $request->description;
-            $post->image = $upload;
-            $post->update();
-
+        $newcategory = Category::select('id')->where('id',$data['category_id'])->first();
+        if($post->category->id != $request->category_id)
+        {
+            $post->category->blogmax = $post->category->blogmax+1;
+            $newcategory->blogmax = $newcategory->blogmax-1;
+            $post->update($data);
+            $newcategory->update();
         }
         else {
-
-
-            $post = Post::find($post->id);
-            $category = Category::where('id',$post->category->id)->first();
-            $req = Category::where('id',$request->category_id)->first();
-            if ($post->category->id != $request->category_id) {
-                $category->blogmax = $category->blogmax-1;
-                $req->blogmax = $req->blogmax+1;
-                $category->update();
-                $req->update();
-            }
-            $post->title = $request->title;
-            $post->category_id = $request->category_id;
-            $post->user_id = $request->user_id;
-            $post->description = $request->description;
-            $post->update();
+            $post->update($data);
         }
 
+        // if ($request->hasFile('image')) {
+
+
+        //     $upload =  $request->image->store('images', 'public');
+        //     $post = Post::find($post->id);
+        //     $category = Category::where('id',$post->category->id)->first();
+        //     $req = Category::where('id',$request->category_id)->first();
+        //     if ($post->category->id != $request->category_id) {
+        //         $category->blogmax = $category->blogmax-1;
+        //         $req->blogmax = $req->blogmax+1;
+        //         $category->update();
+        //         $req->update();
+        //     }
+        //     $post->title = $request->title;
+        //     $post->category_id = $request->category_id;
+        //     $post->user_id = $request->user_id;
+        //     $post->description = $request->description;
+        //     $post->image = $upload;
+        //     $post->update();
+
+        // }
+        // else {
+
+
+        //     $post = Post::find($post->id);
+        //     $category = Category::where('id',$post->category->id)->first();
+        //     $req = Category::where('id',$request->category_id)->first();
+        //     if ($post->category->id != $request->category_id) {
+        //         $category->blogmax = $category->blogmax-1;
+        //         $req->blogmax = $req->blogmax+1;
+        //         $category->update();
+        //         $req->update();
+        //     }
+        //     $post->title = $request->title;
+        //     $post->category_id = $request->category_id;
+        //     $post->user_id = $request->user_id;
+        //     $post->description = $request->description;
+        //     $post->update();
+        // }
 
 
 
-        return redirect(route('post.index'))->with(['message'=>'Updating post success']);
+
+        return redirect(route('posts.index'))->with(['message'=>'Updating post success']);
     }
 
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  \App\Post  $post
-     * @return \Illuminate\Http\Response
-     */
     public function destroy(Post $post)
     {
-        $post = Post::find($post->id);
-        $category = Category::where('id',$post->category->id)->first();
-        $category->blogmax = $category->blogmax-1;
+        $category = $post->category;
+        $category->blogmax++;
         $category->update();
         $post->delete();
-        return redirect(route('post.index'))->with(['message' => 'Deleted Post Successfully']);
+        return redirect(route('posts.index'))->with(['message' => 'Deleted Post Successfully']);
 
     }
 }

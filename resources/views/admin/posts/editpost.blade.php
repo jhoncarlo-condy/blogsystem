@@ -129,7 +129,7 @@
         <div class="col-sm-6">
           <ol class="breadcrumb float-sm-right">
             <li class="breadcrumb-item"><a href="{{ route('users.dashboard') }}">Administrator</a></li>
-            <li class="breadcrumb-item active"><a href="{{ route('post.index') }}">Posts</a></li>
+            <li class="breadcrumb-item active"><a href="{{ route('posts.index') }}">Posts</a></li>
             <li class="breadcrumb-item active">Edit Post</li>
           </ol>
         </div>
@@ -157,7 +157,7 @@
 
 
             </div>
-            <form id="editpost" action="{{ route('post.update',$posts->id) }}" method="POST" enctype="multipart/form-data">
+            <form id="editpost" action="{{ route('posts.update',$post->id) }}" method="POST" enctype="multipart/form-data">
                 @method('PATCH')
                 @csrf
             <!-- /.card-header -->
@@ -166,8 +166,8 @@
                 <div class="col-md-6">
                  <div class="form-group">
                    <label for="">Title</label>
-                   <input type="text"
-                     class="form-control" name="title" id="" aria-describedby="helpId" value="{{ $posts->title }}">
+                   <input type="text" class="form-control" name="title"
+                    id="" aria-describedby="helpId" value="{{ $post->title }}">
                  </div>
                   <!-- /.form-group -->
                   <div class="form-group">
@@ -179,8 +179,8 @@
                     <label>Category</label>
 
                     <select class="form-control select2 select2-danger" name="category_id" data-dropdown-css-class="select2-danger" style="width: 100%;">
-                        <option value="{{ $posts->category_id }}" selected="selected">{{ $find->title }}</option>
-                        @foreach ($category as $category)}
+                        <option value="{{ $post->category_id }}" selected="selected">{{ $post->category->title }}</option>
+                        @foreach ($categories as $category)}
                         <option value="{{ $category->id}}">{{ $category->title}}</option>
                         @endforeach
                     </select>
@@ -195,14 +195,14 @@
                   <div class="mt-4 ml-4">
                         <label>Recent Image:</label>
                         <div class="container">
-                            @if ($posts->image)
-                            <img style="height:100px;width:200px;"src="{{ asset('storage/'.$posts->image) }}" class="img-thumbnail" alt="">
+                            @if ($post->image)
+                            <img style="height:100px;width:200px;"src="{{ asset('storage/'.$post->image) }}" class="img-thumbnail" alt="">
                             @else
                             <span>None</span>
                             @endif
 
                         </div>
-                            @if ($posts->image)
+                            @if ($post->image)
                             <label>Replace Image</label>
                             @else
                             <label>Upload Image</label>
@@ -246,29 +246,9 @@
             <!-- /.card-body -->
             <div class="form-group">
             <div class="mb-3 ml-2 mr-2">
-                <textarea id="summernote" name="description">{{$posts->description }}</textarea>
+                <textarea id="summernote" name="description">{{$post->description }}</textarea>
             </div>
             </div>
-            <!-- /.card -->
-            {{-- ckeditor --}}
-          {{-- <div class="row">
-            <div class="col-md-12">
-              <div class="card card-outline card-info">
-                <div class="card-header">
-                  <h3 class="card-title">
-                    Content
-                  </h3>
-                </div>
-                <!-- /.card-header -->
-                <div class="card-body">
-                 <div class="editor">
-
-                </div>
-
-              </div>
-            </div>
-            <!-- /.col-->
-          </div> --}}
           <div class="form-group text-right mr-4">
             <button type="submit" class="btn btn-primary">Edit Post</button>
           </div>

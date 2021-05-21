@@ -31,7 +31,7 @@ Route::middleware(['auth', 'admin'])->group(function () {
     Route::resource('/admin/users', 'Admin\UserController');
     Route::get('/admin/dashboard', 'Admin\UserController@dashboard')->name('users.dashboard');
     Route::resource('/admin/categories', 'Admin\CategoryController');
-    Route::resource('/post', 'PostController');
+    Route::resource('/admin/posts', 'Admin\PostController');
 });
 
 Route::get('/blog/categories/list','BlogUserController@category')->name('categories');

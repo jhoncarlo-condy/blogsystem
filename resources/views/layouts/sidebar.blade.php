@@ -61,7 +61,7 @@
                 </a>
               </li>
               <li class="nav-item">
-                <a href="{{ route('post.index') }}" class="nav-link">
+                <a href="{{ route('posts.index') }}" class="nav-link">
                   <i class="fa fa-comment nav-icon" aria-hidden="true"></i>
                   <p>Posts</p>
                 </a>
