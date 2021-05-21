@@ -89,11 +89,11 @@ $(document).ready(function(){
         </thead>
         <tbody>
 
-            @forelse ($category as $key=>$cat)
+            @forelse ($categories as $key=>$category)
             <tr>
                 <td scope="row">{{ $key+1}}</td>
-                <td>{{ $cat->title }}</td>
-                <td>{{ $cat->description }}</td>
+                <td>{{ $category->title }}</td>
+                <td>{{ $category->description }}</td>
                 @if(Auth::user()->usertype != '1')
 
                 @else
@@ -101,12 +101,14 @@ $(document).ready(function(){
                     <!-- Button trigger edit modal -->
                     <div class="form-row">
 
-                        <a name="" style="color:green;" id="" href="#" role="button" data-toggle="modal" data-target="#editModal{{ $cat->id }}">
+                        <a name="" style="color:green;" id="" href="#" role="button"
+                         data-toggle="modal" data-target="#editModal{{ $category->id }}">
                             <i class="fas fa-edit"></i>
                         </a>
                 </td>
                 <td>
-                        <form id="deleteform" action="{{ route('category.destroy',$cat->id) }}" method="POST">
+                        <form id="deleteform"
+                        action="{{ route('categories.destroy',$category->id) }}" method="POST">
                             @csrf
                             @method('DELETE')
 
@@ -121,26 +123,26 @@ $(document).ready(function(){
                     </div>
                     {{-- EDIT MODAL --}}
                     <!-- Modal -->
-                    <div class="modal fade" id="editModal{{ $cat->id }}" tabindex="-1" role="dialog" aria-labelledby="modelTitleId" aria-hidden="true">
+                    <div class="modal fade" id="editModal{{ $category->id }}" tabindex="-1" role="dialog" aria-labelledby="modelTitleId" aria-hidden="true">
                         <div class="modal-dialog" role="document">
                             <div class="modal-content">
                                 <div class="modal-header">
-                                    <h5 class="modal-title">Edit Category: {{ $cat->title }}</h5>
+                                    <h5 class="modal-title">Edit Category: {{ $category->title }}</h5>
                                         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                                             <span aria-hidden="true">&times;</span>
                                         </button>
                                 </div>
                                 <div class="modal-body">
-                                    <form  action="{{ route('category.update', $cat->id)  }}" id="editcategory" method="post">
+                                    <form  action="{{ route('categories.update', $category->id)  }}" id="editcategory" method="post">
                                         @method('PUT')
                                         @csrf
                                         <div class="form-group">
                                           <label for="title"></label>
-                                          <input type="text" class="form-control" name="title"  aria-describedby="helpId" placeholder="" value="{{ $cat->title }}">
+                                          <input type="text" class="form-control" name="title"  aria-describedby="helpId" placeholder="" value="{{ $category->title }}">
                                         </div>
                                         <div class="form-group">
                                           <label for="description"></label>
-                                          <textarea class="form-control" name="description" col="60" rows="5" maxlength="100">{{ $cat->description }}</textarea>
+                                          <textarea class="form-control" name="description" col="60" rows="5" maxlength="100">{{ $category->description }}</textarea>
                                         </div>
 
                                 </div>
@@ -167,7 +169,7 @@ $(document).ready(function(){
         </tbody>
 
     </table>
-    {{ $category->links() }}
+    {{ $categories->links() }}
 </div>
 
 <!-- ADD Modal -->
@@ -181,7 +183,7 @@ $(document).ready(function(){
                     </button>
             </div>
             <div class="modal-body">
-                <form action="{{ route('category.store') }}" method="POST" id="addcategory">
+                <form action="{{ route('categories.store') }}" method="POST" id="addcategory">
                     @method('POST')
                     @csrf
                     <div class="form-group">

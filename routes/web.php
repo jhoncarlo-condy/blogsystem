@@ -30,7 +30,7 @@ Auth::routes();
 Route::middleware(['auth', 'admin'])->group(function () {
     Route::resource('/admin/users', 'Admin\UserController');
     Route::get('/admin/dashboard', 'Admin\UserController@dashboard')->name('users.dashboard');
-    Route::resource('/category', 'CategoryController');
+    Route::resource('/admin/categories', 'Admin\CategoryController');
     Route::resource('/post', 'PostController');
 });
 
