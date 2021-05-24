@@ -12,24 +12,13 @@ use Illuminate\Support\Facades\Hash;
 
 class UserController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function __construct()
-    {
-        $this->middleware('auth');
-
-
-    }
     public function index()
     {
         $select = User::select('id','firstname','lastname','email','usertype');
         $users = $select->paginate(5);
-        return view ('admin.users', [
+        return view ('admin.users', with([
             'users'=> $users
-        ]);
+        ]));
     }
     public function dashboard()
     {
@@ -38,12 +27,12 @@ class UserController extends Controller
         $countcat = Category::count();
         $countpost = Post::count();
         $commentcount = Comment::count();
-        return view ('admin.dashboard', [
+        return view ('admin.dashboard', with([
             'countusers' => $countusers,
             'countcat' => $countcat,
             'countpost' => $countpost,
             'commentcount' => $commentcount,
-        ]);
+        ]));
     }
     public function store(Request $request)
     {
@@ -70,14 +59,13 @@ class UserController extends Controller
         $posts = $user->posts()->latest('id')->paginate(2);
         $commentcount = $user->comments()->count();
 
-        return view('admin.visitprofile',[
+        return view('admin.visitprofile',with([
             'user'=>$user,
             'count'=>$count,
             'last' => $last,
             'posts'=> $posts,
             'commentcount' => $commentcount,
-
-        ]);
+        ]));
 
 
     }

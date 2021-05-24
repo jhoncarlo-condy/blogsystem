@@ -13,19 +13,14 @@ use Illuminate\Support\Facades\Storage;
 
 class PostController extends Controller
 {
-    public function __construct()
-    {
-        $this->middleware('auth');
-        $this->middleware('admin');
 
-    }
     public function index()
     {
         $posts = Post::select('id','title','category_id',
             'user_id','description','created_at')->paginate(5);
-        return view ('admin.posts.posts',[
+        return view ('admin.posts.posts',with([
             'posts' => $posts
-        ]);
+        ]));
     }
     public function create()
     {

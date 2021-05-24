@@ -59,7 +59,12 @@
                 </li>
                 <li class="list-group-item">
                     <b>Last Post</b> <p class="float-right">
-                   {{ $last->created_at->diffForHumans() }}
+                        @if ($last == true)
+                        {{ $last->created_at->diffForHumans() }}
+                        @else
+                        0
+                        @endif
+
                     </p>
                 </li>
                 <li class="list-group-item">
