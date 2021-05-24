@@ -55,11 +55,9 @@ class PostController extends Controller
     }
     public function show(Post $post)
     {
-        $category = Category::paginate(4);
-        $latest = Post::all()->sortByDesc('id');
-        $comments = Comment::all()->where('post_id',$post)->sortByDesc('id');
-        $commentcount = Comment::all()->where('post_id',$post)->count();
-        $count = Post::all();
+        $category = Category::select('id','title')->paginate(4);
+        $latest = Post::select('id','title','created_at','image')
+                    ->orderBy('id','desc')->take(3)->get();
 
 
         // $find = Category::find($posts);
@@ -67,9 +65,6 @@ class PostController extends Controller
             'post' => $post,
             'category'=>$category,
             'latest'=>$latest,
-            'comments'=>$comments,
-            'commentcount'=>$commentcount,
-            'count'=>$count
         ]));
     }
     public function profile()

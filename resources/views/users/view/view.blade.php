@@ -22,7 +22,7 @@
 @section('link')
 <li class="nav-item"><a href="{{ route('post.index') }}" class="nav-link active">Home</a>
 </li>
-<li class="nav-item"><a href="{{ route('categories') }}" class="nav-link">Categories</a>
+<li class="nav-item"><a href="{{ route('category.index') }}" class="nav-link">Categories</a>
 </li>
 @if (Auth::user())
 <li class="nav-item"><a href="{{ route('profile') }}" class="nav-link ">Profile</a>
@@ -223,7 +223,7 @@
           <header>
             <h3 class="h6">Latest Posts</h3>
           </header>
-          @forelse ($latest->take(3) as $latest)
+          @forelse ($latest as $latest)
           <div class="blog-posts">
             <a href="{{ route('post.show',$latest->id) }}">
               <div class="item d-flex align-items-center">
@@ -254,8 +254,8 @@
           </header>
           @forelse ( $category->take(7) as $category )
           <div class="item d-flex justify-content-between">
-              <a href="#">{{ $category->title }}</a>
-              <span>({{ $count->where('category_id',$category->id)->count() }})</span>
+              <a href="{{ route('category.show',$category->id) }}">{{ $category->title }}</a>
+              <span>({{ count($category->post) }})</span>
           </div>
           @empty
           <div class="item d-flex justify-content-between"><a href="#">No Categories Available</div>
