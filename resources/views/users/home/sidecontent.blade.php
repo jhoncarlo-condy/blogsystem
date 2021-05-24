@@ -20,7 +20,7 @@
     </header>
     @forelse ($myrecent->take(3) as $recent)
     <div class="blog-posts">
-      <a href="{{ route('blog.show',$recent->id) }}">
+      <a href="{{ route('post.show',$recent->id) }}">
         <div class="item d-flex align-items-center">
           <div class="image">
               @if ($recent->image)
@@ -48,9 +48,9 @@
       <header>
         <h3 class="h6">Latest Posts</h3>
       </header>
-      @forelse ($latest->take(3) as $latest)
+      @forelse ($latest as $latest)
       <div class="blog-posts">
-        <a href="{{ route('blog.show',$latest->id) }}">
+        <a href="{{ route('post.show',$latest->id) }}">
           <div class="item d-flex align-items-center">
             <div class="image">
                 @if ($latest->image)
@@ -79,7 +79,7 @@
       </header>
       @forelse ( $categories->take(7) as $category )
       <div class="item d-flex justify-content-between"><a href="{{ route('view',$category->id) }}">{{ $category->title }}</a>
-        <span>({{ $count->where('category_id',$category->id)->count() }})</span>
+        <span>({{ count($category->posts) }})</span>
       </div>
       @empty
       <div class="item d-flex justify-content-between"><a href="#">No Categories Available</div>

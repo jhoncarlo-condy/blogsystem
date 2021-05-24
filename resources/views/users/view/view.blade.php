@@ -6,7 +6,7 @@
     {
         $('#button').click(function()
         {
-            $('#showall').load('{{ route('allcomments',$posts->id) }}').fadeIn("slow");
+            $('#showall').load('{{ route('allcomments',$post) }}').fadeIn("slow");
             $('#button').hide();
 
         });
@@ -20,7 +20,7 @@
 </script>
 @endpush
 @section('link')
-<li class="nav-item"><a href="{{ route('blog.index') }}" class="nav-link active">Home</a>
+<li class="nav-item"><a href="{{ route('post.index') }}" class="nav-link active">Home</a>
 </li>
 <li class="nav-item"><a href="{{ route('categories') }}" class="nav-link">Categories</a>
 </li>
@@ -55,11 +55,11 @@
         <div class="container">
           <div class="post-single">
               <div class="back mb-2">
-                <a name="" id="" class="btn btn-secondary" href="{{ route('blog.index')}}" role="button">Back</a>
+                <a name="" id="" class="btn btn-secondary" href="{{ route('post.index')}}" role="button">Back</a>
                 <div class="edit-post float-right">
                    @if (Auth::user())
-                   @if ($posts->user_id == Auth::user()->id)
-                   <a name="" id="" class="btn btn-secondary" href="{{ route('blog.edit',$posts->id) }}" role="button">Edit Post</a>
+                   @if ($post->user_id == Auth::user()->id)
+                   <a name="" id="" class="btn btn-secondary" href="{{ route('post.edit',$post->id) }}" role="button">Edit Post</a>
                    @else
                    @endif
                    @endif
@@ -67,8 +67,8 @@
               </div>
 
             <div class="post-thumbnail">
-                @if ($posts->image)
-                <img src="{{ asset('storage/'. $posts->image) }}" alt="..." class="img-fluid">
+                @if ($post->image)
+                <img src="{{ asset('storage/'. $post->image) }}" alt="..." class="img-fluid">
                 @else
                 <img style="height: 400px;" src="https://upload.wikimedia.org/wikipedia/commons/1/14/No_Image_Available.jpg" alt="" class="img-fluid">
                 @endif
@@ -77,34 +77,35 @@
               <div class="post-meta d-flex justify-content-between">
                 <div class="category">
                     <a href="#">
-                        {{ $posts->title }}
+                        {{ $post->title }}
                     </a>
                 </div>
               </div>
               <h1><a href="#"><i class="fa fa-bookmark-o"></i></a></h1>
-              <div class="post-footer d-flex align-items-center flex-column flex-sm-row"><a href="{{ route('viewprofile',$posts->id) }}" class="author d-flex align-items-center flex-wrap">
+              <div class="post-footer d-flex align-items-center flex-column flex-sm-row">
+                  <a href="" class="author d-flex align-items-center flex-wrap">
                   {{-- <div class="avatar"><img src="img/avatar-1.jpg" alt="..." class="img-fluid"></div> --}}
                   <i class="fas fa-user fa-sm"></i><div class="title">
 
                     <span>
-                        {{ $posts->user->firstname . " " . $posts->user->lastname }}
+                        {{ $post->user->firstname . " " . $post->user->lastname }}
                     </span></div></a>
                 <div class="d-flex align-items-center flex-wrap">
-                  <div class="date"><i class="fas fa-calendar fa-xs"></i>{{ $posts->created_at->format('m/d/Y') }}</div>
-                  <div class="date"><i class="fas fa-clock fa-xs"></i>{{ $posts->created_at->format('H:i A') }}</div>
+                  <div class="date"><i class="fas fa-calendar fa-xs"></i>{{ $post->created_at->format('m/d/Y') }}</div>
+                  <div class="date"><i class="fas fa-clock fa-xs"></i>{{ $post->created_at->format('H:i A') }}</div>
                   {{-- <div class="views"></div> --}}
-                  <div class="comments meta-last"><i class="fas fa-comment fa-xs"></i>{{ count($posts->comments) }}</div>
+                  <div class="comments meta-last"><i class="fas fa-comment fa-xs"></i>{{ count($post->comments) }}</div>
                 </div>
               </div>
               <div class="post-body mb-6">
                 <div class="container col-12">
-                    {!! $posts->description !!}
+                    {!! $post->description !!}
                 </div>
                 {{-- <h3>Lorem Ipsum Dolor</h3>
                 <p>div Lorem ipsum dolor sit amet, consectetur adipisicing elit. Assumenda temporibus iusto voluptates deleniti similique rerum ducimus sint ex odio saepe. Sapiente quae pariatur ratione quis perspiciatis deleniti accusantium</p> --}}
 
               </div>
-              <div class="post-tags mt-6"><a href="#" class="tag">#{{ $posts->category->title }}</a></div>
+              <div class="post-tags mt-6"><a href="#" class="tag">#{{ $post->category->title }}</a></div>
               {{-- <div class="posts-nav d-flex justify-content-between align-items-stretch flex-column flex-md-row"><a href="#" class="prev-post text-left d-flex align-items-center">
                   <div class="icon prev"><i class="fa fa-angle-left"></i></div>
                   <div class="text"><strong class="text-primary">Previous Post </strong>
@@ -117,11 +118,11 @@
              </div> --}}
               <div class="post-comments" >
                 <header>
-                  <h3 class="h6">Comments<span class="no-of-comments">({{ count($posts->comments) }})</span></h3>
+                  <h3 class="h6">Comments<span class="no-of-comments">({{ count($post->comments) }})</span></h3>
                 </header>
 
                 <div class="comment" id="showall">
-                @forelse ($posts->comments->take(2) as $postcomment)
+                @forelse ($post->comments->take(2) as $postcomment)
 
                   <div class="comment-header d-flex justify-content-between">
                     <div class="user d-flex align-items-center">
@@ -195,7 +196,7 @@
                     <div class="row">
                     <div class="form-group col-md-6">
                         <input type="hidden" name="user_id" value="{{ Auth::user()->id }}">
-                        <input type="hidden" name="post_id" value="{{ $posts->id }}">
+                        <input type="hidden" name="post_id" value="{{ $post->id }}">
                     </div>
                     <div class="form-group col-md-12">
                     <label for="">Comment as {{ Auth::user()->firstname }}</label>
@@ -224,7 +225,7 @@
           </header>
           @forelse ($latest->take(3) as $latest)
           <div class="blog-posts">
-            <a href="{{ route('blog.show',$latest->id) }}">
+            <a href="{{ route('post.show',$latest->id) }}">
               <div class="item d-flex align-items-center">
                 <div class="image">
                     @if ($latest->image)

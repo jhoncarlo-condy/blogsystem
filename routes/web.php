@@ -34,8 +34,8 @@ Route::middleware(['auth', 'admin'])->group(function () {
     Route::resource('/admin/posts', 'Admin\PostController');
 });
 
-Route::get('/blog/categories/list','BlogUserController@category')->name('categories');
-Route::get('/blog/categories/view/{id}','BlogUserController@viewcat')->name('view');
+Route::get('/blog/categories/list','User\PostController@category')->name('categories');
+Route::get('/blog/categories/view/{id}','User\PostController@viewcat')->name('view');
 Route::view('categories','users.categories.allcategory',[
     'datas'=> App\Category::all()
 ])->name('list');
@@ -44,13 +44,14 @@ Route::view('categories','users.categories.allcategory',[
 // ])->name('allcomments');
 Route::get('/comments/{id}', 'CommentController@show')->name('allcomments');
 
-Route::resource('/blog', 'BlogUserController');
+Route::resource('/users/blog/post', 'User\PostController');
+
 
 
 Route::middleware(['auth'])->group(function () {
     Route::post('/profile','ProfileController@store')->name('changepassword');
     Route::get('/profile/view/{id}','ProfileController@show')->name('viewprofile');
-    Route::get('/blog/profile/view', 'BlogUserController@profile')->name('profile');
+    Route::get('/blog/profile/view', 'PostController@profile')->name('profile');
     Route::resource('/comment','CommentController');
 
 });

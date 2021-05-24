@@ -1,7 +1,7 @@
 <?php
 
-namespace App\Http\Controllers;
-
+namespace App\Http\Controllers\User;
+use App\Http\Controllers\Controller;
 use App\Category;
 use App\Comment;
 use App\Post;
@@ -9,26 +9,27 @@ use App\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
-class BlogUserController extends Controller
+
+class PostController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
 
     public function index()
     {
-        $content = Post::orderBy('id','desc')->paginate(6);
-        $latest = Post::all()->sortByDesc('id');
-        $commentcount = Comment::all();
+        $query = Post::select('id','category_id','user_id','description','image','created_at');
+        $posts = $query->orderBy('id','desc')->paginate(6);
+        $latest = $query->orderBy('id','desc')->take(3)->get();
         if(Auth::user())
         {
-        $myrecent = Post::where('user_id', Auth::user()->id)->orderBy('created_at','desc')->get();
+        $myrecent = $query->where('user_id', Auth::user()->id)
+                        ->orderBy('created_at','desc')->get();
         }
-        $categories = Category::paginate(4);
-        $count = Post::all();
-        return view('users.home.content',compact('latest','content','categories','myrecent','commentcount','count'));
+        $categories = Category::select('id','title')->paginate(4);
+        return view('users.home.content',with([
+            'posts'=>$posts,
+            'latest'=>$latest,
+            'myrecent'=>$myrecent,
+            'categories'=>$categories,
+        ]));
     }
 
 
@@ -83,18 +84,24 @@ class BlogUserController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show(Post $post)
     {
-        $posts = Post::find($id);
         $category = Category::paginate(4);
         $latest = Post::all()->sortByDesc('id');
-        $comments = Comment::all()->where('post_id',$id)->sortByDesc('id');
-        $commentcount = Comment::all()->where('post_id',$id)->count();
+        $comments = Comment::all()->where('post_id',$post)->sortByDesc('id');
+        $commentcount = Comment::all()->where('post_id',$post)->count();
         $count = Post::all();
 
 
         // $find = Category::find($posts);
-        return view ('users.view.view',compact('posts','latest','category','comments','commentcount','count'));
+        return view ('users.view.view',with([
+            'post' => $post,
+            'category'=>$category,
+            'latest'=>$latest,
+            'comments'=>$comments,
+            'commentcount'=>$commentcount,
+            'count'=>$count
+        ]));
     }
 
     public function category()
@@ -139,7 +146,11 @@ class BlogUserController extends Controller
         $category = Category::all();
         $posts = Post::find($id);
         $find = Category::find($posts->category_id);
-        return view ('users.editpost.index', compact('posts','category','find'));
+        return view ('users.editpost.index', with([
+            'category'=>$category,
+            'posts'=>$posts,
+            'find'=>$find
+        ]));
     }
 
     /**
