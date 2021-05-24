@@ -14,9 +14,8 @@ Route::middleware(['auth', 'admin'])->group(function () {
 });
 //user routes
 Route::middleware(['auth'])->group(function () {
+    Route::resource('/users/profile', 'ProfileController');
     Route::post('/profile','ProfileController@store')->name('changepassword');
-    Route::get('/profile/view/{id}','ProfileController@show')->name('viewprofile');
-    Route::get('/blog/profile/view', 'PostController@profile')->name('profile');
     Route::resource('/comment','CommentController');
 
 });

@@ -13,33 +13,16 @@ use Illuminate\Support\Facades\Hash;
 
 class ProfileController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
     public function index()
     {
-        //
+        $count = Post::where('user_id',Auth::user()->id)->count();
+        $last = Post::where('user_id',Auth::user()->id)->latest('id')->get();
+        $category = Category::all();
+        $posts = Post::where('user_id', Auth::user()->id)->latest('id')->paginate(3);
+        $commentcount = Comment::where('user_id',Auth::user()->id)->count();
+        return view ('users.profile.view', compact('posts','category','count','last','commentcount'));
     }
-
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        //
-    }
-
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
-    public function store(Request $request)
+       public function store(Request $request)
     {
         $request->validate([
             'oldpassword' => ['required', new MatchOldPassword],
@@ -51,55 +34,15 @@ class ProfileController extends Controller
 
         return redirect(route('profile'))->with(['message'=>'Password changed successfully']);
     }
-
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function show($id)
+    public function show(User $profile)
     {
-        $count = Post::where('user_id',$id)->count();
-        $last = Post::where('user_id',$id)->latest('id')->get();
-        $category = Category::all();
-        $posts = Post::where('user_id',$id)->latest('id')->paginate(3);
-        $commentcount = Comment::where('user_id',$id)->count();
-        $users = User::find($id);
-        return view('users.profile.visitprofile',compact('count','last','category','posts','commentcount','users'));
-    }
+        $query = Post::select('id','title','category_id','user_id','description','created_at');
+        // $category = Category::all();
+        $posts = $query->where('user_id',$profile)->latest('id')->paginate(3);
 
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function edit($id)
-    {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, $id)
-    {
-
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy($id)
-    {
-        //
+        return view('users.profile.visitprofile',with([
+            'profile'=>$profile,
+            'posts'=>$posts
+        ]));
     }
 }

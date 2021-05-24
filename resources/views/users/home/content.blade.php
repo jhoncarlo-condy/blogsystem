@@ -5,7 +5,7 @@
 <li class="nav-item"><a href="{{ route('category.index') }}" class="nav-link ">Categories</a>
 </li>
 @if (Auth::user())
-<li class="nav-item"><a href="{{ route('profile') }}" class="nav-link ">Profile</a>
+<li class="nav-item"><a href="{{ route('profile.index') }}" class="nav-link ">Profile</a>
 </li>
 @endif
 @endsection
@@ -43,12 +43,12 @@
                   <div class="post-meta d-flex justify-content-between">
                         <div class="date meta-last">{{ $post->created_at->format('m d') . "|" . $post->created_at->format('Y') }}</div>
                         <div class="category"><a href="{{ route('post.show', $post->id) }}">{{ $post->category->title }}</a></div>
-                  </div><a href="{{ route('post.show', $post->id) }}">
+                  </div><a href="{{ route('post.show', $post->user->id) }}">
                     <h3 class="h4">{{ $post->title }}</h3></a>
                   <p class="text-muted">See more ..</p>
                   <footer class="post-footer d-flex align-items-center"><a href="#" class="author d-flex align-items-center flex-wrap">
                       {{-- <div class="avatar"><img src="img/avatar-3.jpg" alt="..." class="img-fluid"></div> --}}
-                      <a href="{{ route('viewprofile',$post->user->id) }}">
+                      <a href="{{ route('profile.show',$post->user_id) }}">
                       <div class="title">
                           <i class="fas fa-user fa-xs"></i><span>{{ $post->user->firstname }}</span>
                       </div></a>
