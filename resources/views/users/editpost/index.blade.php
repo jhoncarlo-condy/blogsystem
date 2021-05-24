@@ -120,7 +120,7 @@
 </style>
 @endpush
 @section('link')
-<li class="nav-item"><a href="{{ route('blog.index') }}" class="nav-link">Home</a>
+<li class="nav-item"><a href="{{ route('post.index') }}" class="nav-link">Home</a>
 </li>
 <li class="nav-item"><a href="{{ route('categories') }}" class="nav-link">Categories</a>
 </li>
@@ -144,7 +144,7 @@
           <!-- SELECT2 EXAMPLE -->
           <div class="card card-primary">
 
-            <form action="{{ route('blog.update',$posts->id) }}" method="POST" enctype="multipart/form-data">
+            <form action="{{ route('post.update',$post->id) }}" method="POST" enctype="multipart/form-data">
                 @method('PATCH')
                 @csrf
             <!-- /.card-header -->
@@ -154,7 +154,8 @@
                  <div class="form-group">
                    <label for="">Title</label>
                    <input type="text"
-                     class="form-control" name="title" id="" aria-describedby="helpId" value="{{ $posts->title }}">
+                     class="form-control" name="title" id="" aria-describedby="helpId"
+                     value="{{ $post->title }}">
                  </div>
                   <!-- /.form-group -->
                   <div class="form-group">
@@ -167,8 +168,8 @@
                     <label>Category</label>
 
                     <select class="form-control select2 select2-danger" name="category_id" data-dropdown-css-class="select2-danger" style="width: 100%;">
-                        <option value="{{ $posts->category_id }}" selected="selected">{{ $find->title }}</option>
-                        @foreach ($category as $category)}
+                        <option value="{{ $post->category_id }}" selected="selected">{{ $post->category->title }}</option>
+                        @foreach ($categories as $category)}
                         <option value="{{ $category->id}}">{{ $category->title}}</option>
                         @endforeach
                     </select>
@@ -183,14 +184,14 @@
                   <div class="mt-4 ml-4">
                         <label>Recent Image:</label>
                         <div class="container">
-                            @if ($posts->image)
-                            <img style="height:100px;width:200px;"src="{{ asset('storage/'.$posts->image) }}" class="img-thumbnail" alt="">
+                            @if ($post->image)
+                            <img style="height:100px;width:200px;"src="{{ asset('storage/'.$post->image) }}" class="img-thumbnail" alt="">
                             @else
                             <span>None</span>
                             @endif
 
                         </div>
-                            @if ($posts->image)
+                            @if ($post->image)
                             <label>Replace Image</label>
                             @else
                             <label>Upload Image</label>
@@ -237,7 +238,7 @@
             </div>
             <!-- /.card-body -->
             <div class="mb-3 ml-2 mr-2">
-            <textarea id="summernote" name="description">{{$posts->description }}</textarea>
+            <textarea id="summernote" name="description">{{$post->description }}</textarea>
 
             </div>
             <!-- /.card -->

@@ -1,13 +1,15 @@
 <?php
 
 namespace App\Http\Controllers\User;
-use App\Http\Controllers\Controller;
-use App\Category;
-use App\Comment;
 use App\Post;
 use App\User;
+use App\Comment;
+use App\Category;
 use Illuminate\Http\Request;
+use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
+use App\Http\Requests\StorePostRequest;
+use Illuminate\Support\Facades\Storage;
 
 
 class PostController extends Controller
@@ -32,58 +34,26 @@ class PostController extends Controller
         ]));
     }
 
-
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
     public function create()
     {
         //
     }
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
-    public function store(Request $request)
+    public function store(StorePostRequest $request)
     {
-        $request->validate([
-            'title' => 'required',
-            'category_id' => 'required',
-            'user_id' => 'required',
-            'description' => 'required',
-            'image' => 'file|image|max:5000',
-        ]);
-
-
-        $post = new Post;
-        $post->title = $request->title;
-        $post->category_id = $request->category_id;
-        $post->user_id = $request->user_id;
-        $post->description = $request->description;
-        if ($request->hasFile('image'))
+        $data = $request->validated();
+        if($request->hasfile('image'))
         {
-          $upload =  $request->image->store('images', 'public');
-            $post->image = $upload;
-
+        $data['image'] = Storage::disk('public')->put('images',$data['image']);
         }
-        $post->save();
-
-        // $post->image = $request->image;
+        Post::create($data);
+        $category = Category::find($data['category_id']);
+        $category->blogmax --;
+        $category->update();
         return redirect()->back()->with(['message'=>'Added new post']);
 
     }
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
     public function show(Post $post)
     {
         $category = Category::paginate(4);
@@ -133,82 +103,41 @@ class PostController extends Controller
         $commentcount = Comment::where('user_id',Auth::user()->id)->count();
         return view ('users.profile.view', compact('posts','category','count','last','commentcount'));
     }
-
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function edit($id)
+    public function edit(Post $post)
     {
-        $category = Category::all();
-        $posts = Post::find($id);
-        $find = Category::find($posts->category_id);
+        $categories = Category::select('id','title');
         return view ('users.editpost.index', with([
-            'category'=>$category,
-            'posts'=>$posts,
-            'find'=>$find
+            'post'=>$post,
+            'categories'=>$categories,
         ]));
     }
-
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, $id)
+    public function update(StorePostRequest $request, Post $post)
     {
-        $request->validate([
-            'title' => 'required',
-            'category_id' => 'required',
-            'user_id' => 'required',
-            'description' => 'required',
-            'image' => 'file|image|max:5000',
-        ]);
 
+        $data = $request->validated();
+        $category = Category::select('id','blogmax');
+        $newcategory = $category->where('id',$data['category_id'])->first();
 
-        if ($request->hasFile('image')) {
+        if($request->hasfile('image'))
+        {
+        $data['image'] = Storage::disk('public')->put('images',$data['image']);
+        }
+        if($post->category->id != $data['category_id'])
+        {
 
-
-            $upload =  $request->image->store('images', 'public');
-            $post = Post::find($id);
-            $post->title = $request->title;
-            $post->category_id = $request->category_id;
-            $post->user_id = $request->user_id;
-            $post->description = $request->description;
-            $post->image = $upload;
-            $post->update();
+            $newcategory->blogmax--;
+            $oldcategory = $post->category;
+            $oldcategory->blogmax++;
+            $oldcategory->update();
+            $newcategory->update();
+            $post->update($data);
+        return redirect(route('post.show',$post->id))->with(['message'=>'Updating post success']);
 
         }
         else {
-
-            $post = Post::find($id);
-            $post->title = $request->title;
-            $post->category_id = $request->category_id;
-            $post->user_id = $request->user_id;
-            $post->description = $request->description;
-            $post->update();
+            $post->update($data);
+        return redirect(route('post.show',$post->id))->with(['message'=>'Updating post success']);
         }
 
-
-
-
-        return redirect(route('blog.show',$post->id))->with(['message'=>'Updating post success']);
-
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy($id)
-    {
-        //
     }
 }
