@@ -25,7 +25,7 @@ class PostController extends Controller
         $myrecent = $query->where('user_id', Auth::user()->id)
                         ->orderBy('created_at','desc')->get();
         }
-        $categories = Category::select('id','title')->paginate(4);
+        $categories = Category::select('id','title')->take(4)->get();
         return view('users.home.content',with([
             'posts'=>$posts,
             'latest'=>$latest,

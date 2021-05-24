@@ -252,7 +252,7 @@
           <header>
             <h3 class="h6">Categories</h3>
           </header>
-          @forelse ( $category->take(7) as $category )
+          @forelse ( $category as $category )
           <div class="item d-flex justify-content-between">
               <a href="{{ route('category.show',$category->id) }}">{{ $category->title }}</a>
               <span>({{ count($category->post) }})</span>
