@@ -12,7 +12,7 @@ class CategoryController extends Controller
 {
     public function index()
     {
-        $categories = Category::select('id','title','description')->paginate(5);
+        $categories = Category::select('id','title','description','blogmax')->paginate(5);
         return view('admin.category',with([
             'categories'=> $categories
         ]));

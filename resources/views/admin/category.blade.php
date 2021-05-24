@@ -81,6 +81,7 @@ $(document).ready(function(){
                 <th>#</th>
                 <th>Title</th>
                 <th>Description</th>
+                <th>Posts Left</th>
                 @if(Auth::user()->usertype == '1')
                 <th>Edit</th>
                 <th>Delete</th>
@@ -94,6 +95,7 @@ $(document).ready(function(){
                 <td scope="row">{{ $key+1}}</td>
                 <td>{{ $category->title }}</td>
                 <td>{{ $category->description }}</td>
+                <td>{{ $category->blogmax }}</td>
                 @if(Auth::user()->usertype != '1')
 
                 @else

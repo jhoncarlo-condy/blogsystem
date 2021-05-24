@@ -24,11 +24,11 @@ class PostController extends Controller
     }
     public function create()
     {
-        $select = Category::select('id','title','blogmax');
-        $categories = $select->where('blogmax','>', 0)->get();
-        return view ('admin.posts.addpost',[
+        $categories = Category::select('id','title','blogmax')
+                        ->where('blogmax','>', 0)->get();
+        return view ('admin.posts.addpost',with([
             'categories'=>$categories
-        ]);
+        ]));
     }
     public function store(Request $request)
     {
@@ -41,32 +41,13 @@ class PostController extends Controller
         ]);
         if($request->hasfile('image'))
         {
-        Storage::put('images', $data['image']);
+        $data['image'] = Storage::disk('public')->put('images',$data['image']);
         }
         Post::create($data);
         $category = Category::find($data['category_id']);
         $category->blogmax --;
         $category->update();
-        // $post = new Post;
-        // $post->title = $request->title;
-        // $post->category_id = $request->category_id;
-        // $post->user_id = $request->user_id;
-        // $post->description = $request->description;
-        // if ($request->hasFile('image'))
-        // {
-        //   $upload =  $request->image->store('images', 'public');
-        //     $post->image = $upload;
-
-        // }
-        // $category = Category::find($request->category_id);
-        // $category->blogmax = $category->blogmax+1;
-        // $category->update();
-        // $post->save();
-
         return redirect(route('posts.index'))->with(['message'=>'Added new post']);
-
-
-
     }
 
     public function show(Post $post)
