@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Post;
 use App\Comment;
+use App\Category;
 use Illuminate\Http\Request;
 
 class CommentController extends Controller
@@ -17,6 +18,14 @@ class CommentController extends Controller
     {
         $comments = Comment::all();
         return view ('users.comment.comments',compact('comments'));
+    }
+
+    public function allcomments()
+    {
+        $datas = Category::select('id','title');
+        return view('users.categories.allcategory',with([
+            'datas'=>$datas
+        ]));
     }
 
     /**
