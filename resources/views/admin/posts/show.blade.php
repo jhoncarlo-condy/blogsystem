@@ -70,7 +70,7 @@
                   <div class="date"><i class="fas fa-clock fa-xs"></i>{{ $post->created_at->format('H:i A') }}</div>
                   {{-- <div class="views"></div> --}}
                   <div class="comments meta-last"><i class="fas fa-comment fa-xs"></i>
-                    {{ $comments->count() }}
+                    {{ count($post->comments) }}
                   </div>
                 </div>
               </div>
@@ -78,9 +78,6 @@
                 <div class="container col-12">
                     {!! $post->description !!}
                 </div>
-                {{-- <h3>Lorem Ipsum Dolor</h3>
-                <p>div Lorem ipsum dolor sit amet, consectetur adipisicing elit. Assumenda temporibus iusto voluptates deleniti similique rerum ducimus sint ex odio saepe. Sapiente quae pariatur ratione quis perspiciatis deleniti accusantium</p> --}}
-
               </div>
               <div class="post-tags mt-6"><a href="#" class="tag">#{{ $post->category->title }}</a></div>
               {{-- <div class="posts-nav d-flex justify-content-between align-items-stretch flex-column flex-md-row"><a href="#" class="prev-post text-left d-flex align-items-center">
@@ -95,10 +92,10 @@
              </div> --}}
              <div class="post-comments">
                 <header>
-                  <h3 class="h6">Post Comments<span class="no-of-comments">({{ $comments->count() }})</span></h3>
+                  <h3 class="h6">Post Comments<span class="no-of-comments">({{ $post->comments->count() }})</span></h3>
                 </header>
 
-                @forelse ($comments as $comment)
+                @forelse ($post->comments as $comment)
                 <div class="comment">
                   <div class="comment-header d-flex justify-content-between">
                     <div class="user d-flex align-items-center">
@@ -165,7 +162,7 @@
       <header>
         <h3 class="h6">Latest Posts</h3>
       </header>
-      @forelse ($latest->take(3) as $latest)
+      @forelse ($latest as $latest)
       <div class="blog-posts">
         <a href="{{ route('blog.show',$latest->id) }}">
           <div class="item d-flex align-items-center">
@@ -194,7 +191,7 @@
       <header>
         <h3 class="h6">Categories</h3>
       </header>
-      @forelse ( $categories->take(7) as $category )
+      @forelse ( $categories as $category )
       <div class="item d-flex justify-content-between"><a href="#">{{ $category->title }}</a></div>
       @empty
       <div class="item d-flex justify-content-between"><a href="#">No Categories Available</div>
