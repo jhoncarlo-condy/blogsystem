@@ -2,7 +2,7 @@
 @section('link')
 <li class="nav-item"><a href="{{ route('post.index') }}" class="nav-link active">Home</a>
 </li>
-<li class="nav-item"><a href="{{ route('categories') }}" class="nav-link ">Categories</a>
+<li class="nav-item"><a href="{{ route('category.index') }}" class="nav-link ">Categories</a>
 </li>
 @if (Auth::user())
 <li class="nav-item"><a href="{{ route('profile') }}" class="nav-link ">Profile</a>

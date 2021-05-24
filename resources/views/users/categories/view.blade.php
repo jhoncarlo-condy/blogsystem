@@ -4,9 +4,9 @@
 </style>
 @endpush
 @section('link')
-<li class="nav-item"><a href="{{ route('blog.index') }}" class="nav-link">Home</a>
+<li class="nav-item"><a href="{{ route('post.index') }}" class="nav-link">Home</a>
 </li>
-<li class="nav-item"><a href="{{ route('categories') }}" class="nav-link active">Categories</a>
+<li class="nav-item"><a href="{{ route('category.index') }}" class="nav-link active">Categories</a>
 </li>
 @endsection
 @section('content')
@@ -27,7 +27,7 @@
     <div class="row">
       <main class="posts-listing col-lg-8">
         <div class="category">
-        <h3>Posts from category: {{ $categories->title }}
+        <h3>Posts from category: {{ $category->title }}
         </h3>
         </div>
         <div class="container">
@@ -37,7 +37,7 @@
             <div class="post col-xl-6">
                 <div class="post-thumbnail">
                     @if($post->image)
-                    <a href="{{ route('blog.show',$post->id) }}">
+                    <a href="{{ route('post.show',$post->id) }}">
                         <img style="height: 150px;width:400px;" src="{{ asset('storage/'.$post->image) }}" alt="..." class="img-fluid"></a>
                     </a>
                     @else
@@ -47,8 +47,8 @@
                 <div class="post-details">
                   <div class="post-meta d-flex justify-content-between">
                     <div class="date meta-last"></div>
-                    <div class="category"><a href="{{ route('blog.show',$post->id) }}">{{ $post->category->title }}</a></div>
-                  </div><a href="{{ route('blog.show', $post->id) }}">
+                    <div class="category"><a href="{{ route('post.show',$post->id) }}">{{ $post->category->title }}</a></div>
+                  </div><a href="{{ route('post.show', $post->id) }}">
                     <h3 class="h4">{{ $post->title }}</h3></a>
                   <p class="text-muted">See more ..</p>
                   <footer class="post-footer d-flex align-items-center"><a href="{{ route('viewprofile',$post->id) }}" class="author d-flex align-items-center flex-wrap">
@@ -90,9 +90,9 @@
       <header>
         <h3 class="h6">Categories</h3>
       </header>
-      @forelse ( $lists as $category )
-      <div class="item d-flex justify-content-between"><a href="{{ route('view',$category->id) }}">{{ $category->title }}</a>
-        <span>({{ $count->where('category_id',$category->id)->count() }})</span>
+      @forelse ( $categories as $category )
+      <div class="item d-flex justify-content-between"><a href="{{ route('category.show',$category->id) }}">{{ $category->title }}</a>
+        <span>({{ count($category->post) }})</span>
       </div>
       @empty
       <div class="item d-flex justify-content-between"><a href="#">No Categories Available</div>

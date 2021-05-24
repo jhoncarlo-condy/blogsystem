@@ -53,7 +53,6 @@ class PostController extends Controller
         return redirect()->back()->with(['message'=>'Added new post']);
 
     }
-
     public function show(Post $post)
     {
         $category = Category::paginate(4);
@@ -73,27 +72,6 @@ class PostController extends Controller
             'count'=>$count
         ]));
     }
-
-    public function category()
-    {
-        $lists = Category::paginate(4);
-        $categories = Category::with(['posts' => function($query) {
-            $query->latest();
-        }])->paginate(4);
-        $count = Post::all();
-
-        return view ('users.categories.category',compact('categories','lists','count'));
-    }
-
-    public function viewcat($id)
-    {
-        $lists = Category::all();
-        $categories = Category::find($id);
-        $posts = Post::where('category_id',$id)->orderBy('id','desc')->paginate(4);
-        $count = Post::all();
-        return view ('users.categories.view',compact('posts','lists','count','categories'));
-    }
-
     public function profile()
     {
         $count = Post::where('user_id',Auth::user()->id)->count();

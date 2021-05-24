@@ -78,7 +78,7 @@
         <h3 class="h6">Categories</h3>
       </header>
       @forelse ( $categories->take(7) as $category )
-      <div class="item d-flex justify-content-between"><a href="{{ route('view',$category->id) }}">{{ $category->title }}</a>
+      <div class="item d-flex justify-content-between"><a href="{{ route('category.show',$category->id) }}">{{ $category->title }}</a>
         <span>({{ count($category->posts) }})</span>
       </div>
       @empty

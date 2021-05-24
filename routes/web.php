@@ -22,11 +22,7 @@ Route::get('/', function () {
 Auth::routes();
 
 
-
-// Route::get('/dashboard', 'UserController@index')->name('dashboard');
-// Route::get('/category', '<Catego></Catego>ryController@index')->name('category');
-
-
+//admin routes
 Route::middleware(['auth', 'admin'])->group(function () {
     Route::resource('/admin/users', 'Admin\UserController');
     Route::get('/admin/dashboard', 'Admin\UserController@dashboard')->name('users.dashboard');
@@ -34,20 +30,18 @@ Route::middleware(['auth', 'admin'])->group(function () {
     Route::resource('/admin/posts', 'Admin\PostController');
 });
 
-Route::get('/blog/categories/list','User\PostController@category')->name('categories');
-Route::get('/blog/categories/view/{id}','User\PostController@viewcat')->name('view');
+
 Route::view('categories','users.categories.allcategory',[
     'datas'=> App\Category::all()
 ])->name('list');
-// Route::view('comments','users.view.allcomments',[
-//     'posts'=> App\Post::find($id)
-// ])->name('allcomments');
 Route::get('/comments/{id}', 'CommentController@show')->name('allcomments');
 
+
 Route::resource('/users/blog/post', 'User\PostController');
+Route::resource('/users/blog/category', 'User\CategoryController');
 
 
-
+//user routes
 Route::middleware(['auth'])->group(function () {
     Route::post('/profile','ProfileController@store')->name('changepassword');
     Route::get('/profile/view/{id}','ProfileController@show')->name('viewprofile');

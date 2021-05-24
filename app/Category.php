@@ -13,8 +13,12 @@ class Category extends Model
      *
      * @return \Illuminate\Database\Eloquent\Relations\HasOne
      */
-    public function posts()
+    public function post()
     {
             return $this->hasMany(Post::class);
+    }
+    public function latestpost()
+    {
+        return $this->hasOne(Post::class)->latest();
     }
 }

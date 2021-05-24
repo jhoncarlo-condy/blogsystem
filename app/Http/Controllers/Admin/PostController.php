@@ -44,8 +44,6 @@ class PostController extends Controller
     }
     public function show(Post $post)
     {
-        dd($post);
-
         $latest = Post::select('id','title','image','created_at')
                     ->orderBy('id','desc')
                     ->take(3)->get();

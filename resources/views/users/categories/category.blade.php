@@ -17,9 +17,9 @@
 </script>
 @endpush
 @section('link')
-<li class="nav-item"><a href="{{ route('blog.index') }}" class="nav-link">Home</a>
+<li class="nav-item"><a href="{{ route('post.index') }}" class="nav-link">Home</a>
 </li>
-<li class="nav-item"><a href="{{ route('categories') }}" class="nav-link active">Categories</a>
+<li class="nav-item"><a href="{{ route('category.index') }}" class="nav-link active">Categories</a>
 </li>
 @if (Auth::user())
 <li class="nav-item"><a href="{{ route('profile') }}" class="nav-link ">Profile</a>
@@ -48,13 +48,13 @@
           <div class="row">
             <!-- post -->
             @forelse ($categories as $category)
-            @foreach ($category->posts as $cat)
+            @foreach ($category->post as $post)
 
             <div class="post col-xl-6">
                 <div class="post-thumbnail">
-                    @if($cat->image)
-                    <a href="{{ route('blog.show',$cat->id) }}">
-                        <img style="height: 150px;width:400px;" src="{{ asset('storage/'.$cat->image) }}" alt="..." class="img-fluid"></a>
+                    @if($post->image)
+                    <a href="{{ route('post.show',$post->id) }}">
+                        <img style="height: 150px;width:400px;" src="{{ asset('storage/'.$post->image) }}" alt="..." class="img-fluid"></a>
                     </a>
                     @else
                     <img style="height: 150px;width:400px;" src="https://upload.wikimedia.org/wikipedia/commons/1/14/No_Image_Available.jpg" alt="..." class="img-fluid"></a>
@@ -63,17 +63,18 @@
                 <div class="post-details">
                   <div class="post-meta d-flex justify-content-between">
                     <div class="date meta-last"></div>
-                    <div class="category"><a href="{{ route('blog.show',$cat->id) }}">{{ $category->title }}</a></div>
-                  </div><a href="{{ route('blog.show',$category->id) }}">
-                    <h3 class="h4">{{ $cat->title }}</h3></a>
-                  <p class="text-muted">{{ $cat->title }}</p>
-                  <p class="text-muted"><a href="{{ route('blog.show',$cat->id) }}"> See more ..</a></p>
-                  <footer class="post-footer d-flex align-items-center"><a href="{{ route('viewprofile',$cat->user->id) }}" class="author d-flex align-items-center flex-wrap">
+                    <div class="category"><a href="{{ route('post.show',$post->id) }}">{{ $post->title }}</a></div>
+                  </div><a href="{{ route('post.show',$post->id) }}">
+                    <h3 class="h4">{{ $category->title }}</h3></a>
+                  <p class="text-muted">{{ $category->title }}</p>
+                  <p class="text-muted"><a href="{{ route('post.show',$category->id) }}"> See more ..</a></p>
+                  <footer class="post-footer d-flex align-items-center">
+                      {{-- <a href="{{ route('viewprofile',$post->user->id) }}" class="author d-flex align-items-center flex-wrap"> --}}
                       {{-- <div class="avatar"><img src="img/avatar-3.jpg" alt="..." class="img-fluid"></div> --}}
                       <div class="title">
-                          <i class="fas fa-user fa-xs"></i><span>{{ $cat->user->firstname}}</span>
+                          <i class="fas fa-user fa-xs"></i><span>{{ $post->user->firstname}}</span>
                       </div></a>
-                    <div class="date"><i class="fas fa-clock fa-xs"></i>{{ $cat->created_at->diffForHumans() }}</div>
+                    <div class="date"><i class="fas fa-clock fa-xs"></i>{{ $post->created_at->diffForHumans() }}</div>
                   </footer>
                 </div>
               </div>
@@ -108,10 +109,10 @@
       <header>
         <h3 class="h6">Categories</h3>
       </header>
-      @forelse ( $lists as $list )
+      @forelse ( $lists as $category )
       <div class="item d-flex justify-content-between">
-      <a href="{{ route('view',$list->id) }}">{{ $list->title }}</a>
-        <span>({{ $count->where('category_id',$list->id)->count() }})</span>
+      <a href="{{ route('category.show',$category->id) }}">{{ $category->title }}</a>
+        <span>({{ count($category->post)}})</span>
       </div>
       @empty
       <div class="item d-flex justify-content-between"><a href="#">No Categories Available</div>
