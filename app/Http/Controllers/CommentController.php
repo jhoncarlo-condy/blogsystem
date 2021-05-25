@@ -9,11 +9,7 @@ use Illuminate\Http\Request;
 
 class CommentController extends Controller
 {
-    public function index()
-    {
-        $comments = Comment::all();
-        return view ('users.comment.comments',compact('comments'));
-    }
+
     public function store(Request $request)
     {
         $data = $request->validate([

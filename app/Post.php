@@ -7,6 +7,7 @@ use Illuminate\Database\Eloquent\Relations\HasOne;
 
 class Post extends Model
 {
+    protected $guarded = [];
     protected $table = 'posts';
     public function user()
     {
@@ -20,5 +21,4 @@ class Post extends Model
     {
         return $this->hasMany(Comment::class)->orderBy('id','desc');
     }
-    protected $guarded = [''];
 }

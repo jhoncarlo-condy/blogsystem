@@ -154,9 +154,11 @@
                   @endforelse
                 </div>
 
+                @if (count($post->comments)>0)
                 <div class="seemore-button">
-                    <button type="button" id="button" class="btn btn-secondary">See more</button>
+                    <a style="color:blue" name="" id="button" role="button">See all Comments&rarr;</a>
                 </div>
+                @endif
 
               </div>
               @guest
@@ -184,7 +186,7 @@
 
               </div>
               @endguest
-              @if (Auth::user())
+              @auth
               <div class="add-comment">
                 <header>
                   <h3 class="h6">Leave a reply</h3>
@@ -209,7 +211,7 @@
                 </form>
 
               </div>
-              @endif
+              @endauth
 
             </div>
           </div>

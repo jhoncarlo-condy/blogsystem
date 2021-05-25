@@ -25,7 +25,7 @@ class CategoryController extends Controller
             'blogmax'=>'required'
         ]);
         Category::create($data);
-        return redirect()->back()->with(['message'=>'Added new category']);
+        return back()->with(['message'=>'Added new category']);
     }
     public function edit(Category $category)
     {

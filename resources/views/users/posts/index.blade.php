@@ -69,7 +69,6 @@
                   <div class="date"><i class="fas fa-clock fa-xs"></i>{{ $post->created_at->diffForHumans() }}</div>
                   <div class="comments meta-last"><i class="fas fa-comment fa-xs"></i></i>{{ count($post->comments) }}</div>
                   </footer>
-                  @endauth
                   @else
                   <footer class="post-footer d-flex align-items-center"><a href="#" class="author d-flex align-items-center flex-wrap">
                         {{-- <div class="avatar"><img src="img/avatar-3.jpg" alt="..." class="img-fluid"></div> --}}
@@ -81,6 +80,19 @@
                     <div class="comments meta-last"><i class="fas fa-comment fa-xs"></i></i>{{ count($post->comments) }}</div>
                   </footer>
                   @endif
+                  @endauth
+                  @guest
+                  <footer class="post-footer d-flex align-items-center"><a href="#" class="author d-flex align-items-center flex-wrap">
+                    {{-- <div class="avatar"><img src="img/avatar-3.jpg" alt="..." class="img-fluid"></div> --}}
+                    <a href="{{ route('profile.show',$post->user_id) }}">
+                    <div class="title">
+                        <i class="fas fa-user fa-xs"></i><span>{{ $post->user->firstname }}</span>
+                    </div></a>
+                    <div class="date"><i class="fas fa-clock fa-xs"></i>{{ $post->created_at->diffForHumans() }}</div>
+                    <div class="comments meta-last"><i class="fas fa-comment fa-xs"></i></i>{{ count($post->comments) }}</div>
+                 </footer>
+                  @endguest
+
                 </div>
               </div>
             @empty
@@ -89,13 +101,7 @@
           </div>
           <!-- Pagination -->
           <nav aria-label="Page navigation example">
-            {{-- <ul class="pagination pagination-template d-flex justify-content-center">
-              <li class="page-item"><a href="#" class="page-link"> <i class="fa fa-angle-left"></i></a></li>
-              <li class="page-item"><a href="#" class="page-link active">1</a></li>
-              <li class="page-item"><a href="#" class="page-link">2</a></li>
-              <li class="page-item"><a href="#" class="page-link">3</a></li>
-              <li class="page-item"><a href="#" class="page-link"> <i class="fa fa-angle-right"></i></a></li>
-            </ul> --}}
+
             <div class="d-flex justify-content-center">
                 {{ $posts->links() }}
             </div>
@@ -104,7 +110,7 @@
         </div>
       </main>
 
-
+{{-- side contents --}}
 <aside class="col-lg-4">
 
 @if (Auth::user())

@@ -20,7 +20,7 @@ class AdminMiddleware
         {
             return $next($request);
         }
-        if(Auth::user()->usertype == 2)
+        elseif(Auth::user()->usertype == 2)
         {
             return $next($request);
         }
