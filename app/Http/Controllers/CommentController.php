@@ -14,92 +14,21 @@ class CommentController extends Controller
         $comments = Comment::all();
         return view ('users.comment.comments',compact('comments'));
     }
-
-    public function allcomments()
-    {
-        $datas = Category::select('id','title');
-        return view('users.categories.allcategory',with([
-            'datas'=>$datas
-        ]));
-    }
-
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        //
-    }
-
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
     public function store(Request $request)
     {
-        $request->validate([
+        $data = $request->validate([
             'comment' => 'required',
+            'user_id'=>'required',
+            'post_id'=>'required',
         ]);
 
-        $comment = new Comment;
-        $comment->user_id = $request->user_id;
-        $comment->post_id = $request->post_id;
-        $comment->comment = $request->comment;
-        $comment->save();
+        Comment::create($data);
         return redirect()->back()->with(['message','Your comment has been added']);
-
-
-
-
     }
-
-    /**
-     * Display the specified resource.
-     *
-     * @param  \App\Comment  $comment
-     * @return \Illuminate\Http\Response
-     */
-    public function show(Comment $comment, Post $posts,$id)
+    public function show(Post $postcomments)
     {
-        $postcomments = Post::find($id);
-        return view ('users.view.allcomments',compact('postcomments'));
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  \App\Comment  $comment
-     * @return \Illuminate\Http\Response
-     */
-    public function edit(Comment $comment)
-    {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Comment  $comment
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, Comment $comment)
-    {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  \App\Comment  $comment
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy(Comment $comment)
-    {
-        //
+        return view ('users.posts.allcomments',with([
+            'postcomments'=>$postcomments
+        ]));
     }
 }

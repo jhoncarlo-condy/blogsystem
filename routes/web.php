@@ -15,15 +15,14 @@ Route::middleware(['auth', 'admin'])->group(function () {
 //user routes
 Route::middleware(['auth'])->group(function () {
     Route::resource('/users/profile', 'ProfileController')->except(['show']);
-    Route::post('/profile','ProfileController@store')->name('changepassword');
-    Route::resource('/comment','CommentController');
+    Route::resource('/comment','CommentController')->except(['show']);
 
 });
 
 //guests routes
 Route::resource('/users/profile', 'ProfileController')->only(['show']);
-Route::view('/allcomments','CommentController@allcomments')->name('list');
-Route::get('/comments/{id}', 'CommentController@show')->name('allcomments');
+Route::get('/allcategories','User\CategoryController@all')->name('list');
+Route::get('/comments/{postcomments}', 'CommentController@show')->name('commentshow');
 Route::resource('/users/blogs/post', 'User\PostController');
 Route::resource('/users/blogs/category', 'User\CategoryController');
 

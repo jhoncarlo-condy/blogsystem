@@ -22,7 +22,7 @@
                 </li>
                 <li class="list-group-item">
                     <b>Last Post</b> <p class="float-right">
-                   @if (Auth::user()->post == true)
+                   @if (count(Auth::user()->post) > 0)
                    {{ Auth::user()->post->last()->created_at->diffForHumans() }}
                    @else
                    n/a

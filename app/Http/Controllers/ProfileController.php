@@ -18,7 +18,8 @@ class ProfileController extends Controller
         $query = Post::select('id','title','category_id','user_id','description','image','created_at')
                         ->where('user_id', Auth::user()->id)->latest('id');
         $posts = $query->paginate(2);
-        $categories = Category::select('id','title')->get();
+        $categories = Category::select('id','title','blogmax')
+                        ->where('blogmax','>', 0)->get();
         return view ('users.profile.index', with([
             'categories'=>$categories,
             'posts'=>$posts,
@@ -32,14 +33,14 @@ class ProfileController extends Controller
             'confirmpassword' => 'same:newpassword',
         ]);
 
-        User::find(Auth::user()->id)->update(['password'=> Hash::make($data['password'])]);
+        User::find(Auth::user()->id)->update(['password'=> Hash::make($data['newpassword'])]);
 
-        return redirect(route('profile'))->with(['message'=>'Password changed successfully']);
+        return redirect(route('profile.index'))->with(['message'=>'Password changed successfully']);
     }
     public function show(User $profile)
     {
         $posts = $profile->post()->orderBy('id','desc')->paginate(2);
-        return view('users.profile.visitprofile',with([
+        return view('users.profile.show',with([
             'profile'=>$profile,
             'posts'=>$posts
         ]));

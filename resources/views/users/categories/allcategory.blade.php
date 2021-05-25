@@ -3,8 +3,8 @@
   </header>
   @forelse ( $datas as $data )
   <div class="item d-flex justify-content-between">
-  <a href="{{ route('view',$data->id) }}">{{ $data->title }}</a>
-    <span>({{ $data->posts->where('category_id',$data->id)->count() }})</span>
+  <a href="{{ route('category.show',$data->id) }}">{{ $data->title }}</a>
+    <span>({{ count($data->post->where('category_id',$data->id)) }})</span>
   </div>
   @empty
   <div class="item d-flex justify-content-between"><a href="#">No Categories Available</div>

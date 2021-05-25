@@ -262,6 +262,7 @@
                                   <label>Category</label>
 
                                   <select class="form-control " name="category_id" data-dropdown-css-class="select2-danger" style="width: 100%;">
+                                    <option disabled selected>Select Category</option>
                                     @foreach ($categories as $category)
                                     <option value="{{ $category->id }}">{{ $category->title }}</option>
                                     @endforeach
@@ -312,7 +313,7 @@
                 <!-- /.tab-pane -->
 
                 <div class="tab-pane" id="settings">
-                  <form method="POST" action="{{ route('changepassword') }}" class="form-horizontal">
+                  <form method="POST" action="{{ route('profile.store') }}" class="form-horizontal">
                     @csrf
                     @method('POST')
                     @if ($errors->has('oldpassword'))

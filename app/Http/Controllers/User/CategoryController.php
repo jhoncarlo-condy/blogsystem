@@ -18,7 +18,7 @@ class CategoryController extends Controller
             return $q->latest()->first();
         }])->get();
 
-        return view ('users.categories.category',with([
+        return view ('users.categories.index',with([
             'lists'=>$lists,
             'categories'=>$categories,
         ]));
@@ -29,10 +29,17 @@ class CategoryController extends Controller
         $posts = Post::select('id','title','category_id','user_id','image','created_at')
                 ->where('category_id',$category->id)
                 ->orderBy('id','desc')->paginate(4);
-        return view ('users.categories.view',with([
+        return view ('users.categories.show',with([
             'categories'=>$categories,
             'category'=>$category,
             'posts'=>$posts,
+        ]));
+    }
+    public function all()
+    {
+        $datas = Category::select('id','title')->get();
+        return view('users.categories.allcategory',with([
+            'datas'=>$datas
         ]));
     }
 }

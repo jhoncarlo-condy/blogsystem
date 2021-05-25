@@ -17,7 +17,7 @@ class PostController extends Controller
 
     public function index()
     {
-        $query = Post::select('id','category_id','user_id','description','image','created_at');
+        $query = Post::select('id','title','category_id','user_id','image','created_at');
         $posts = $query->orderBy('id','desc')->paginate(6);
         $latest = $query->orderBy('id','desc')->take(3)->get();
         if (Auth::user()) {
@@ -28,7 +28,7 @@ class PostController extends Controller
             $myrecent = '';
         }
         $categories = Category::select('id','title')->take(4)->get();
-        return view('users.home.content',with([
+        return view('users.posts.index',with([
             'posts'=>$posts,
             'latest'=>$latest,
             'myrecent'=>$myrecent,
@@ -57,7 +57,7 @@ class PostController extends Controller
 
 
         // $find = Category::find($posts);
-        return view ('users.view.view',with([
+        return view ('users.posts.show',with([
             'post' => $post,
             'category'=>$category,
             'latest'=>$latest,
@@ -66,7 +66,7 @@ class PostController extends Controller
     public function edit(Post $post)
     {
         $categories = Category::select('id','title');
-        return view ('users.editpost.index', with([
+        return view ('users.posts.edit', with([
             'post'=>$post,
             'categories'=>$categories,
         ]));

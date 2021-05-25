@@ -6,7 +6,7 @@
     {
         $('#button').click(function()
         {
-            $('#showall').load('{{ route('allcomments',$post) }}').fadeIn("slow");
+            $('#showall').load('{{ route('commentshow',$post->id) }}').fadeIn("slow");
             $('#button').hide();
 
         });

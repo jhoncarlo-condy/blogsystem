@@ -171,8 +171,8 @@
                 </li>
                 <li class="list-group-item">
                     <b>Last Post</b> <p class="float-right">
-                    @if ($profile->created_at == true)
-                    {{ $profile->created_at->diffForHumans() }}
+                    @if (count($profile->post)>0)
+                    {{ $posts->first()->created_at->diffForHumans() }}
                     @else
                     n/a
                     @endif
