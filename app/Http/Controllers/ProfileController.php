@@ -16,23 +16,23 @@ class ProfileController extends Controller
     public function index()
     {
         $query = Post::select('id','title','category_id','user_id','description','image','created_at')
-                        ->where('user_id', Auth::user()->id);
-        $posts = $query->latest('id')->paginate(2);
+                        ->where('user_id', Auth::user()->id)->latest('id');
+        $posts = $query->paginate(2);
         $categories = Category::select('id','title')->get();
-        return view ('users.profile.view', with([
+        return view ('users.profile.index', with([
             'categories'=>$categories,
             'posts'=>$posts,
         ]));
     }
        public function store(Request $request)
     {
-        $request->validate([
+        $data = $request->validate([
             'oldpassword' => ['required', new MatchOldPassword],
             'newpassword' => 'required',
             'confirmpassword' => 'same:newpassword',
         ]);
 
-        User::find(Auth::user()->id)->update(['password'=> Hash::make($request->newpassword)]);
+        User::find(Auth::user()->id)->update(['password'=> Hash::make($data['password'])]);
 
         return redirect(route('profile'))->with(['message'=>'Password changed successfully']);
     }
