@@ -167,7 +167,7 @@
 
               <ul class="list-group list-group-unbordered mb-3">
                 <li class="list-group-item">
-                  <b>Posts</b> <p class="float-right">{{count($profile)}}</p>
+                  <b>Posts</b> <p class="float-right">{{count($profile->post)}}</p>
                 </li>
                 <li class="list-group-item">
                     <b>Last Post</b> <p class="float-right">
@@ -213,7 +213,7 @@
 
                     <div class="post">
                         <div class="user-block">
-                          <img style="width:200px;height:150px;" class="rounded-circle" src="https://thumbs.dreamstime.com/b/default-avatar-profile-icon-vector-social-media-user-portrait-176256935.jpg" alt="user image">
+                          <img style="width:20px;height:20px;" class="rounded-circle" src="https://thumbs.dreamstime.com/b/default-avatar-profile-icon-vector-social-media-user-portrait-176256935.jpg" alt="user image">
                           <span class="username">
                             <a href="#">{{ $post->user->firstname ." ".$post->user->lastname }}</a>
                           </span>

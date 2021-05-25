@@ -122,11 +122,11 @@
 </style>
 @endpush
 @section('link')
-<li class="nav-item"><a href="{{ route('blog.index') }}" class="nav-link">Home</a>
+<li class="nav-item"><a href="{{ route('post.index') }}" class="nav-link">Home</a>
 </li>
-<li class="nav-item"><a href="{{ route('categories') }}" class="nav-link">Categories</a>
+<li class="nav-item"><a href="{{ route('category.index') }}" class="nav-link">Categories</a>
 </li>
-<li class="nav-item"><a href="{{ route('profile') }}" class="nav-link active">Profile</a>
+<li class="nav-item"><a href="{{ route('profile.index') }}" class="nav-link active">Profile</a>
 </li>
 @endsection
 @section('content')
@@ -183,32 +183,32 @@
                     @forelse ($posts as $post)
                     <div class="post">
                         <div class="user-block">
-                          <img class="img-circle img-bordered-sm" src="https://thumbs.dreamstime.com/b/default-avatar-profile-icon-vector-social-media-user-portrait-176256935.jpg" alt="user image">
+                            <img style="width:20px;height:20px;" class="rounded-circle" src="https://thumbs.dreamstime.com/b/default-avatar-profile-icon-vector-social-media-user-portrait-176256935.jpg" alt="user image">
                           <span class="username">
                             <a href="#">{{ $post->user->firsname ." ".$post->user->lastname }}</a>
                           </span>
                           <span class="description">{{ $post->created_at->diffForHumans() ." | ".$post->created_at->format('h:i A')}}</span>
                         </div>
                         <!-- /.user-block -->
-                        <a href="{{ route('blog.show',$post->id) }}"><h4>Title: {{ $post->title }}</h4></a>
+                        <a href="{{ route('post.show',$post->id) }}"><h4>Title: {{ $post->title }}</h4></a>
                         <div class="widget tags">
                         @if ($post->image)
-                        <a href="{{ route('blog.show',$post->id) }}">
+                        <a href="{{ route('post.show',$post->id) }}">
                         <img style="width:200px;height:150px;" src="{{ asset('storage/'.$post->image) }}" alt="">
                         </a>
                         @else
-                        <a href="{{ route('blog.show',$post->id) }}">
+                        <a href="{{ route('post.show',$post->id) }}">
                         <img style="width:200px;height:150px;" src="https://upload.wikimedia.org/wikipedia/commons/1/14/No_Image_Available.jpg" alt="">
                         </a>
                         @endif
                                 <div class="container">
-                                <a href="{{ route('blog.show',$post->id) }}">
+                                <a href="{{ route('post.show',$post->id) }}">
 
                                     {!! $post->description !!}
                                 </a>
                                 </div>
 
-                            <li class="list-inline-item"><a href="{{ route('view',$post->category->id) }}" class="tag">#{{ $post->category->title }}</a></li>
+                            <li class="list-inline-item"><a href="{{ route('category.show',$post->category->id) }}" class="tag">#{{ $post->category->title }}</a></li>
 
                         </div>
 
@@ -227,7 +227,7 @@
                 <!-- /.tab-pane -->
                 <div class="tab-pane" id="timeline">
 
-                          <form action="{{ route('blog.store') }}" method="POST" enctype="multipart/form-data">
+                          <form action="{{ route('post.store') }}" method="POST" enctype="multipart/form-data">
                               @method('POST')
                               @csrf
                           <!-- /.card-header -->
@@ -262,8 +262,8 @@
                                   <label>Category</label>
 
                                   <select class="form-control " name="category_id" data-dropdown-css-class="select2-danger" style="width: 100%;">
-                                    @foreach ($category as $cat)
-                                    <option value="{{ $cat->id }}">{{ $cat->title }}</option>
+                                    @foreach ($categories as $category)
+                                    <option value="{{ $category->id }}">{{ $category->title }}</option>
                                     @endforeach
                                   </select>
 

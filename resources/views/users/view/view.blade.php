@@ -25,7 +25,7 @@
 <li class="nav-item"><a href="{{ route('category.index') }}" class="nav-link">Categories</a>
 </li>
 @if (Auth::user())
-<li class="nav-item"><a href="{{ route('profile') }}" class="nav-link ">Profile</a>
+<li class="nav-item"><a href="{{ route('profile.index') }}" class="nav-link ">Profile</a>
 </li>
 @endif
 @endsection

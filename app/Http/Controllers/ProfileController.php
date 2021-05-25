@@ -15,12 +15,14 @@ class ProfileController extends Controller
 {
     public function index()
     {
-        $count = Post::where('user_id',Auth::user()->id)->count();
-        $last = Post::where('user_id',Auth::user()->id)->latest('id')->get();
-        $category = Category::all();
-        $posts = Post::where('user_id', Auth::user()->id)->latest('id')->paginate(3);
-        $commentcount = Comment::where('user_id',Auth::user()->id)->count();
-        return view ('users.profile.view', compact('posts','category','count','last','commentcount'));
+        $query = Post::select('id','title','category_id','user_id','description','image','created_at')
+                        ->where('user_id', Auth::user()->id);
+        $posts = $query->latest('id')->paginate(2);
+        $categories = Category::select('id','title')->get();
+        return view ('users.profile.view', with([
+            'categories'=>$categories,
+            'posts'=>$posts,
+        ]));
     }
        public function store(Request $request)
     {
@@ -36,10 +38,7 @@ class ProfileController extends Controller
     }
     public function show(User $profile)
     {
-        $query = Post::select('id','title','category_id','user_id','description','created_at');
-        // $category = Category::all();
-        $posts = $query->where('user_id',$profile)->latest('id')->paginate(3);
-
+        $posts = $profile->post()->orderBy('id','desc')->paginate(2);
         return view('users.profile.visitprofile',with([
             'profile'=>$profile,
             'posts'=>$posts

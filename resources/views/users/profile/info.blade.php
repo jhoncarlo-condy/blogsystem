@@ -18,21 +18,21 @@
 
               <ul class="list-group list-group-unbordered mb-3">
                 <li class="list-group-item">
-                  <b>Posts</b> <p class="float-right">{{$count}}</p>
+                  <b>Posts</b> <p class="float-right">{{count($posts)}}</p>
                 </li>
                 <li class="list-group-item">
                     <b>Last Post</b> <p class="float-right">
-                    @forelse ($last->take(1) as $last)
-                    {{ $last->created_at->diffForHumans()}}
-                    @empty
-                    n/a
-                    @endforelse
+                   @if ($posts == true)
+                   {{ $posts->first()->created_at->diffForHumans() }}
+                   @else
+                   n/a
+                   @endif
                     </p>
                 </li>
                 <li class="list-group-item">
                     <b>Your total Comments</b> <p class="float-right">
-                    @if ($commentcount > 0 )
-                        {{ $commentcount }}
+                    @if (count(Auth::user()->comment) > 0 )
+                       {{ count(Auth::user()->comment)}}
                     @else
                     0
                     @endif
