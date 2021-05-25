@@ -20,10 +20,12 @@ class PostController extends Controller
         $query = Post::select('id','category_id','user_id','description','image','created_at');
         $posts = $query->orderBy('id','desc')->paginate(6);
         $latest = $query->orderBy('id','desc')->take(3)->get();
-        if(Auth::user())
-        {
-        $myrecent = $query->where('user_id', Auth::user()->id)
+        if (Auth::user()) {
+            $myrecent = $query->where('user_id', Auth::user()->id)
                         ->orderBy('created_at','desc')->get();
+        }
+        else {
+            $myrecent = '';
         }
         $categories = Category::select('id','title')->take(4)->get();
         return view('users.home.content',with([

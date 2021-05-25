@@ -20,8 +20,8 @@ Route::middleware(['auth'])->group(function () {
 
 });
 //guests routes
-Route::view('categories','CommentController@allcomments')->name('list');
+Route::view('/allcomments','CommentController@allcomments')->name('list');
 Route::get('/comments/{id}', 'CommentController@show')->name('allcomments');
-Route::resource('/users/blog/post', 'User\PostController');
-Route::resource('/users/blog/category', 'User\CategoryController');
+Route::resource('/users/blogs/post', 'User\PostController');
+Route::resource('/users/blogs/category', 'User\CategoryController');
 

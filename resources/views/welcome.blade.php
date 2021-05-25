@@ -85,12 +85,16 @@
                 @if (Route::has('login'))
                 <div class="links">
                         @auth
-                            <a href="{{ url('/dashboard') }}">Home</a>
+                            @if (Auth::user()->usertype == 1 or 2)
+                            <a href="{{ route('users.dashboard') }}">Home</a>
+                            @else
+                            <a href="{{ route('post.index') }}">Home</a>
+                            @endif
                         @else
                             <a href="{{ route('login') }}">Login</a>
                             <a href="{{ route('register') }}">Register</a><br><br>
                             <div class="links container mt-4">
-                                <a href="{{ url('/blog') }}">Login as Guest</a>
+                                <a href="{{ route('post.index') }}">Login as Guest</a>
                             </div>
                         @endauth
                     </div>

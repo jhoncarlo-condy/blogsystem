@@ -18,7 +18,7 @@
     <header>
       <h3 class="h6">Your Recent Posts</h3>
     </header>
-    @forelse ($myrecent->take(3) as $recent)
+    @forelse ($myrecent as $recent)
     <div class="blog-posts">
       <a href="{{ route('post.show',$recent->id) }}">
         <div class="item d-flex align-items-center">
