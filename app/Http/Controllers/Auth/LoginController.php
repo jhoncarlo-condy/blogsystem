@@ -47,7 +47,7 @@ class LoginController extends Controller
         }
         else if(Auth::user()->usertype == 3)
         {
-            return '/users/blog/post';
+            return '/users/blogs/post';
         }
     }
 

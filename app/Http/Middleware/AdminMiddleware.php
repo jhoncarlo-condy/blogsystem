@@ -25,7 +25,7 @@ class AdminMiddleware
             return $next($request);
         }
         else {
-            return redirect('/blog')->with(['status'=>'Forbidden Access']);
+            return redirect('/users/blogs/post')->with(['status'=>'Forbidden Access']);
         }
     }
 }

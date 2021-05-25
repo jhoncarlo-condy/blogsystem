@@ -51,13 +51,25 @@
                   </div><a href="{{ route('post.show', $post->id) }}">
                     <h3 class="h4">{{ $post->title }}</h3></a>
                   <p class="text-muted">See more ..</p>
-                  <footer class="post-footer d-flex align-items-center"><a href="{{ route('viewprofile',$post->id) }}" class="author d-flex align-items-center flex-wrap">
+                  @if ($post->user->id == Auth::user()->id)
+                  <footer class="post-footer d-flex align-items-center"><a href="{{ route('profile.index') }}" class="author d-flex align-items-center flex-wrap">
                       {{-- <div class="avatar"><img src="img/avatar-3.jpg" alt="..." class="img-fluid"></div> --}}
                       <div class="title">
-                          <i class="fas fa-user fa-xs"></i><span>{{ $post->user->firstname}}</span>
+                          <i class="fas fa-user fa-xs"></i><span>Me</span>
                       </div></a>
                     <div class="date"><i class="fas fa-clock fa-xs"></i>{{ $post->created_at->diffForHumans() }}</div>
-                  </footer>
+                    <div class="comments meta-last"><i class="fas fa-comment fa-xs"></i></i>{{ count($post->comments) }}</div>
+                </footer>
+                  @else
+                  <footer class="post-footer d-flex align-items-center"><a href="{{ route('profile.show',$post->id) }}" class="author d-flex align-items-center flex-wrap">
+                    {{-- <div class="avatar"><img src="img/avatar-3.jpg" alt="..." class="img-fluid"></div> --}}
+                    <div class="title">
+                        <i class="fas fa-user fa-xs"></i><span>{{ $post->user->firstname}}</span>
+                    </div></a>
+                  <div class="date"><i class="fas fa-clock fa-xs"></i>{{ $post->created_at->diffForHumans() }}</div>
+                  <div class="comments meta-last"><i class="fas fa-comment fa-xs"></i></i>{{ count($post->comments) }}</div>
+                </footer>
+                  @endif
                 </div>
               </div>
             @empty

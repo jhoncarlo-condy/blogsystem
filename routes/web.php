@@ -14,12 +14,14 @@ Route::middleware(['auth', 'admin'])->group(function () {
 });
 //user routes
 Route::middleware(['auth'])->group(function () {
-    Route::resource('/users/profile', 'ProfileController');
+    Route::resource('/users/profile', 'ProfileController')->except(['show']);
     Route::post('/profile','ProfileController@store')->name('changepassword');
     Route::resource('/comment','CommentController');
 
 });
+
 //guests routes
+Route::resource('/users/profile', 'ProfileController')->only(['show']);
 Route::view('/allcomments','CommentController@allcomments')->name('list');
 Route::get('/comments/{id}', 'CommentController@show')->name('allcomments');
 Route::resource('/users/blogs/post', 'User\PostController');

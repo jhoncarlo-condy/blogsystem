@@ -85,7 +85,7 @@
                 @if (Route::has('login'))
                 <div class="links">
                         @auth
-                            @if (Auth::user()->usertype == 1 or 2)
+                            @if (Auth::user()->usertype == 1&2)
                             <a href="{{ route('users.dashboard') }}">Home</a>
                             @else
                             <a href="{{ route('post.index') }}">Home</a>

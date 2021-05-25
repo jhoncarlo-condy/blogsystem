@@ -35,12 +35,6 @@ class PostController extends Controller
             'categories'=>$categories,
         ]));
     }
-
-    public function create()
-    {
-        //
-    }
-
     public function store(StorePostRequest $request)
     {
         $data = $request->validated();
