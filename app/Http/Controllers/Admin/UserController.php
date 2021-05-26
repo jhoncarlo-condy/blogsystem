@@ -47,7 +47,7 @@ class UserController extends Controller
             'password' => 'required|string|min:6',
             'usertype' => 'required'
         ]);
-
+        $data['password']= Hash::make($data['password']);
         User::create($data);
         return back()->with(['message'=>'User Added Successfully']);
 
@@ -89,7 +89,15 @@ class UserController extends Controller
     }
     public function destroy(User $user)
     {
+        Post::select('user_id')
+            ->where('user_id',$user->id)
+            ->delete();
+        Comment::select('user_id')
+            ->where('user_id',$user->id)
+            ->delete();
         $user->delete();
         return back()->with(['message' => 'User Deleted Successfully']);
     }
+
+
 }

@@ -181,7 +181,11 @@
                     <select class="form-control select2 select2-danger" name="category_id" data-dropdown-css-class="select2-danger" style="width: 100%;">
                         <option value="{{ $post->category_id }}" selected="selected">{{ $post->category->title }}</option>
                         @foreach ($categories as $category)}
+                        @if ($category->blogmax>0)
                         <option value="{{ $category->id}}">{{ $category->title}}</option>
+                        @else
+
+                        @endif
                         @endforeach
                     </select>
 

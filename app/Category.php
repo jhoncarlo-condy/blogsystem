@@ -8,11 +8,14 @@ class Category extends Model
 {
     protected $table = 'categories';
     protected $guarded = [];
-    /**
-     * Get the user associated with the Category
-     *
-     * @return \Illuminate\Database\Eloquent\Relations\HasOne
-     */
+
+
+    public function getBlogmaxAttribute($value)
+    {
+       $posts = Post::where('category_id',$this->id)->count();
+       return $value-$posts;
+
+    }
     public function post()
     {
             return $this->hasMany(Post::class);

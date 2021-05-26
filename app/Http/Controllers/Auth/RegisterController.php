@@ -35,10 +35,10 @@ class RegisterController extends Controller
     {
         if(Auth::user()->usertype == 3)
         {
-            return '/blog';
+            return '/users/blogs/post';
         }
         else {
-            return '/blog';
+            return '/';
         }
     }
 

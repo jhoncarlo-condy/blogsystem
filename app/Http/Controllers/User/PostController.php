@@ -53,9 +53,6 @@ class PostController extends Controller
         $data['image'] = Storage::disk('public')->put('images',$data['image']);
         }
         Post::create($data);
-        $category = Category::find($data['category_id']);
-        $category->blogmax --;
-        $category->update();
         return back()->with(['message'=>'Added new post']);
 
     }
@@ -82,7 +79,7 @@ class PostController extends Controller
     {
         $categories = Category::select(
             'id',
-            'title');
+            'title')->get();
         return view ('users.posts.edit')->with([
             'post'=>$post,
             'categories'=>$categories,
@@ -90,29 +87,12 @@ class PostController extends Controller
     }
     public function update(StorePostRequest $request, Post $post)
     {
-
         $data = $request->validated();
-        $category = Category::select(
-            'id',
-            'blogmax');
-        $newcategory = $category->where('id',$data['category_id'])->first();
-
         if($request->hasfile('image')){
         $data['image'] = Storage::disk('public')->put('images',$data['image']);
         }
-        if($post->category->id != $data['category_id']){
-            $newcategory->blogmax--;
-            $oldcategory = $post->category;
-            $oldcategory->blogmax++;
-            $oldcategory->update();
-            $newcategory->update();
-            $post->update($data);
+        $post->update($data);
         return redirect()->route('post.show',$post->id)->with(['message'=>'Updating post success']);
-        }
-        else {
-            $post->update($data);
-        return redirect()->route('post.show',$post->id)->with(['message'=>'Updating post success']);
-        }
 
     }
 }

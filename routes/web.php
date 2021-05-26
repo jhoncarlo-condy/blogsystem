@@ -26,3 +26,4 @@ Route::get('/comments/{postcomments}', 'CommentController@show')->name('comments
 Route::resource('/users/blogs/post', 'User\PostController');
 Route::resource('/users/blogs/category', 'User\CategoryController');
 
+Route::get('/test','UserController@test')->name('test');

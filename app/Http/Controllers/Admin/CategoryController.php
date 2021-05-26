@@ -51,12 +51,12 @@ class CategoryController extends Controller
     public function destroy(Category $category)
     {
         $post = $category->posts()->doesntExist();
-      if ($post == true) {
-            $category->delete();
-            return back()->with(['message'=>'Category Deleted Successfully']);
+      if ($post) {
+        $category->delete();
+        return back()->with(['message'=>'Category Deleted Successfully']);
       }
       else {
-          return redirect()->back()->with(['error'=>'Delete post first with the selected category']);
+        return redirect()->back()->with(['error'=>'Delete post first with the selected category']);
       }
     }
 }

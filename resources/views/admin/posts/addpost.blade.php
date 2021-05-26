@@ -201,7 +201,11 @@
 
                     <select class="form-control " name="category_id" data-dropdown-css-class="select2-danger" style="width: 100%;">
                         @forelse ($categories as $category)}
+                        @if ($category->blogmax>0)
                         <option value="{{ $category->id}}">{{ $category->title}}</option>
+                        @else
+
+                        @endif
                         @empty
                         empty
                         @endforelse
