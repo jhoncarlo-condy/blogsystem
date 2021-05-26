@@ -247,26 +247,6 @@
                   <textarea class="form-control" name="description" id="summernote" rows="3"></textarea>
                 </div>
                 </div>
-            <!-- /.card -->
-            {{-- ckeditor --}}
-          {{-- <div class="row">
-            <div class="col-md-12">
-              <div class="card card-outline card-info">
-                <div class="card-header">
-                  <h3 class="card-title">
-                    Content
-                  </h3>
-                </div>
-                <!-- /.card-header -->
-                <div class="card-body">
-                 <div class="editor">
-
-                </div>
-
-              </div>
-            </div>
-            <!-- /.col-->
-          </div> --}}
           <div class="form-group text-right mr-4">
             <button type="submit" class="btn btn-primary">Add Post</button>
           </div>

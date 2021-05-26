@@ -170,15 +170,15 @@ $auth = Auth::user();
                           <strong class="text-danger">{{ $errors->first('description') }}</strong>
 
                     @endif
+                    </div>
                     <div class="form-group">
                         <label for="blogmax">Max Blog Post</label>
                         <input type="text" class="form-control" name="blogmax" id="blogmax" aria-describedby="helpId" placeholder="">
-                      </div>
+
                       @if ($errors->has('blogmax'))
                               <strong class="text-danger">{{ $errors->first('blogmax') }}</strong>
                       @endif
                     </div>
-
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
@@ -246,7 +246,9 @@ $auth = Auth::user();
                     {
                         required:true,
                         maxlength:100,
-                    }
+                    },
+                    blogmax: "required",
+
                 },
                 messages:
                 {
