@@ -14,9 +14,12 @@
         </div>
       </div>
     </div><!-- /.container-fluid -->
-  </section>
+</section>
 @endsection
 @section('content-wrapper')
+@php
+$auth = Auth::user();
+@endphp
 @if ($errors->has('title'))
 <div class="alert alert-danger alert-dismissible fade show" role="alert">
     <button type="button" class="close" data-dismiss="alert" aria-label="Close">
@@ -37,39 +40,9 @@
     </button>
     <strong>{{ session('error') }}</strong>
 </div>
-
-@endif
-@if (Session::has('message'))
-<script>
-$(document).ready(function(){
-    $(function() {
-    var Toast = Swal.mixin({
-      toast: true,
-      position: 'top-end',
-      showConfirmButton: false,
-      timer: 3000
-    });
-
-
-    $(function() {
-      Toast.fire({
-        icon: 'success',
-        title: 'Message: Operation Success',
-      })
-    });
-  });
-})
-</script>
-<div class="alert alert-success alert-dismissible fade show" role="alert">
-    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-        <span aria-hidden="true">&times;</span>
-        <span class="sr-only">Close</span>
-    </button>
-    <strong>{{ session('message') }}</strong>
-</div>
 @endif
 <!-- Button trigger modal -->
-@if(Auth::user()->usertype == '1')
+@if($auth->usertype == '1')
 <button type="button" class="btn btn-primary float-right my-2 mx-5" data-toggle="modal" data-target="#modelId">
   Add new category
 </button>
@@ -82,7 +55,7 @@ $(document).ready(function(){
                 <th>Title</th>
                 <th>Description</th>
                 <th>Posts Left</th>
-                @if(Auth::user()->usertype == '1')
+                @if($auth->usertype == '1')
                 <th>Edit</th>
                 <th>Delete</th>
                 @endif
@@ -96,34 +69,32 @@ $(document).ready(function(){
                 <td>{{ $category->title }}</td>
                 <td>{{ $category->description }}</td>
                 <td>{{ $category->blogmax }}</td>
-                @if(Auth::user()->usertype != '1')
+                @if($auth->usertype != '1')
 
                 @else
                 <td>
                     <!-- Button trigger edit modal -->
                     <div class="form-row">
-
                         <a name="" style="color:green;" id="" href="#" role="button"
                          data-toggle="modal" data-target="#editModal{{ $category->id }}">
                             <i class="fas fa-edit"></i>
                         </a>
                 </td>
                 <td>
+                    {{-- delete category --}}
                         <form id="deleteform"
                         action="{{ route('categories.destroy',$category->id) }}" method="POST">
                             @csrf
                             @method('DELETE')
-
-                            {{-- <button class="btn"><i class="fa fa-close"></i></button> --}}
                                 <button type="submit"  style="border: 0; background: none;color:red;">
                                  <i class="fas fa-trash    "></i>
                                 </button>
-
                             <button  id="delete" disabled="disabled" type="submit" hidden="hidden"></button>
                         </form>
                         @endif
                     </div>
-                    {{-- EDIT MODAL --}}
+                </td>
+                {{-- EDIT MODAL --}}
                     <!-- Modal -->
                     <div class="modal fade" id="editModal{{ $category->id }}" tabindex="-1" role="dialog" aria-labelledby="modelTitleId" aria-hidden="true">
                         <div class="modal-dialog" role="document">
@@ -156,9 +127,6 @@ $(document).ready(function(){
                             </div>
                         </div>
                     </div>
-
-                </td>
-
             </tr>
             @empty
             <tr>

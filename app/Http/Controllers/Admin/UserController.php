@@ -45,9 +45,8 @@ class UserController extends Controller
             'lastname' => 'required|string|max:255',
             'email' => 'required|string|email|max:255|unique:users',
             'password' => 'required|string|min:6',
-            'usertype' => 'required'
+            'usertype' => 'required|integer',
         ]);
-        $data['password']= Hash::make($data['password']);
         User::create($data);
         return back()->with(['message'=>'User Added Successfully']);
 

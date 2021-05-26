@@ -18,6 +18,9 @@
 </section>
 @endsection
 @section('content-wrapper')
+@php
+$auth = Auth::user();
+@endphp
 {{-- success message --}}
 @if (Session::has('message'))
 <div class="alert alert-success alert-dismissible fade show" role="alert">
@@ -30,18 +33,13 @@
 @endif
 @if ($errors->any())
 @foreach ($errors->all() as $error)
-
 <div class="alert alert-danger">
             {{ $error }}
-
-
 </div>
 @endforeach
 @endif
 <!-- Button trigger modal -->
-@if (Auth::user()->usertype == '1')
-
-
+@if ($auth->usertype == '1')
 <button type="button" class="btn btn-primary float-right my-2 mx-5" data-toggle="modal" data-target="#modelId">
   Add new user
 </button>
@@ -56,8 +54,10 @@
                 <th>E-mail</th>
                 <th>Usertype</th>
                 <th>View</th>
+                @if ($auth->usertype == '1')
                 <th>Edit</th>
                 <th>Delete</th>
+                @endif
             </tr>
         </thead>
         <tbody>
@@ -82,9 +82,9 @@
                         <i class="fas fa-eye"></i>
                     </a>
                 </td>
+                @if ($auth->usertype == '1')
                 <td>
                     <!-- Button trigger edit modal -->
-                        @if (Auth::user()->usertype == '1')
                         <a name="" style="color:green;" id="" href="#" role="button" data-toggle="modal" data-target="#editModal{{ $user->id }}">
                             <i class="fas fa-edit"></i>
                         </a>
@@ -97,7 +97,6 @@
                                 <i class="fas fa-trash    "></i>
                             </button>
                         </form>
-                        @endif
                     </div>
                     {{-- EDIT MODAL --}}
                     <!-- Modal -->
@@ -138,32 +137,6 @@
                                         @if ($errors->has('email'))
                                                 <strong class="text-danger">{{ $errors->first('email') }}</strong>
                                         @endif
-                                        {{-- <div class="form-group">
-                                            <button type="button" class="btn btn-primary btn-sm" id="pass-btn">Change Password</button>
-                                        </div>
-                                        <div class="displaypass">
-                                            <div class="form-group">
-                                                <label for="oldpassword">Enter Old Password</label>
-                                                <input type="text" class="form-control" name="oldpassword" id="oldpassword" aria-describedby="helpId" placeholder=""
-                                                value="{{ $user->password }}">
-                                            </div>
-                                            <div class="form-group">
-                                                <label for="newpassword">Enter New Password</label>
-                                                <input type="text" class="form-control" name="newpassword" id="newpassword" aria-describedby="helpId" placeholder=""
-                                                value="{{ $user->password }}">
-                                            </div>
-                                            @if ($errors->has('password'))
-                                                    <strong class="text-danger">{{ $errors->first('password') }}</strong>
-                                            @endif
-                                            <div class="form-group">
-                                                <label for="confirm_password">Confirm Password</label>
-                                                <input type="password" class="form-control" name="confirm_password" id="confirm_password" aria-describedby="helpId" placeholder="">
-                                            </div>
-                                            @if ($errors->has('confirm_password'))
-                                                    <strong class="text-danger">{{ $errors->first('confirm_password') }}</strong>
-                                            @endif
-
-                                        </div> --}}
                                         <div class="form-group">
                                           <label for="usertype">Usertype</label>
                                           <select class="form-control" name="usertype" id="usertype">
@@ -195,7 +168,7 @@
                     </div>
 
                 </td>
-
+                @endif
             </tr>
             @empty
             <tr>
@@ -269,9 +242,9 @@
                     <div class="form-group">
                       <label for="usertype">Usertype</label>
                       <select class="form-control" name="usertype" id="usertype">
-                        <option selected><span>Select Usertype</span></option>
-                        <option value="2">Admin</option>
-                        <option value="3">User</option>
+                        <option disabled selected><span>Select Usertype</span></option>
+                        <option value="2"><span>Admin</span></option>
+                        <option value="3"><span>User</span></option>
                       </select>
                     </div>
                     @if ($errors->has('usertype'))
@@ -292,27 +265,27 @@
 @endsection
 @push('scripts')
 <script>
-$(document).ready(function()
-{
-    $(".displaypass").hide();
-    $("#pass-btn").click(function()
+    $(document).ready(function()
     {
-        $(".displaypass").toggle();
-    })
+        $(".displaypass").hide();
+        $("#pass-btn").click(function()
+        {
+            $(".displaypass").toggle();
+        })
 
-    $(".reveal").on('mousedown', function()
-    {
+        $(".reveal").on('mousedown', function()
+        {
 
-        $("#password_confirm").attr("type","text");
-        $("#password").attr("type","text");
-    })
-    $(".reveal").on('mouseup', function()
-    {
-        $("#password").attr("type","password");
-        $("#password_confirm").attr("type","password");
+            $("#password_confirm").attr("type","text");
+            $("#password").attr("type","text");
+        })
+        $(".reveal").on('mouseup', function()
+        {
+            $("#password").attr("type","password");
+            $("#password_confirm").attr("type","password");
 
+        })
     })
-})
 </script>
 <script>
     $(document).ready(function()

@@ -19,6 +19,9 @@
 @endsection
 
 @section('content-wrapper')
+@php
+$auth = Auth::user();
+@endphp
 {{-- success message --}}
 @if (Session::has('message'))
 <div class="alert alert-success alert-dismissible fade show" role="alert">
