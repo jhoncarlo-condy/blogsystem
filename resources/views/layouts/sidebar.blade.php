@@ -1,14 +1,12 @@
 <aside class="main-sidebar sidebar-dark-primary elevation-4">
     <!-- Brand Logo -->
     <a href="../../index3.html" class="brand-link">
-        {{-- <img style="height:50px;widht:50px;"src="https://www.pngkey.com/png/full/232-2326777_blogger-logo-icons-no-attribution-white-blog-icon.png" alt=""> --}}
       <img src="https://www.pngkey.com/png/full/232-2326777_blogger-logo-icons-no-attribution-white-blog-icon.png" alt="AdminLTE Logo" class="brand-image img-circle elevation-3" style="opacity: .8;">
       <span class="brand-text font-weight-light">Blog System</span>
     </a>
 
     <!-- Sidebar -->
     <div class="sidebar">
-      <!-- Sidebar user (optional) -->
       <div class="user-panel mt-3 pb-3 mb-3 d-flex">
         <div class="image">
           <img style="height:40px;width:40px;" src="https://banner2.cleanpng.com/20180425/zaw/kisspng-computer-icons-user-setting-icon-5ae14125465597.8284342815247117172881.jpg" class="img-circle elevation-2" alt="User Image">
