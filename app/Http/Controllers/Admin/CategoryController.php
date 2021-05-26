@@ -12,10 +12,14 @@ class CategoryController extends Controller
 {
     public function index()
     {
-        $categories = Category::select('id','title','description','blogmax')->paginate(5);
-        return view('admin.category',with([
+        $categories = Category::select(
+            'id',
+            'title',
+            'description',
+            'blogmax')->paginate(5);
+        return view('admin.category')->with([
             'categories'=> $categories
-        ]));
+        ]);
     }
     public function store(Request $request)
     {
@@ -29,9 +33,9 @@ class CategoryController extends Controller
     }
     public function edit(Category $category)
     {
-        return view('category.index',with([
+        return view('category.index')->with([
             'category'=>$category
-        ]));
+        ]);
     }
     public function update(Request $request, Category $category)
     {

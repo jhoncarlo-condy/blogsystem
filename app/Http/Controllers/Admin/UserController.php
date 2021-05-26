@@ -14,25 +14,29 @@ class UserController extends Controller
 {
     public function index()
     {
-        $select = User::select('id','firstname','lastname','email','usertype');
+        $select = User::select(
+            'id',
+            'firstname',
+            'lastname',
+            'email',
+            'usertype');
         $users = $select->paginate(5);
-        return view ('admin.users', with([
+        return view ('admin.users')->with([
             'users'=> $users
-        ]));
+        ]);
     }
     public function dashboard()
     {
-
         $countusers = User::count('usertype',3);
         $countcat = Category::count();
         $countpost = Post::count();
         $commentcount = Comment::count();
-        return view ('admin.dashboard', with([
+        return view ('admin.dashboard')->with([
             'countusers' => $countusers,
             'countcat' => $countcat,
             'countpost' => $countpost,
             'commentcount' => $commentcount,
-        ]));
+        ]);
     }
     public function store(Request $request)
     {
@@ -45,29 +49,30 @@ class UserController extends Controller
         ]);
 
         User::create($data);
-        return redirect()->back()->with(['message'=>'User Added Successfully']);
+        return back()->with(['message'=>'User Added Successfully']);
 
 
     }
     public function show(User $user)
     {
-        $posts = Post::select('title','category','user_id','description','image','created_at');
-
-
+        $posts = Post::select(
+            'title',
+            'category',
+            'user_id',
+            'description',
+            'image',
+            'created_at');
         $count = $posts->count('user_id',$user);
         $last = $user->posts()->latest('id')->first();
         $posts = $user->posts()->latest('id')->paginate(2);
         $commentcount = $user->comments()->count();
-
-        return view('admin.visitprofile',with([
+        return view('admin.visitprofile')->with([
             'user'=>$user,
             'count'=>$count,
             'last' => $last,
             'posts'=> $posts,
             'commentcount' => $commentcount,
-        ]));
-
-
+        ]);
     }
     public function update(Request $request, User $user)
     {
@@ -79,12 +84,12 @@ class UserController extends Controller
         ]);
 
         $user->update($data);
-        return redirect()->back()->with(['message'=>'User Updated Successfully']);
+        return back()->with(['message'=>'User Updated Successfully']);
 
     }
     public function destroy(User $user)
     {
         $user->delete();
-        return redirect()->back()->with(['message' => 'User Deleted Successfully']);
+        return back()->with(['message' => 'User Deleted Successfully']);
     }
 }

@@ -15,25 +15,32 @@ class PostController extends Controller
 
     public function index()
     {
-        $posts = Post::select('id','title','category_id',
-            'user_id','description','created_at')->paginate(5);
-        return view ('admin.posts.posts',with([
+        $posts = Post::select(
+            'id',
+            'title',
+            'category_id',
+            'user_id',
+            'description',
+            'created_at')->paginate(5);
+        return view ('admin.posts.posts')->with([
             'posts' => $posts
-        ]));
+        ]);
     }
     public function create()
     {
-        $categories = Category::select('id','title','blogmax')
-                        ->where('blogmax','>', 0)->get();
-        return view ('admin.posts.addpost',with([
+        $categories = Category::select(
+            'id',
+            'title',
+            'blogmax')
+            ->where('blogmax','>', 0)->get();
+        return view ('admin.posts.addpost')->with([
             'categories'=>$categories
-        ]));
+        ]);
     }
     public function store(StorePostRequest $request)
     {
         $data = $request->validated();
-        if($request->hasfile('image'))
-        {
+        if($request->hasfile('image')){
         $data['image'] = Storage::disk('public')->put('images',$data['image']);
         }
         Post::create($data);
@@ -44,24 +51,31 @@ class PostController extends Controller
     }
     public function show(Post $post)
     {
-        $latest = Post::select('id','title','image','created_at')
-                    ->orderBy('id','desc')
-                    ->take(3)->get();
+        $latest = Post::select(
+            'id',
+            'title',
+            'image',
+            'created_at')
+            ->orderBy('id','desc')
+            ->take(3)->get();
         $categories = Category::select('title')->take(7)->get();
-        return view ('admin.posts.show', with([
+        return view ('admin.posts.show')->with([
             'post' => $post,
             'latest' => $latest,
             'categories' => $categories,
-        ]));
+        ]);
     }
     public function edit(Post $post)
     {
-        $categories = Category::select('id','title','blogmax')
-                        ->where('blogmax','>',0)->get();
-        return view ('admin.posts.editpost',with([
+        $categories = Category::select(
+            'id',
+            'title',
+            'blogmax')
+            ->where('blogmax','>',0)->get();
+        return view ('admin.posts.editpost')->with([
             'post' => $post,
             'categories'=>$categories
-        ]));
+        ]);
 
     }
     public function update(StorePostRequest $request, Post $post)
@@ -70,21 +84,17 @@ class PostController extends Controller
         $category = Category::select('id','blogmax');
         $newcategory = $category->where('id',$data['category_id'])->first();
 
-        if($request->hasfile('image'))
-        {
+        if($request->hasfile('image')){
         $data['image'] = Storage::disk('public')->put('images',$data['image']);
         }
-        if($post->category->id != $data['category_id'])
-        {
-
+        if($post->category->id != $data['category_id']){
             $newcategory->blogmax--;
+            $newcategory->update();
             $oldcategory = $post->category;
             $oldcategory->blogmax++;
             $oldcategory->update();
-            $newcategory->update();
             $post->update($data);
         return redirect(route('posts.index'))->with(['message'=>'Updating post success']);
-
         }
         else {
             $post->update($data);

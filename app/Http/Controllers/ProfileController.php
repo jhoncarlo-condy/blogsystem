@@ -15,15 +15,26 @@ class ProfileController extends Controller
 {
     public function index()
     {
-        $query = Post::select('id','title','category_id','user_id','description','image','created_at')
-                        ->where('user_id', Auth::user()->id)->latest('id');
-        $posts = $query->paginate(2);
-        $categories = Category::select('id','title','blogmax')
-                        ->where('blogmax','>', 0)->get();
-        return view ('users.profile.index', with([
+        $posts = Post::select(
+            'id',
+            'title',
+            'category_id',
+            'user_id',
+            'description',
+            'image',
+            'created_at')
+            ->where('user_id', Auth::user()->id)
+            ->latest('id')
+            ->paginate(2);
+        $categories = Category::select(
+            'id',
+            'title',
+            'blogmax')
+            ->where('blogmax','>', 0)->get();
+        return view ('users.profile.index')->with([
             'categories'=>$categories,
             'posts'=>$posts,
-        ]));
+        ]);
     }
        public function store(Request $request)
     {
@@ -32,17 +43,17 @@ class ProfileController extends Controller
             'newpassword' => 'required',
             'confirmpassword' => 'same:newpassword',
         ]);
+        $auth = Auth::user()->id;
+        User::find($auth)->update(['password'=> Hash::make($data['newpassword'])]);
 
-        User::find(Auth::user()->id)->update(['password'=> Hash::make($data['newpassword'])]);
-
-        return redirect(route('profile.index'))->with(['message'=>'Password changed successfully']);
+        return redirect()->route('profile.index')->with(['message'=>'Password changed successfully']);
     }
     public function show(User $profile)
     {
         $posts = $profile->post()->orderBy('id','desc')->paginate(2);
-        return view('users.profile.show',with([
+        return view('users.profile.show')->with([
             'profile'=>$profile,
             'posts'=>$posts
-        ]));
+        ]);
     }
 }

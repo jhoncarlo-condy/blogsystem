@@ -11,35 +11,46 @@ class CategoryController extends Controller
 {
     public function index()
     {
-        $query = Category::select('id','title');
+        $query = Category::select(
+            'id',
+            'title');
         $lists = $query->paginate(4);
-        $categories = $query->with(['post'=>function($q)
-        {
+        $categories = $query->with(['post'=>function($q){
             return $q->latest()->first();
         }])->get();
 
-        return view ('users.categories.index',with([
+        return view ('users.categories.index')->with([
             'lists'=>$lists,
             'categories'=>$categories,
-        ]));
+        ]);
     }
     public function show(Category $category)
     {
-        $categories = Category::select('id','title')->get();
-        $posts = Post::select('id','title','category_id','user_id','image','created_at')
-                ->where('category_id',$category->id)
-                ->orderBy('id','desc')->paginate(4);
-        return view ('users.categories.show',with([
+        $categories = Category::select(
+            'id',
+            'title')->get();
+        $posts = Post::select(
+            'id',
+            'title',
+            'category_id',
+            'user_id',
+            'image',
+            'created_at')
+            ->where('category_id',$category->id)
+            ->orderBy('id','desc')->paginate(4);
+        return view ('users.categories.show')->with([
             'categories'=>$categories,
             'category'=>$category,
             'posts'=>$posts,
-        ]));
+        ]);
     }
     public function all()
     {
-        $datas = Category::select('id','title')->get();
-        return view('users.categories.allcategory',with([
+        $datas = Category::select(
+            'id',
+            'title')->get();
+        return view('users.categories.allcategory')->with([
             'datas'=>$datas
-        ]));
+        ]);
     }
 }

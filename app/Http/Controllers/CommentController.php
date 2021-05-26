@@ -19,12 +19,12 @@ class CommentController extends Controller
         ]);
 
         Comment::create($data);
-        return redirect()->back()->with(['message','Your comment has been added']);
+        return back()->with(['message','Your comment has been added']);
     }
     public function show(Post $postcomments)
     {
-        return view ('users.posts.allcomments',with([
+        return view ('users.posts.allcomments')->with([
             'postcomments'=>$postcomments
-        ]));
+        ]);
     }
 }
