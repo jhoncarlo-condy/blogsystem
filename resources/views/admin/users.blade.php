@@ -264,6 +264,19 @@ $auth = Auth::user();
 
 @endsection
 @push('scripts')
+@if(Session::has('message'))
+<script>
+    $(document).ready(function()
+    {
+        swal({
+        title: "Success!",
+        text: "Operation Success",
+        type: "success",
+        closeOnConfirm: false
+        })
+    });
+</script>
+@endif
 <script>
     $(document).ready(function()
     {

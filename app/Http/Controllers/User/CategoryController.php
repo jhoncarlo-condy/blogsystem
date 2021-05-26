@@ -15,9 +15,7 @@ class CategoryController extends Controller
             'id',
             'title');
         $lists = $query->paginate(4);
-        $categories = $query->with(['post'=>function($q){
-            return $q->latest()->first();
-        }])->get();
+        $categories = $query->orderBy('id','desc')->paginate(4);
 
         return view ('users.categories.index')->with([
             'lists'=>$lists,

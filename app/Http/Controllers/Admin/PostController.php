@@ -38,9 +38,15 @@ class PostController extends Controller
             'categories'=>$categories
         ]);
     }
-    public function store(StorePostRequest $request)
+    public function store(Request $request)
     {
-        $data = $request->validated();
+        $data = $request->validate([
+            'title' => 'required',
+            'category_id' => 'required',
+            'user_id' => 'required',
+            'description' => 'required',
+            'image' => 'file|image|max:5000',
+        ]);
         if($request->hasfile('image')){
         $data['image'] = Storage::disk('public')
                             ->put('images',$data['image']);
@@ -77,9 +83,15 @@ class PostController extends Controller
         ]);
 
     }
-    public function update(StorePostRequest $request, Post $post)
+    public function update(Request $request, Post $post)
     {
-        $data = $request->validated();
+        $data = $request->validate([
+            'title' => 'required',
+            'category_id' => 'required',
+            'user_id' => 'required',
+            'description' => 'required',
+            'image' => 'file|image|max:5000',
+        ]);
         if($request->hasfile('image')){
          $data['image'] = Storage::disk('public')->put('images',$data['image']);
         }

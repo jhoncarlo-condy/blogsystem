@@ -109,25 +109,25 @@
                           <span class="description">{{ $post->created_at->diffForHumans() ." | ".$post->created_at->format('h:i A')}}</span>
                         </div>
                         <!-- /.user-block -->
-                        <a href="{{ route('blog.show',$post->id) }}"><h4>Title: {{ $post->title }}</h4></a>
+                        <a href="{{ route('posts.show',$post->id) }}"><h4>Title: {{ $post->title }}</h4></a>
                         <div class="widget tags">
                         @if ($post->image)
-                        <a href="{{ route('blog.show',$post->id) }}">
+                        <a href="{{ route('posts.show',$post->id) }}">
                         <img style="width:200px;height:150px;" src="{{ asset('storage/'.$post->image) }}" alt="">
                         </a>
                         @else
-                        <a href="{{ route('blog.show',$post->id) }}">
+                        <a href="{{ route('posts.show',$post->id) }}">
                         <img style="width:200px;height:150px;" src="https://upload.wikimedia.org/wikipedia/commons/1/14/No_Image_Available.jpg" alt="">
                         </a>
                         @endif
                                 <div class="container">
-                                <a href="{{ route('blog.show',$post->id) }}">
+                                <a href="{{ route('posts.show',$post->id) }}">
 
                                     {!! $post->description !!}
                                 </a>
                                 </div>
 
-                            <li class="list-inline-item"><a href="{{ route('categories') }}" class="tag">#{{ $post->category->title }}</a></li>
+                            <li class="list-inline-item"><a href="{{ route('categories.index') }}" class="tag">#{{ $post->category->title }}</a></li>
 
                         </div>
 

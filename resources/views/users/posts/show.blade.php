@@ -92,7 +92,7 @@
                     </span></div></a>
                 <div class="d-flex align-items-center flex-wrap">
                   <div class="date"><i class="fas fa-calendar fa-xs"></i>{{ $post->created_at->format('m/d/Y') }}</div>
-                  <div class="date"><i class="fas fa-clock fa-xs"></i>{{ $post->created_at->format('H:i A') }}</div>
+                  <div class="date"><i class="fas fa-clock fa-xs"></i>{{ $post->created_at->format('h:i A') }}</div>
                   {{-- <div class="views"></div> --}}
                   <div class="comments meta-last"><i class="fas fa-comment fa-xs"></i>{{ count($post->comments) }}</div>
                 </div>
@@ -239,7 +239,7 @@
                 <div class="title"><strong>{{ $latest->title }}</strong>
                   <div class="d-flex align-items-center">
                     <div class="views"><i class="fas fa-calendar fa-xs"></i>{{ $latest->created_at->format('m/d/Y')  }}</div>
-                    <div class="comments"><i class="fas fa-clock fa-xs"></i>{{ $latest->created_at->format('H:i A')  }}</div>
+                    <div class="comments"><i class="fas fa-clock fa-xs"></i>{{ $latest->created_at->format('h:i A')  }}</div>
                   </div>
                 </div>
               </div>

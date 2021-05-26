@@ -18,10 +18,10 @@ class Category extends Model
     }
     public function post()
     {
-            return $this->hasMany(Post::class);
+            return $this->hasMany(Post::class)->orderBy('id','desc');
     }
     public function latestpost()
     {
-        return $this->hasOne(Post::class)->latest();
+        return $this->hasMany(Post::class)->orderBy('id','desc')->take(1);
     }
 }

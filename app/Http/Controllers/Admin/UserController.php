@@ -62,9 +62,9 @@ class UserController extends Controller
             'image',
             'created_at');
         $count = $posts->count('user_id',$user);
-        $last = $user->posts()->latest('id')->first();
-        $posts = $user->posts()->latest('id')->paginate(2);
-        $commentcount = $user->comments()->count();
+        $last = $user->post()->latest('id')->first();
+        $posts = $user->post()->latest('id')->paginate(2);
+        $commentcount = $user->comment()->count();
         return view('admin.visitprofile')->with([
             'user'=>$user,
             'count'=>$count,
@@ -79,7 +79,7 @@ class UserController extends Controller
             'firstname' => 'required|string|max:255',
             'lastname' => 'required|string|max:255',
             'email' => 'required|string|email|max:255',
-            'usertype' => 'required'
+            'usertype' => 'required|integer'
         ]);
 
         $user->update($data);
