@@ -56,7 +56,7 @@ class CategoryController extends Controller
         return back()->with(['message'=>'Category Deleted Successfully']);
       }
       else {
-        return redirect()->back()->with(['error'=>'Delete post first with the selected category']);
+        return back()->with(['error'=>'Delete post first with the selected category']);
       }
     }
 }
