@@ -2,11 +2,11 @@
 
 namespace App\Http\Controllers\Admin;
 
-use App\Http\Controllers\Controller;
 use App\Category;
-use App\Post;
-use Illuminate\Database\QueryException;
+use App\Events\AddCategoryEvent;
 use Illuminate\Http\Request;
+use App\Events\AddCountEvent;
+use App\Http\Controllers\Controller;
 
 class CategoryController extends Controller
 {
@@ -28,7 +28,9 @@ class CategoryController extends Controller
             'description' => 'required',
             'blogmax'=>'required'
         ]);
-        Category::create($data);
+        $category = Category::create($data);
+        $categorycount = count($category);
+        event (new AddCategoryEvent($categorycount));
         return back()->with(['message'=>'Added new category']);
     }
     public function edit(Category $category)

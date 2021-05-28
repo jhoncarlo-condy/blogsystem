@@ -1,4 +1,38 @@
 @extends('layouts.app')
+@push('scripts')
+<script src="https://js.pusher.com/7.0/pusher.min.js"></script>
+    <script>
+
+      // Enable pusher logging - don't include this in production
+      Pusher.logToConsole = true;
+
+      var pusher = new Pusher('deedc206526db9726e72', {
+        cluster: 'ap1'
+      });
+
+      var channel = pusher.subscribe('my-channel');
+
+        channel.bind('category-event', function(data)
+        {
+            var total  = data.categorycount + parseInt($("#categorycount").text());
+            $("#categorycount").text(total);
+        });
+        channel.bind('post-event', function(data)
+        {
+            var total  = data.postcount + parseInt($("#postcount").text());
+            $("#postcount").text(total);
+        });
+        channel.bind('user-event', function(data)
+        {
+            var total  = data.usercount + parseInt($("#usercount").text());
+            $("#usercount").text(total);
+        });channel.bind('comment-event', function(data)
+        {
+            var total  = data.commentcount + parseInt($("#commentcount").text());
+            $("#commentcount").text(total);
+        });
+    </script>
+@endpush
 @section('content-header')
 <section class="content-header">
     <div class="container-fluid">
@@ -25,7 +59,7 @@
           <!-- small box -->
           <div class="small-box bg-info">
             <div class="inner">
-              <h3>{{ $countusers }}</h3>
+              <h3 id="usercount">{{ $countusers }}</h3>
 
               <p>Registered Users</p>
             </div>
@@ -40,7 +74,7 @@
           <!-- small box -->
           <div class="small-box bg-success">
             <div class="inner">
-              <h3>{{ $countcat }}<sup style="font-size: 20px"></sup></h3>
+              <h3 id="categorycount">{{ $countcat }}<sup style="font-size: 20px"></sup></h3>
 
               <p>Total Categories</p>
             </div>
@@ -55,7 +89,7 @@
           <!-- small box -->
           <div class="small-box bg-warning">
             <div class="inner">
-              <h3>{{ $countpost }}</h3>
+              <h3 id="postcount">{{ $countpost }}</h3>
 
               <p>Total Posts</p>
             </div>
@@ -70,7 +104,7 @@
           <!-- small box -->
           <div class="small-box bg-danger">
             <div class="inner">
-              <h3>{{ $commentcount }}</h3>
+              <h3 id="commentcount">{{ $commentcount }}</h3>
 
               <p>Total Comments</p>
             </div>

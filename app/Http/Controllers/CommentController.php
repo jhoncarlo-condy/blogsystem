@@ -5,7 +5,9 @@ namespace App\Http\Controllers;
 use App\Post;
 use App\Comment;
 use App\Category;
+use App\Events\AddCommentEvent;
 use Illuminate\Http\Request;
+use App\Events\AddCountEvent;
 
 class CommentController extends Controller
 {
@@ -18,7 +20,9 @@ class CommentController extends Controller
             'post_id'=>'required',
         ]);
 
-        Comment::create($data);
+        $comment = Comment::create($data);
+        $commentcount = count($comment);
+        event (new AddCommentEvent($commentcount));
         return back()->with(['message','Your comment has been added']);
     }
     public function show(Post $postcomments)

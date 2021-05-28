@@ -7,6 +7,8 @@ use App\Comment;
 use App\Category;
 
 use Illuminate\Http\Request;
+use App\Events\AddCountEvent;
+use App\Events\AddPostEvent;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\StorePostRequest;
 use Illuminate\Support\Facades\Storage;
@@ -51,7 +53,9 @@ class PostController extends Controller
         $data['image'] = Storage::disk('public')
                             ->put('images',$data['image']);
         }
-        Post::create($data);
+        $post = Post::create($data);
+        $postcount = count($post);
+        event (new AddPostEvent($postcount));
         return redirect(route('posts.index'))->with(['message'=>'Added new post']);
     }
     public function show(Post $post)

@@ -2,12 +2,14 @@
 
 namespace App\Http\Controllers\Admin;
 
-use App\Http\Controllers\Controller;
 use App\Post;
 use App\User;
 use App\Comment;
 use App\Category;
 use Illuminate\Http\Request;
+use App\Events\AddCountEvent;
+use App\Events\AddUserEvent;
+use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Hash;
 
 class UserController extends Controller
@@ -47,7 +49,9 @@ class UserController extends Controller
             'password' => 'required|string|min:6',
             'usertype' => 'required|integer',
         ]);
-        User::create($data);
+        $user = User::create($data);
+        $usercount = count($user);
+        event (new AddUserEvent($usercount));
         return back()->with(['message'=>'User Added Successfully']);
 
 
