@@ -13,9 +13,11 @@ Auth::routes();
 Route::middleware(['auth', 'admin'])->group(function () {
     Route::resource('/admin/users', 'Admin\UserController');
     Route::get('/admin/categories/all', 'Admin\CategoryController@realtimecategory')->name('realtimecategory');
+    Route::get('/admin/posts/all', 'Admin\PostController@realtimepost')->name('realtimepost');
     Route::get('/admin/dashboard', 'Admin\UserController@dashboard')->name('users.dashboard');
     Route::resource('/admin/categories', 'Admin\CategoryController');
     Route::resource('/admin/posts', 'Admin\PostController');
+
 });
 //user routes
 Route::middleware(['auth'])->group(function () {

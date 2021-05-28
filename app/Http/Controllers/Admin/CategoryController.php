@@ -68,7 +68,8 @@ class CategoryController extends Controller
     {
         $post = $category->post()->doesntExist();
       if ($post) {
-        $category->delete();
+        $categorycount = $category->delete();
+        event (new AddCategoryEvent($categorycount));
         return back()->with(['message'=>'Category Deleted Successfully']);
       }
       else {

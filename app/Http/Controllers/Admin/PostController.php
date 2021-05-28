@@ -6,9 +6,8 @@ use App\Post;
 use App\Comment;
 use App\Category;
 
-use Illuminate\Http\Request;
-use App\Events\AddCountEvent;
 use App\Events\AddPostEvent;
+use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\StorePostRequest;
 use Illuminate\Support\Facades\Storage;
@@ -28,6 +27,20 @@ class PostController extends Controller
         return view ('admin.posts.posts')->with([
             'posts' => $posts
         ]);
+    }
+    public function realtimepost()
+    {
+        $posts = Post::select(
+            'id',
+            'title',
+            'category_id',
+            'user_id',
+            'description',
+            'created_at')->orderBy('id','desc')->paginate(5);
+        return view ('admin.posts.realtimeposts')->with([
+            'posts' => $posts
+        ]);
+
     }
     public function create()
     {
@@ -108,7 +121,8 @@ class PostController extends Controller
         Comment::select('post_id')
             ->where('post_id',$post->id)
             ->delete();
-        $post->delete();
+        $postcount = $post->delete();
+        event (new AddPostEvent($postcount));
         return redirect()->route('posts.index')->with(['message' => 'Deleted Post Successfully']);
     }
 }

@@ -19,7 +19,7 @@
         });
         channel.bind('post-event', function(data)
         {
-            var total  = data.postcount + parseInt($("#postcount").text());
+            var total  = data.postcount + parseInt($("#postcount").text()) - data.delete;
             $("#postcount").text(total);
         });
         channel.bind('user-event', function(data)
