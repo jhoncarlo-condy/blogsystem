@@ -16,11 +16,25 @@ class CategoryController extends Controller
             'id',
             'title',
             'description',
-            'blogmax')->paginate(5);
+            'blogmax')
+            ->orderby('id','desc')->paginate(5);
         return view('admin.category')->with([
             'categories'=> $categories
         ]);
     }
+    public function realtimecategory()
+    {
+        $categories = Category::select(
+            'id',
+            'title',
+            'description',
+            'blogmax')
+            ->orderby('id','desc')->paginate(5);
+        return view('admin.realtimecategory')->with([
+            'categories'=>$categories
+        ]);
+    }
+
     public function store(Request $request)
     {
         $data = $request->validate([
@@ -52,7 +66,7 @@ class CategoryController extends Controller
     }
     public function destroy(Category $category)
     {
-        $post = $category->posts()->doesntExist();
+        $post = $category->post()->doesntExist();
       if ($post) {
         $category->delete();
         return back()->with(['message'=>'Category Deleted Successfully']);

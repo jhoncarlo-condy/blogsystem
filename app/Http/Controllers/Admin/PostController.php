@@ -24,7 +24,7 @@ class PostController extends Controller
             'category_id',
             'user_id',
             'description',
-            'created_at')->paginate(5);
+            'created_at')->orderBy('id','desc')->paginate(5);
         return view ('admin.posts.posts')->with([
             'posts' => $posts
         ]);
