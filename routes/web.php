@@ -20,13 +20,13 @@ Route::middleware(['auth', 'admin'])->group(function () {
 Route::middleware(['auth'])->group(function () {
     Route::resource('/users/profile', 'ProfileController')->except(['show']);
     Route::resource('/comment','CommentController')->except(['show']);
-    Route::get('/comment/{postcomments}','CommentController@realtimecomments')->name('realtimecomments');
 });
 
 //guests routes
 Route::resource('/users/profile', 'ProfileController')->only(['show']);
 Route::get('/allcategories','User\CategoryController@all')->name('list');
 Route::get('/comments/{postcomments}', 'CommentController@show')->name('commentshow');
+Route::get('/comment/{postcomments}','CommentController@realtimecomments')->name('realtimecomments');
 Route::resource('/users/blogs/post', 'User\PostController');
 Route::resource('/users/blogs/category', 'User\CategoryController');
 
