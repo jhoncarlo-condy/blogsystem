@@ -1,6 +1,27 @@
 @extends('users.layouts.app')
 @push('scripts')
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js" integrity="sha512-894YE6QWD5I59HgZOGReFYm4dnWc1Qt5NtvYSaNcOP+u1T9qYdvdihz0PPSiiqn/+/3e7Jo4EaG7TubfWGUrMQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+<script src="https://js.pusher.com/7.0/pusher.min.js"></script>
+    <script>
+
+      // Enable pusher logging - don't include this in production
+      Pusher.logToConsole = true;
+
+      var pusher = new Pusher('deedc206526db9726e72', {
+        cluster: 'ap1'
+      });
+
+      var channel = pusher.subscribe('my-channel');
+
+        channel.bind('comment-event', function(data)
+        {
+            var total  = data.commentcount + parseInt($("#commentcount1").text());
+            $("#commentcount").html("("+total+")");
+            $("#commentcount1").text(total);
+            $('#showall').load('{{ route('realtimecomments',$post->id) }}').fadeIn("slow");
+
+        });
+    </script>
 <script>
     $(document).ready(function()
     {
@@ -16,6 +37,7 @@
             $('#catbutton').hide();
 
         });
+
     });
 </script>
 @endpush
@@ -94,7 +116,7 @@
                   <div class="date"><i class="fas fa-calendar fa-xs"></i>{{ $post->created_at->format('m/d/Y') }}</div>
                   <div class="date"><i class="fas fa-clock fa-xs"></i>{{ $post->created_at->format('h:i A') }}</div>
                   {{-- <div class="views"></div> --}}
-                  <div class="comments meta-last"><i class="fas fa-comment fa-xs"></i>{{ count($post->comments) }}</div>
+                <div  class="comments meta-last"><i class="fas fa-comment fa-xs"></i><span id="commentcount1">{{ count($post->comments) }}</span></div>
                 </div>
               </div>
               <div class="post-body mb-6">
@@ -116,9 +138,57 @@
                   </div>
                   <div class="icon next"><i class="fa fa-angle-right">   </i></div></a>
              </div> --}}
+
+              @guest
+              <div class="add-comment">
+                <header>
+                  <h3 class="h6">You must login to leave a reply</h3>
+                </header>
+
+                <form action="" method="POST" class="commenting-form">
+
+
+                    <div class="form-group col-md-12">
+                    <label for=""></label>
+                      <textarea name="comment" id="usercomment" placeholder="Type your comment" class="form-control"></textarea>
+                    </div>
+                    <div class="form-group col-md-12">
+                      <a name="" id="" class="btn btn-secondary" href="{{ route('login') }}" role="button">Add Comment</a>
+                    </div>
+                  </div>
+                </form>
+
+              </div>
+              @endguest
+              @auth
+              <div class="add-comment">
+                <header>
+                  <h3 class="h6">Leave a reply</h3>
+                </header>
+
+                <form id="commentstore" action="{{ route('comment.store') }}" method="POST" class="commenting-form">
+                    @csrf
+                    @method('POST')
+                    <div class="row">
+                    <div class="form-group col-md-6">
+                        <input type="hidden" id="user_id" name="user_id" value="{{ Auth::user()->id }}">
+                        <input type="hidden" id="post_id" name="post_id" value="{{ $post->id }}">
+                    </div>
+                    <div class="form-group col-md-12">
+                    <label for="">Comment as {{ Auth::user()->firstname }}</label>
+                      <textarea name="comment" id="comment" placeholder="Type your comment" class="form-control"></textarea>
+                    </div>
+                    <div class="form-group col-md-12">
+                      <button id="addcomment" type="submit" class="btn btn-secondary">Submit Comment</button>
+                    </div>
+                  </div>
+                </form>
+
+              </div>
+              @endauth
               <div class="post-comments" >
                 <header>
-                  <h3 class="h6">Comments<span class="no-of-comments">({{ count($post->comments) }})</span></h3>
+                  <h3 class="h6">Comments<span id="commentcount" class="no-of-comments">({{ count($post->comments) }})</span></h3>
                 </header>
 
                 <div class="comment" id="showall">
@@ -161,58 +231,6 @@
                 @endif
 
               </div>
-              @guest
-              <div class="add-comment">
-                <header>
-                  <h3 class="h6">You must login to leave a reply</h3>
-                </header>
-
-                <form action="" method="POST" class="commenting-form">
-
-                    <div class="row">
-                    <div class="form-group col-md-6">
-                        <input type="hidden" name="user_id" value="">
-                        <input type="hidden" name="post_id" value="">
-                    </div>
-                    <div class="form-group col-md-12">
-                    <label for=""></label>
-                      <textarea name="comment" id="usercomment" placeholder="Type your comment" class="form-control"></textarea>
-                    </div>
-                    <div class="form-group col-md-12">
-                      <a name="" id="" class="btn btn-secondary" href="{{ route('login') }}" role="button">Add Comment</a>
-                    </div>
-                  </div>
-                </form>
-
-              </div>
-              @endguest
-              @auth
-              <div class="add-comment">
-                <header>
-                  <h3 class="h6">Leave a reply</h3>
-                </header>
-
-                <form action="{{ route('comment.store') }}" method="POST" class="commenting-form">
-                    @csrf
-                    @method('POST')
-                    <div class="row">
-                    <div class="form-group col-md-6">
-                        <input type="hidden" name="user_id" value="{{ Auth::user()->id }}">
-                        <input type="hidden" name="post_id" value="{{ $post->id }}">
-                    </div>
-                    <div class="form-group col-md-12">
-                    <label for="">Comment as {{ Auth::user()->firstname }}</label>
-                      <textarea name="comment" id="usercomment" placeholder="Type your comment" class="form-control"></textarea>
-                    </div>
-                    <div class="form-group col-md-12">
-                      <button type="submit" class="btn btn-secondary">Submit Comment</button>
-                    </div>
-                  </div>
-                </form>
-
-              </div>
-              @endauth
-
             </div>
           </div>
         </div>

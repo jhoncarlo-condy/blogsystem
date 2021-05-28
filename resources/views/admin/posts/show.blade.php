@@ -6,7 +6,7 @@
     {
         $('#button').click(function()
         {
-            $('#showall').load('{{ route('allcomments',$post->id) }}').fadeIn("slow");
+            $('#showall').load('{{ route('commentshow',$post->id) }}').fadeIn("slow");
             $('#button').hide();
 
         });
@@ -164,7 +164,7 @@
       </header>
       @forelse ($latest as $latest)
       <div class="blog-posts">
-        <a href="{{ route('blog.show',$latest->id) }}">
+        <a href="{{ route('posts.show',$latest->id) }}">
           <div class="item d-flex align-items-center">
             <div class="image">
                 @if ($latest->image)

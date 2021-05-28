@@ -31,4 +31,11 @@ class CommentController extends Controller
             'postcomments'=>$postcomments
         ]);
     }
+    public function realtimecomments(Post $postcomments)
+    {
+        $realtimecomments = $postcomments->comments()->take(2)->get();
+        return view ('users.posts.realtimecomments')->with([
+            'realtimecomments'=>$realtimecomments
+        ]);
+    }
 }

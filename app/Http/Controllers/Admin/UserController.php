@@ -49,6 +49,7 @@ class UserController extends Controller
             'password' => 'required|string|min:6',
             'usertype' => 'required|integer',
         ]);
+        $data['password']=Hash::make($data['password']);
         $user = User::create($data);
         $usercount = count($user);
         event (new AddUserEvent($usercount));
