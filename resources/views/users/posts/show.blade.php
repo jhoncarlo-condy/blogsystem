@@ -38,6 +38,24 @@
 
         });
 
+        $('#commentstore').on('submit', function (e) {
+
+        e.preventDefault();
+        $.ajax({
+        type: 'POST',
+        url: '/comment',
+        data: $("#commentstore").serialize(),
+        success: function () {
+            $("#comment").val(' ')
+        },
+        error: function(){
+            alert('error');
+        }
+
+        });
+
+        });
+
     });
 </script>
 @endpush
@@ -166,7 +184,7 @@
                   <h3 class="h6">Leave a reply</h3>
                 </header>
 
-                <form id="commentstore" action="{{ route('comment.store') }}" method="POST" class="commenting-form">
+                <form id="commentstore"  method="POST" class="commenting-form">
                     @csrf
                     @method('POST')
                     <div class="row">

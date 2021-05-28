@@ -21,7 +21,6 @@ Route::middleware(['auth'])->group(function () {
     Route::resource('/users/profile', 'ProfileController')->except(['show']);
     Route::resource('/comment','CommentController')->except(['show']);
     Route::get('/comment/{postcomments}','CommentController@realtimecomments')->name('realtimecomments');
-
 });
 
 //guests routes
