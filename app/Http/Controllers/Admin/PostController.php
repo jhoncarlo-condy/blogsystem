@@ -7,6 +7,7 @@ use App\Comment;
 use App\Category;
 
 use App\Events\AddPostEvent;
+use App\Events\DeletePostEvent;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\StorePostRequest;
@@ -113,6 +114,8 @@ class PostController extends Controller
          $data['image'] = Storage::disk('public')->put('images',$data['image']);
         }
         $post->update($data);
+        $postcount = 0;
+        event (new AddPostEvent($postcount));
         return redirect()->route('posts.index')->with(['message'=>'Post Updated Successfully']);
 
     }
@@ -122,7 +125,7 @@ class PostController extends Controller
             ->where('post_id',$post->id)
             ->delete();
         $deletepost = $post->delete();
-        event (new AddPostEvent($deletepost));
+        event (new DeletePostEvent($deletepost));
         return redirect()->route('posts.index')->with(['message' => 'Deleted Post Successfully']);
     }
 }

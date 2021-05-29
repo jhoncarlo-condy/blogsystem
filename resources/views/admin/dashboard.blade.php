@@ -11,7 +11,7 @@
       });
 
       var channel = pusher.subscribe('my-channel');
-
+        // category event
         channel.bind('category-event', function(data)
         {
             var total  = data.categorycount + parseInt($("#categorycount").text());
@@ -22,11 +22,20 @@
             var total  = parseInt($("#categorycount").text() - data.deletecategory);
             $("#categorycount").text(total);
         });
+
+        // post event
         channel.bind('post-event', function(data)
         {
             var total  = data.postcount + parseInt($("#postcount").text()) - data.delete;
             $("#postcount").text(total);
         });
+        channel.bind('delete-post-event', function(data)
+        {
+            var total  = data.postcount + parseInt($("#postcount").text()) - data.delete;
+            $("#postcount").text(total);
+        });
+
+        // user event
         channel.bind('user-event', function(data)
         {
             var total  = data.usercount + parseInt($("#usercount").text());

@@ -61,7 +61,8 @@ class CategoryController extends Controller
             'description' => 'required',
 
         ]);
-        $categorycount = $category->update($data);
+        $category->update($data);
+        $categorycount = 0;
         event (new AddCategoryEvent($categorycount));
         return back()->with(['message' => 'Success updating category']);
 

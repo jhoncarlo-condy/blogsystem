@@ -24,6 +24,6 @@ class DeletePostEvent
     }
     public function broadcastAs()
     {
-        return 'delete-category-event';
+        return 'delete-post-event';
     }
 }
