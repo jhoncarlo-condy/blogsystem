@@ -17,6 +17,11 @@
             var total  = data.categorycount + parseInt($("#categorycount").text());
             $("#categorycount").text(total);
         });
+        channel.bind('delete-category-event', function(data)
+        {
+            var total  = parseInt($("#categorycount").text() - data.deletecategory);
+            $("#categorycount").text(total);
+        });
         channel.bind('post-event', function(data)
         {
             var total  = data.postcount + parseInt($("#postcount").text()) - data.delete;

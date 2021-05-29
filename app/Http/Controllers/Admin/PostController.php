@@ -121,8 +121,8 @@ class PostController extends Controller
         Comment::select('post_id')
             ->where('post_id',$post->id)
             ->delete();
-        $postcount = $post->delete();
-        event (new AddPostEvent($postcount));
+        $deletepost = $post->delete();
+        event (new AddPostEvent($deletepost));
         return redirect()->route('posts.index')->with(['message' => 'Deleted Post Successfully']);
     }
 }

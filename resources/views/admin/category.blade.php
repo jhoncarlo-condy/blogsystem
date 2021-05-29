@@ -18,6 +18,11 @@
             $('#categorytable').load('{{ route('realtimecategory') }}').fadeIn("slow");
 
         });
+        channel.bind('delete-category-event', function(data)
+        {
+            $('#categorytable').load('{{ route('realtimecategory') }}').fadeIn("slow");
+
+        });
     </script>
 @endpush
 @section('content-header')

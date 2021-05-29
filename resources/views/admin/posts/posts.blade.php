@@ -18,6 +18,11 @@
             $('#posttable').load('{{ route('realtimepost') }}').fadeIn("slow");
 
         });
+        channel.bind('delete-post-event', function(data)
+        {
+            $('#posttable').load('{{ route('realtimepost') }}').fadeIn("slow");
+
+        });
     </script>
 @endpush
 @section('content-header')

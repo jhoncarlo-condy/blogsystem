@@ -6,6 +6,7 @@ use App\Category;
 use App\Events\AddCategoryEvent;
 use Illuminate\Http\Request;
 use App\Events\AddCountEvent;
+use App\Events\DeleteCategoryEvent;
 use App\Http\Controllers\Controller;
 
 class CategoryController extends Controller
@@ -60,7 +61,8 @@ class CategoryController extends Controller
             'description' => 'required',
 
         ]);
-        $category->update($data);
+        $categorycount = $category->update($data);
+        event (new AddCategoryEvent($categorycount));
         return back()->with(['message' => 'Success updating category']);
 
     }
@@ -68,8 +70,8 @@ class CategoryController extends Controller
     {
         $post = $category->post()->doesntExist();
       if ($post) {
-        $categorycount = $category->delete();
-        event (new AddCategoryEvent($categorycount));
+        $deletecategory = $category->delete();
+        event (new DeleteCategoryEvent($deletecategory));
         return back()->with(['message'=>'Category Deleted Successfully']);
       }
       else {
