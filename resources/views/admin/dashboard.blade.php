@@ -26,12 +26,12 @@
         // post event
         channel.bind('post-event', function(data)
         {
-            var total  = data.postcount + parseInt($("#postcount").text()) - data.delete;
+            var total  = data.postcount + parseInt($("#postcount").text());
             $("#postcount").text(total);
         });
         channel.bind('delete-post-event', function(data)
         {
-            var total  = data.postcount + parseInt($("#postcount").text()) - data.delete;
+            var total  =  parseInt($("#postcount").text()) - data.deletepost;
             $("#postcount").text(total);
         });
 
@@ -40,7 +40,15 @@
         {
             var total  = data.usercount + parseInt($("#usercount").text());
             $("#usercount").text(total);
-        });channel.bind('comment-event', function(data)
+        });
+        channel.bind('delete-user-event', function(data)
+        {
+            var total  =  parseInt($("#usercount").text())-data.deleteuser;
+            $("#usercount").text(total);
+        });
+
+        // comment event
+        channel.bind('comment-event', function(data)
         {
             var total  = data.commentcount + parseInt($("#commentcount").text());
             $("#commentcount").text(total);

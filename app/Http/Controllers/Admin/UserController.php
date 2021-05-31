@@ -9,6 +9,7 @@ use App\Category;
 use Illuminate\Http\Request;
 use App\Events\AddCountEvent;
 use App\Events\AddUserEvent;
+use App\Events\DeleteUserEvent;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Hash;
 
@@ -16,16 +17,30 @@ class UserController extends Controller
 {
     public function index()
     {
-        $select = User::select(
+        $users = User::select(
             'id',
             'firstname',
             'lastname',
             'email',
-            'usertype');
-        $users = $select->paginate(5);
+            'usertype')
+            ->orderBy('id','desc')->paginate(5);
         return view ('admin.users')->with([
             'users'=> $users
         ]);
+    }
+    public function realtimeuser()
+    {
+        $users = User::select(
+            'id',
+            'firstname',
+            'lastname',
+            'email',
+            'usertype')
+            ->orderBy('id','desc')->paginate(5);
+        return view ('admin.realtimeuser')->with([
+            'users'=> $users
+        ]);
+
     }
     public function dashboard()
     {
@@ -88,6 +103,8 @@ class UserController extends Controller
         ]);
 
         $user->update($data);
+        $usercount = 0;
+        event (new AddUserEvent($usercount));
         return back()->with(['message'=>'User Updated Successfully']);
 
     }
@@ -99,7 +116,8 @@ class UserController extends Controller
         Comment::select('user_id')
             ->where('user_id',$user->id)
             ->delete();
-        $user->delete();
+        $deleteuser = $user->delete();
+        event (new DeleteUserEvent($deleteuser));
         return back()->with(['message' => 'User Deleted Successfully']);
     }
 
