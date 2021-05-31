@@ -8,6 +8,7 @@ use App\Category;
 use App\Events\AddCommentEvent;
 use Illuminate\Http\Request;
 use App\Events\AddCountEvent;
+use App\Events\AddPostEvent;
 
 class CommentController extends Controller
 {

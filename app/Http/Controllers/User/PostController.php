@@ -48,32 +48,30 @@ class PostController extends Controller
     }
     public function realtimeuserpost()
     {
-        $query = Post::select(
+        $posts = Post::select(
             'id',
             'title',
             'category_id',
             'user_id',
             'image',
-            'created_at');
-        $posts = $query->orderBy('id','desc')->paginate(6);
-        $latest = $query->orderBy('id','desc')->take(3)->get();
-        $auth = Auth::user();
-        if ($auth) {
-            $myrecent = $query->where('user_id', $auth->id)
-                        ->orderBy('created_at','desc')->get();
-        }
-        else {
-            $myrecent = '';
-        }
-        $categories = Category::select(
-            'id',
-            'title')
-            ->take(4)->get();
+            'created_at')
+            ->orderBy('id','desc')->paginate(6);
         return view('users.posts.realtimeposts')->with([
-            'posts'=>$posts,
-            'latest'=>$latest,
-            'myrecent'=>$myrecent,
-            'categories'=>$categories,
+            'posts'=>$posts
+        ]);
+    }
+    public function realtimelatestpost()
+    {
+        $latest = Post::select(
+            'id',
+            'title',
+            'category_id',
+            'user_id',
+            'image',
+            'created_at')
+            ->orderBy('id','desc')->take(3)->get();
+        return view('users.posts.realtimelatestpost')->with([
+            'latest'=>$latest
         ]);
     }
     public function store(StorePostRequest $request)
@@ -125,6 +123,8 @@ class PostController extends Controller
         $data['image'] = Storage::disk('public')->put('images',$data['image']);
         }
         $post->update($data);
+        $postcount = 0;
+        event (new AddPostEvent($postcount));
         return redirect()->route('post.show',$post->id)->with(['message'=>'Updating post success']);
 
     }

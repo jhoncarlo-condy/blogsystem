@@ -25,21 +25,27 @@
         channel.bind('post-event', function(data)
         {
             $('#posttable').load('{{ route('realtimeuserpost') }}').fadeIn("slow");
+            $('#latestpost').load('{{ route('realtimelatestpost') }}').fadeIn("slow");
 
         });
         channel.bind('delete-post-event', function(data)
         {
             $('#posttable').load('{{ route('realtimeuserpost') }}').fadeIn("slow");
+            $('#latestpost').load('{{ route('realtimelatestpost') }}').fadeIn("slow");
+
 
         });
     </script>
 @endpush
+@php
+    $auth = Auth::user();
+@endphp
 @section('link')
 <li class="nav-item"><a href="{{ route('post.index') }}" class="nav-link active">Home</a>
 </li>
 <li class="nav-item"><a href="{{ route('category.index') }}" class="nav-link ">Categories</a>
 </li>
-@if (Auth::user())
+@if ($auth)
 <li class="nav-item"><a href="{{ route('profile.index') }}" class="nav-link ">Profile</a>
 </li>
 @endif
@@ -76,7 +82,7 @@
 {{-- side contents --}}
 <aside class="col-lg-4">
 
-@if (Auth::user())
+@if ($auth)
 <div class="widget latest-posts">
     <header>
       <h3 class="h6">Your Recent Posts</h3>
@@ -111,29 +117,9 @@
       <header>
         <h3 class="h6">Latest Posts</h3>
       </header>
-      @forelse ($latest as $latest)
-      <div class="blog-posts">
-        <a href="{{ route('post.show',$latest->id) }}">
-          <div class="item d-flex align-items-center">
-            <div class="image">
-                @if ($latest->image)
-                <img src="{{ url('storage/'.$latest->image) }}" alt="..." class="img-fluid">
-                @else
-                <img class="img-fluid" src="https://upload.wikimedia.org/wikipedia/commons/1/14/No_Image_Available.jpg" alt="">
-                @endif
-            </div>
-            <div class="title"><strong>{{ $latest->title }}</strong>
-              <div class="d-flex align-items-center">
-                <div class="views"><i class="fas fa-calendar fa-xs"></i>{{ $latest->created_at->format('m/d/Y')  }}</div>
-                <div class="comments"><i class="fas fa-clock fa-xs"></i>{{ $latest->created_at->format('h:i A')  }}</div>
-              </div>
-            </div>
-          </div>
-        </a>
+      <div id="latestpost">
+        @include('users.posts.realtimelatestpost')
       </div>
-      @empty
-
-      @endforelse
     </div>
     <!-- Widget [Categories Widget]-->
     <div class="widget categories" id="showall">

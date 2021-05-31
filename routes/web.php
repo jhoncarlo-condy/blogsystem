@@ -33,4 +33,5 @@ Route::get('/comments/{postcomments}', 'CommentController@show')->name('comments
 Route::get('/comment/{postcomments}','CommentController@realtimecomments')->name('realtimecomments');
 Route::resource('/users/blogs/post', 'User\PostController');
 Route::get('/realtimeuserpost', 'User\PostController@realtimeuserpost')->name('realtimeuserpost');
+Route::get('/realtimelatestpost', 'User\PostController@realtimelatestpost')->name('realtimelatestpost');
 Route::resource('/users/blogs/category', 'User\CategoryController');

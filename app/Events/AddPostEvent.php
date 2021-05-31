@@ -15,7 +15,6 @@ class AddPostEvent implements ShouldBroadcast
     use Dispatchable, InteractsWithSockets, SerializesModels;
 
     public $postcount;
-    public $delete;
 
     public function __construct($postcount)
     {
