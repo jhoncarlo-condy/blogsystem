@@ -94,7 +94,7 @@
                   @endguest
 
                 </div>
-              </div>
+            </div>
             @empty
               Empty
             @endforelse
