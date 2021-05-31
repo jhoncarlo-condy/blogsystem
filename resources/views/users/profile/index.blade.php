@@ -1,125 +1,142 @@
 @extends('users.layouts.app')
 @push('css')
 <style>
-    .image img
-    {
-        width:400px;
+        .image img
+        {
+            width:400px;
+        }
+        .file-upload {
+    background-color: #ffffff;
+    width: 600px;
+    margin: 0 auto;
+    padding: 20px;
     }
-    .file-upload {
-  background-color: #ffffff;
-  width: 600px;
-  margin: 0 auto;
-  padding: 20px;
-}
 
-.file-upload-btn {
-  width: 100%;
-  margin: 0;
-  color: #fff;
-  background: #1FB264;
-  border: none;
-  padding: 10px;
-  border-radius: 4px;
-  border-bottom: 4px solid #15824B;
-  transition: all .2s ease;
-  outline: none;
-  text-transform: uppercase;
-  font-weight: 700;
-}
+    .file-upload-btn {
+    width: 100%;
+    margin: 0;
+    color: #fff;
+    background: #1FB264;
+    border: none;
+    padding: 10px;
+    border-radius: 4px;
+    border-bottom: 4px solid #15824B;
+    transition: all .2s ease;
+    outline: none;
+    text-transform: uppercase;
+    font-weight: 700;
+    }
 
-.file-upload-btn:hover {
-  background: #1AA059;
-  color: #ffffff;
-  transition: all .2s ease;
-  cursor: pointer;
-}
+    .file-upload-btn:hover {
+    background: #1AA059;
+    color: #ffffff;
+    transition: all .2s ease;
+    cursor: pointer;
+    }
 
-.file-upload-btn:active {
-  border: 0;
-  transition: all .2s ease;
-}
+    .file-upload-btn:active {
+    border: 0;
+    transition: all .2s ease;
+    }
 
-.file-upload-content {
-  display: none;
-  text-align: center;
-}
+    .file-upload-content {
+    display: none;
+    text-align: center;
+    }
 
-.file-upload-input {
-  position: absolute;
-  margin: 0;
-  padding: 0;
-  width: 100%;
-  height: 100%;
-  outline: none;
-  opacity: 0;
-  cursor: pointer;
-}
+    .file-upload-input {
+    position: absolute;
+    margin: 0;
+    padding: 0;
+    width: 100%;
+    height: 100%;
+    outline: none;
+    opacity: 0;
+    cursor: pointer;
+    }
 
-.image-upload-wrap {
-  margin-top: 20px;
-  border: 4px dashed #1FB264;
-  position: relative;
-}
+    .image-upload-wrap {
+    margin-top: 20px;
+    border: 4px dashed #1FB264;
+    position: relative;
+    }
 
-.image-dropping,
-.image-upload-wrap:hover {
-  background-color: #1FB264;
-  border: 4px dashed #ffffff;
-}
+    .image-dropping,
+    .image-upload-wrap:hover {
+    background-color: #1FB264;
+    border: 4px dashed #ffffff;
+    }
 
-.image-title-wrap {
-  padding: 0 15px 15px 15px;
-  color: #222;
-}
+    .image-title-wrap {
+    padding: 0 15px 15px 15px;
+    color: #222;
+    }
 
-.drag-text {
-  text-align: center;
-}
+    .drag-text {
+    text-align: center;
+    }
 
-.drag-text h3 {
-  font-weight: 100;
-  text-transform: uppercase;
-  color: #15824B;
-  padding: 60px 0;
-}
+    .drag-text h3 {
+    font-weight: 100;
+    text-transform: uppercase;
+    color: #15824B;
+    padding: 60px 0;
+    }
 
-.file-upload-image {
-  max-height: 200px;
-  max-width: 200px;
-  margin: auto;
-  padding: 20px;
-}
+    .file-upload-image {
+    max-height: 200px;
+    max-width: 200px;
+    margin: auto;
+    padding: 20px;
+    }
 
-.remove-image {
-  width: 200px;
-  margin: 0;
-  color: #fff;
-  background: #cd4535;
-  border: none;
-  padding: 10px;
-  border-radius: 4px;
-  border-bottom: 4px solid #b02818;
-  transition: all .2s ease;
-  outline: none;
-  text-transform: uppercase;
-  font-weight: 700;
-}
+    .remove-image {
+    width: 200px;
+    margin: 0;
+    color: #fff;
+    background: #cd4535;
+    border: none;
+    padding: 10px;
+    border-radius: 4px;
+    border-bottom: 4px solid #b02818;
+    transition: all .2s ease;
+    outline: none;
+    text-transform: uppercase;
+    font-weight: 700;
+    }
 
-.remove-image:hover {
-  background: #c13b2a;
-  color: #ffffff;
-  transition: all .2s ease;
-  cursor: pointer;
-}
+    .remove-image:hover {
+    background: #c13b2a;
+    color: #ffffff;
+    transition: all .2s ease;
+    cursor: pointer;
+    }
 
-.remove-image:active {
-  border: 0;
-  transition: all .2s ease;
-}
-
-
+    .remove-image:active {
+    border: 0;
+    transition: all .2s ease;
+    }
 
 </style>
+@endpush
+@push('scripts')
+<script>
+    $(document).ready(function(){
+        $("#search").keyup(function(){
+            $("#result").html('');
+            var searchfield = $("#search").val();
+            $.ajax({
+                url: "search",
+                method: "get",
+                data:{name:searchfield},
+                success:function(data){
+                    $("#result").html(data);
+                }
+
+            });
+        });
+    });
+</script>
 @endpush
 @section('link')
 <li class="nav-item"><a href="{{ route('post.index') }}" class="nav-link">Home</a>
@@ -261,12 +278,13 @@
                                 <div class="form-group">
                                   <label>Category</label>
 
-                                  <select class="form-control " name="category_id" data-dropdown-css-class="select2-danger" style="width: 100%;">
-                                    <option disabled selected>Select Category</option>
+                                  {{-- <select id="select"  class="form-control" style="width: 100%;">
                                     @foreach ($categories as $category)
                                     <option value="{{ $category->id }}">{{ $category->title }}</option>
                                     @endforeach
-                                  </select>
+                                  </select> --}}
+                                    <input type="text" class="form-control" name="search" id="search" aria-describedby="helpId" placeholder="">
+                                    <div id="result"></div>
 
                                 </div>
                                 <!-- /.form-group -->
@@ -334,19 +352,19 @@
                     <div class="form-group row">
                       <label for="inputName" class="col-sm-2 col-form-label">Old Password</label>
                       <div class="col-sm-10">
-                        <input type="password" name="oldpassword" class="form-control" id="inputName" placeholder="Old Password">
+                        <input type="password" name="oldpassword" class="form-control" placeholder="Old Password">
                       </div>
                     </div>
                     <div class="form-group row">
                       <label for="inputEmail" class="col-sm-2 col-form-label">New Password</label>
                       <div class="col-sm-10">
-                        <input type="password" name="newpassword" class="form-control" id="inputEmail" placeholder="New Password">
+                        <input type="password" name="newpassword" class="form-control"  placeholder="New Password">
                       </div>
                     </div>
                     <div class="form-group row">
                         <label for="inputEmail" class="col-sm-2 col-form-label">Confirm Password</label>
                         <div class="col-sm-10">
-                          <input type="password" name="confirmpassword" class="form-control" id="inputEmail" placeholder="Confirm Password">
+                          <input type="password" name="confirmpassword" class="form-control"  placeholder="Confirm Password">
                         </div>
                       </div>
                     <div class="form-group row">

@@ -30,8 +30,9 @@ Route::middleware(['auth'])->group(function () {
 Route::resource('/users/profile', 'ProfileController')->only(['show']);
 Route::get('/allcategories','User\CategoryController@all')->name('list');
 Route::get('/comments/{postcomments}', 'CommentController@show')->name('commentshow');
-Route::get('/comment/{postcomments}','CommentController@realtimecomments')->name('realtimecomments');
 Route::resource('/users/blogs/post', 'User\PostController');
+Route::resource('/users/blogs/category', 'User\CategoryController');
 Route::get('/realtimeuserpost', 'User\PostController@realtimeuserpost')->name('realtimeuserpost');
 Route::get('/realtimelatestpost', 'User\PostController@realtimelatestpost')->name('realtimelatestpost');
-Route::resource('/users/blogs/category', 'User\CategoryController');
+Route::get('/comment/{postcomments}','CommentController@realtimecomments')->name('realtimecomments');
+Route::get('search','SearchController@search')->name('search');
