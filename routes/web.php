@@ -34,25 +34,3 @@ Route::get('/comment/{postcomments}','CommentController@realtimecomments')->name
 Route::resource('/users/blogs/post', 'User\PostController');
 Route::get('/realtimeuserpost', 'User\PostController@realtimeuserpost')->name('realtimeuserpost');
 Route::resource('/users/blogs/category', 'User\CategoryController');
-
-Route::get('/event',function()
-{
-   event(new MyEvent('Hello world'));
-});
-
-Route::get('/listen',function()
-{
-    return view ('sample');
-});
-
-Route::get('/form',function()
-{
-    return view ('form');
-});
-
-Route::post('/submit',function(Request $request){
-    $text = $request->text;
-
-    event(new FormSubmittedEvent($text));
-    return redirect('/form');
-});
