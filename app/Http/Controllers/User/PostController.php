@@ -5,6 +5,7 @@ use App\Post;
 use App\User;
 use App\Comment;
 use App\Category;
+use App\Events\AddPostEvent;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
@@ -45,6 +46,36 @@ class PostController extends Controller
             'categories'=>$categories,
         ]);
     }
+    public function realtimeuserpost()
+    {
+        $query = Post::select(
+            'id',
+            'title',
+            'category_id',
+            'user_id',
+            'image',
+            'created_at');
+        $posts = $query->orderBy('id','desc')->paginate(6);
+        $latest = $query->orderBy('id','desc')->take(3)->get();
+        $auth = Auth::user();
+        if ($auth) {
+            $myrecent = $query->where('user_id', $auth->id)
+                        ->orderBy('created_at','desc')->get();
+        }
+        else {
+            $myrecent = '';
+        }
+        $categories = Category::select(
+            'id',
+            'title')
+            ->take(4)->get();
+        return view('users.posts.realtimeposts')->with([
+            'posts'=>$posts,
+            'latest'=>$latest,
+            'myrecent'=>$myrecent,
+            'categories'=>$categories,
+        ]);
+    }
     public function store(StorePostRequest $request)
     {
         $data = $request->validated();
@@ -52,7 +83,9 @@ class PostController extends Controller
         {
         $data['image'] = Storage::disk('public')->put('images',$data['image']);
         }
-        Post::create($data);
+        $post = Post::create($data);
+        $postcount = count($post);
+        event (new AddPostEvent($postcount));
         return back()->with(['message'=>'Added new post']);
 
     }
