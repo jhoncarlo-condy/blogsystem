@@ -24,6 +24,8 @@ class CommentController extends Controller
         $comment = Comment::create($data);
         $commentcount = count($comment);
         event (new AddCommentEvent($commentcount));
+        $postcount = 0;
+        event (new AddPostEvent($postcount));
         return back()->with(['message','Your comment has been added']);
     }
     public function show(Post $postcomments)
