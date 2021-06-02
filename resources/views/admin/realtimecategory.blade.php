@@ -103,7 +103,7 @@
                             <div class="form-group">
                                 <label for="">Edit Max Blog Post</label>
                                 <input type="text" class="form-control" name="blogmax" id="" aria-describedby="helpId" value="{{ count($category->post) == 0 ? $category->blogmax : count($category->post)+$category->blogmax }}">
-                                <small><strong>Note:</strong>Must be greater that or equal to number of posts</small>
+                                <small><strong>Note:</strong>Must be greater than or equal to number of posts</small>
                             </div>
 
                     </div>

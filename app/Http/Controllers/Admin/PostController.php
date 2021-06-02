@@ -103,14 +103,8 @@ class PostController extends Controller
     }
     public function edit(Post $post)
     {
-        $categories = Category::select(
-            'id',
-            'title',
-            'blogmax')
-            ->get();
         return view ('admin.posts.editpost')->with([
             'post' => $post,
-            'categories'=>$categories
         ]);
 
     }
@@ -118,15 +112,26 @@ class PostController extends Controller
     {
         $data = $request->validate([
             'title' => 'required',
-            'category_id' => 'required',
+            'category' => 'required',
             'user_id' => 'required',
             'description' => 'required',
             'image' => 'file|image|max:5000',
         ]);
+        $query = Category::where('title',$data['category'])->first();
+        $data['category_id'] = $query->id;
         if($request->hasfile('image')){
          $data['image'] = Storage::disk('public')->put('images',$data['image']);
         }
-        $post->update($data);
+        else{
+            $data['image']=NULL;
+        }
+        $post->update([
+            'title'=>$data['title'],
+            'category_id'=>$data['category_id'],
+            'user_id'=>$data['user_id'],
+            'description'=>$data['description'],
+            'image'=>$data['image']
+        ]);
         $postcount = 0;
         event (new AddPostEvent($postcount));
         return redirect()->route('posts.index')->with(['message'=>'Post Updated Successfully']);

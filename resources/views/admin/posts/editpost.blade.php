@@ -1,123 +1,9 @@
 @extends('layouts.app')
 @push('css')
-<style>
-    .image img
-        {
-            width:400px;
-        }
-        .file-upload {
-    background-color: #ffffff;
-    width: 600px;
-    margin: 0 auto;
-    padding: 20px;
-    }
-
-    .file-upload-btn {
-    width: 100%;
-    margin: 0;
-    color: #fff;
-    background: #1FB264;
-    border: none;
-    padding: 10px;
-    border-radius: 4px;
-    border-bottom: 4px solid #15824B;
-    transition: all .2s ease;
-    outline: none;
-    text-transform: uppercase;
-    font-weight: 700;
-    }
-
-    .file-upload-btn:hover {
-    background: #1AA059;
-    color: #ffffff;
-    transition: all .2s ease;
-    cursor: pointer;
-    }
-
-    .file-upload-btn:active {
-    border: 0;
-    transition: all .2s ease;
-    }
-
-    .file-upload-content {
-    display: none;
-    text-align: center;
-    }
-
-    .file-upload-input {
-    position: absolute;
-    margin: 0;
-    padding: 0;
-    width: 100%;
-    height: 100%;
-    outline: none;
-    opacity: 0;
-    cursor: pointer;
-    }
-
-    .image-upload-wrap {
-    margin-top: 20px;
-    border: 4px dashed #1FB264;
-    position: relative;
-    }
-
-    .image-dropping,
-    .image-upload-wrap:hover {
-    background-color: #1FB264;
-    border: 4px dashed #ffffff;
-    }
-
-    .image-title-wrap {
-    padding: 0 15px 15px 15px;
-    color: #222;
-    }
-
-    .drag-text {
-    text-align: center;
-    }
-
-    .drag-text h3 {
-    font-weight: 100;
-    text-transform: uppercase;
-    color: #15824B;
-    padding: 60px 0;
-    }
-
-    .file-upload-image {
-    max-height: 200px;
-    max-width: 200px;
-    margin: auto;
-    padding: 20px;
-    }
-
-    .remove-image {
-    width: 200px;
-    margin: 0;
-    color: #fff;
-    background: #cd4535;
-    border: none;
-    padding: 10px;
-    border-radius: 4px;
-    border-bottom: 4px solid #b02818;
-    transition: all .2s ease;
-    outline: none;
-    text-transform: uppercase;
-    font-weight: 700;
-    }
-
-    .remove-image:hover {
-    background: #c13b2a;
-    color: #ffffff;
-    transition: all .2s ease;
-    cursor: pointer;
-    }
-
-    .remove-image:active {
-    border: 0;
-    transition: all .2s ease;
-    }
-
-</style>
+@include('common.imagedesign')
+@endpush
+@push('scripts')
+    @include('common.search')
 @endpush
 @section('content-header')
 <section class="content-header">
@@ -179,16 +65,14 @@
                 <div class="form-group">
                     <label>Category</label>
 
-                    <select class="form-control select2 select2-danger" name="category_id" data-dropdown-css-class="select2-danger" style="width: 100%;">
-                        <option value="{{ $post->category_id }}" selected="selected">{{ $post->category->title }}</option>
-                        @foreach ($categories as $category)}
-                        @if ($category->blogmax>0)
-                        <option value="{{ $category->id}}">{{ $category->title}}</option>
-                        @else
-
-                        @endif
-                        @endforeach
-                    </select>
+                    <input type="text" class="form-control"
+                      name="category" id="category-search"
+                      aria-describedby="helpId" placeholder="Search category..." value="{{ $post->category->title }}">
+                      <div class="card search-card">
+                          <div class="card-header" style="color:gray">Search Result</div>
+                          <div class="list-group list-group-flush search-result" id="category-result">
+                          </div>
+                      </div>
 
                   </div>
                   <!-- /.form-group -->
