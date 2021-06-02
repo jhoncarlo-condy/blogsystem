@@ -4,6 +4,7 @@
     li.result:hover
     {
         cursor:pointer;
+        background-color:gray;
     }
         .image img
         {
@@ -134,7 +135,7 @@
 <script>
  $(document).ready(function(){
      $(".search-card").hide();
-    $("#category-search").keyup(function(){
+     $("#category-search").keyup(function(){
         $(".card").show();
         var query = $(this).val();
         if(query.length>=3){
@@ -150,14 +151,24 @@
                 success:function(data){
                     var _html = '';
                     $.each(data.result,function(index,result){
+                        if(result.blogmax > 0)
+                        {
                         _html+='<li class="list-group-item result found" id="'+result.title+'">'+result.title+'</li>';
-
+                        }
                     });
+                    if(data.result == 0)
+                        {
+                    _html='<li class="list-group-item">No results found</li>';
+                        }
                     $("#category-result").html(_html);
 
 
                 }
             });
+        }
+        if(query == 0)
+        {
+            $(".search-card").fadeOut();
         }
     });
     $(document).on('click','.found',function(){
@@ -325,7 +336,7 @@
                                     name="category" id="category-search"
                                     aria-describedby="helpId" placeholder="Search category...">
                                     <div class="card search-card">
-                                        <div class="card-header">Search Result</div>
+                                        <div class="card-header" style="color:gray">Search Result</div>
                                         <div class="list-group list-group-flush search-result" id="category-result">
                                         </div>
                                     </div>
