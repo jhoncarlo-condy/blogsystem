@@ -1,123 +1,9 @@
 @extends('layouts.app')
 @push('css')
-<style>
-        .image img
-        {
-            width:400px;
-        }
-        .file-upload {
-    background-color: #ffffff;
-    width: 600px;
-    margin: 0 auto;
-    padding: 20px;
-    }
-
-    .file-upload-btn {
-    width: 100%;
-    margin: 0;
-    color: #fff;
-    background: #1FB264;
-    border: none;
-    padding: 10px;
-    border-radius: 4px;
-    border-bottom: 4px solid #15824B;
-    transition: all .2s ease;
-    outline: none;
-    text-transform: uppercase;
-    font-weight: 700;
-    }
-
-    .file-upload-btn:hover {
-    background: #1AA059;
-    color: #ffffff;
-    transition: all .2s ease;
-    cursor: pointer;
-    }
-
-    .file-upload-btn:active {
-    border: 0;
-    transition: all .2s ease;
-    }
-
-    .file-upload-content {
-    display: none;
-    text-align: center;
-    }
-
-    .file-upload-input {
-    position: absolute;
-    margin: 0;
-    padding: 0;
-    width: 100%;
-    height: 100%;
-    outline: none;
-    opacity: 0;
-    cursor: pointer;
-    }
-
-    .image-upload-wrap {
-    margin-top: 20px;
-    border: 4px dashed #1FB264;
-    position: relative;
-    }
-
-    .image-dropping,
-    .image-upload-wrap:hover {
-    background-color: #1FB264;
-    border: 4px dashed #ffffff;
-    }
-
-    .image-title-wrap {
-    padding: 0 15px 15px 15px;
-    color: #222;
-    }
-
-    .drag-text {
-    text-align: center;
-    }
-
-    .drag-text h3 {
-    font-weight: 100;
-    text-transform: uppercase;
-    color: #15824B;
-    padding: 60px 0;
-    }
-
-    .file-upload-image {
-    max-height: 200px;
-    max-width: 200px;
-    margin: auto;
-    padding: 20px;
-    }
-
-    .remove-image {
-    width: 200px;
-    margin: 0;
-    color: #fff;
-    background: #cd4535;
-    border: none;
-    padding: 10px;
-    border-radius: 4px;
-    border-bottom: 4px solid #b02818;
-    transition: all .2s ease;
-    outline: none;
-    text-transform: uppercase;
-    font-weight: 700;
-    }
-
-    .remove-image:hover {
-    background: #c13b2a;
-    color: #ffffff;
-    transition: all .2s ease;
-    cursor: pointer;
-    }
-
-    .remove-image:active {
-    border: 0;
-    transition: all .2s ease;
-    }
-
-</style>
+    @include('common.imagedesign')
+@endpush
+@push('scripts')
+    @include('common.search')
 @endpush
 @section('content-header')
 @php
@@ -168,7 +54,7 @@
                 </button>
               </div>
             </div>
-            <form action="{{ route('posts.store') }}" id="addpost" method="POST" enctype="multipart/form-data">
+            <form action="{{ route('post.store') }}" method="POST" enctype="multipart/form-data">
                 @method('POST')
                 @csrf
             <!-- /.card-header -->
@@ -183,9 +69,8 @@
                   <!-- /.form-group -->
                   <div class="form-group">
                     <label>Author</label>
-                    <input type="text" class="form-control" name="" disabled
-                    value="{{ $auth->firstname . " " . $auth->lastname }}" placeholder="">
-                    <input type="hidden" name="user_id" value="{{ $auth->id }}">
+                    <input type="text" class="form-control" name="" disabled value="{{ Auth::user()->firstname . " " . Auth::user()->lastname }}" placeholder="">
+                    <input type="hidden" name="user_id" value="{{ Auth::user()->id }}">
                 </div>
                   <!-- /.form-group -->
                 </div>
@@ -202,51 +87,50 @@
                 <div class="col-12 col-sm-6">
                   <div class="form-group">
                     <label>Category</label>
-
-                    <select class="form-control " name="category_id" data-dropdown-css-class="select2-danger" style="width: 100%;">
-                        @forelse ($categories as $category)}
-                        @if ($category->blogmax>0)
-                        <option value="{{ $category->id}}">{{ $category->title}}</option>
-                        @else
-
-                        @endif
-                        @empty
-                        empty
-                        @endforelse
-                    </select>
-
+                      <input type="text" class="form-control"
+                      name="category" id="category-search"
+                      aria-describedby="helpId" placeholder="Search category...">
+                      <div class="card search-card">
+                          <div class="card-header" style="color:gray">Search Result</div>
+                          <div class="list-group list-group-flush search-result" id="category-result">
+                          </div>
+                      </div>
                   </div>
                   <!-- /.form-group -->
                 </div>
                 <!-- /.col -->
+                <div class="col-10 col-sm-4">
 
+
+                </div>
                 <!-- /.col -->
               </div>
               <!-- /.row -->
             </div>
-            <!-- /.card-body -->
             <div class="file-upload">
-                <button class="file-upload-btn" type="button" onclick="$('.file-upload-input').trigger( 'click' )">Add Image</button>
+              <button class="file-upload-btn" type="button" onclick="$('.file-upload-input').trigger( 'click' )">Add Image</button>
 
-                <div class="image-upload-wrap">
-                  <input class="file-upload-input" name="image" type='file' onchange="readURL(this);" accept="image/*" />
-                  <div class="drag-text">
-                    <h3>Drag and drop a file or select add Image</h3>
-                  </div>
-                </div>
-                <div class="file-upload-content">
-                  <img class="file-upload-image" src="#" alt="your image" />
-                  <div class="image-title-wrap">
-                    <button type="button" onclick="removeUpload()" class="remove-image">Remove <span class="image-title">Uploaded Image</span></button>
-                  </div>
+              <div class="image-upload-wrap">
+                <input class="file-upload-input" name="image" type='file' onchange="readURL(this);" accept="image/*" />
+                <div class="drag-text">
+                  <h3>Drag and drop a file or select add Image</h3>
                 </div>
               </div>
-              <div class="mb-3 ml-2 mr-2">
-                <div class="form-group">
-                  <label for="description">Description</label>
-                  <textarea class="form-control" name="description" id="summernote" rows="3"></textarea>
+              <div class="file-upload-content">
+                <img class="file-upload-image" src="#" alt="your image" />
+                <div class="image-title-wrap">
+                  <button type="button" onclick="removeUpload()" class="remove-image">Remove <span class="image-title">Uploaded Image</span></button>
                 </div>
-                </div>
+              </div>
+            </div>
+
+
+            <!-- /.card-body -->
+            <div class="container mb-3">
+            <textarea id="summernote" name="description"></textarea>
+
+            </div>
+
           <div class="form-group text-right mr-4">
             <button type="submit" class="btn btn-primary">Add Post</button>
           </div>

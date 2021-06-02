@@ -1,191 +1,12 @@
 @extends('users.layouts.app')
 @push('css')
-<style>
-    li.result:hover
-    {
-        cursor:pointer;
-        background-color:gray;
-    }
-        .image img
-        {
-            width:400px;
-        }
-        .file-upload {
-    background-color: #ffffff;
-    width: 600px;
-    margin: 0 auto;
-    padding: 20px;
-    }
-
-    .file-upload-btn {
-    width: 100%;
-    margin: 0;
-    color: #fff;
-    background: #1FB264;
-    border: none;
-    padding: 10px;
-    border-radius: 4px;
-    border-bottom: 4px solid #15824B;
-    transition: all .2s ease;
-    outline: none;
-    text-transform: uppercase;
-    font-weight: 700;
-    }
-
-    .file-upload-btn:hover {
-    background: #1AA059;
-    color: #ffffff;
-    transition: all .2s ease;
-    cursor: pointer;
-    }
-
-    .file-upload-btn:active {
-    border: 0;
-    transition: all .2s ease;
-    }
-
-    .file-upload-content {
-    display: none;
-    text-align: center;
-    }
-
-    .file-upload-input {
-    position: absolute;
-    margin: 0;
-    padding: 0;
-    width: 100%;
-    height: 100%;
-    outline: none;
-    opacity: 0;
-    cursor: pointer;
-    }
-
-    .image-upload-wrap {
-    margin-top: 20px;
-    border: 4px dashed #1FB264;
-    position: relative;
-    }
-
-    .image-dropping,
-    .image-upload-wrap:hover {
-    background-color: #1FB264;
-    border: 4px dashed #ffffff;
-    }
-
-    .image-title-wrap {
-    padding: 0 15px 15px 15px;
-    color: #222;
-    }
-
-    .drag-text {
-    text-align: center;
-    }
-
-    .drag-text h3 {
-    font-weight: 100;
-    text-transform: uppercase;
-    color: #15824B;
-    padding: 60px 0;
-    }
-
-    .file-upload-image {
-    max-height: 200px;
-    max-width: 200px;
-    margin: auto;
-    padding: 20px;
-    }
-
-    .remove-image {
-    width: 200px;
-    margin: 0;
-    color: #fff;
-    background: #cd4535;
-    border: none;
-    padding: 10px;
-    border-radius: 4px;
-    border-bottom: 4px solid #b02818;
-    transition: all .2s ease;
-    outline: none;
-    text-transform: uppercase;
-    font-weight: 700;
-    }
-
-    .remove-image:hover {
-    background: #c13b2a;
-    color: #ffffff;
-    transition: all .2s ease;
-    cursor: pointer;
-    }
-
-    .remove-image:active {
-    border: 0;
-    transition: all .2s ease;
-    }
-
-</style>
+@include('common.imagedesign')
 @endpush
 @push('scripts')
-{{-- <script>
-   $(document).ready(function () {
-      $('select').selectize({
-          sortField: 'text'
-      });
-  });
-</script> --}}
-<script>
- $(document).ready(function(){
-     $(".search-card").hide();
-     $("#category-search").keyup(function(){
-        $(".card").show();
-        var query = $(this).val();
-        if(query.length>=3){
-            $.ajax({
-                url:"{{ url('search') }}",
-                data:{
-                    title: query
-                },
-                dataType:'json',
-                beforeSend:function(){
-                    $("#category-result").html('<li class="list-group-item">Loading...</li>');
-                },
-                success:function(data){
-                    var _html = '';
-                    $.each(data.result,function(index,result){
-                        if(result.blogmax > 0)
-                        {
-                        _html+='<li class="list-group-item result found" id="'+result.title+'">'+result.title+'</li>';
-                        }
-                    });
-                    if(data.result == 0)
-                        {
-                    _html='<li class="list-group-item">No results found</li>';
-                        }
-                    $("#category-result").html(_html);
-
-
-                }
-            });
-        }
-        if(query == 0)
-        {
-            $(".search-card").fadeOut();
-        }
-    });
-    $(document).on('click','.found',function(){
-      $("#category-search").val($(this).text());
-      $(".search-card").fadeOut();
-    });
-
- });
-</script>
+    @include('common.search')
 @endpush
 @section('link')
-<li class="nav-item"><a href="{{ route('post.index') }}" class="nav-link">Home</a>
-</li>
-<li class="nav-item"><a href="{{ route('category.index') }}" class="nav-link">Categories</a>
-</li>
-<li class="nav-item"><a href="{{ route('profile.index') }}" class="nav-link active">Profile</a>
-</li>
+    @include('users.common.links')
 @endsection
 @section('content')
 <section style="background: url('https://images.unsplash.com/photo-1481627834876-b7833e8f5570?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=541&q=80'); background-size: cover; background-position: center bottom" class="divider">
@@ -285,7 +106,7 @@
                 <!-- /.tab-pane -->
                 <div class="tab-pane" id="timeline">
 
-                          <form action="{{ route('post.store') }}" method="POST" enctype="multipart/form-data">
+                      <form action="{{ route('post.store') }}" method="POST" enctype="multipart/form-data">
                               @method('POST')
                               @csrf
                           <!-- /.card-header -->
@@ -318,20 +139,6 @@
                               <div class="col-12 col-sm-6">
                                 <div class="form-group">
                                   <label>Category</label>
-
-                                  {{-- <select id="select"  class="form-control" style="width: 100%;">
-                                    @foreach ($categories as $category)
-                                    <option value="{{ $category->id }}">{{ $category->title }}</option>
-                                    @endforeach
-                                  </select> --}}<br>
-                                  {{-- //Category select using dropdown
-                                  <select class="form-control" id="select-state" searchable="Search here.." placeholder="Select a category..">
-                                    <option value="" selected>Select a category..</option>
-                                    @foreach ($categories as $category)
-                                    <option value="{{ $category->id }}">{{ $category->title }}</option>
-                                    @endforeach
-                                  </select> --}}
-                                  //Category select using input
                                     <input type="text" class="form-control"
                                     name="category" id="category-search"
                                     aria-describedby="helpId" placeholder="Search category...">
@@ -340,16 +147,6 @@
                                         <div class="list-group list-group-flush search-result" id="category-result">
                                         </div>
                                     </div>
-                                    {{-- //input with select --}}
-                                    {{-- <div class="form-group">
-                                      <label for="">Search Category</label>
-                                      <input class="form-control" list="category-result" id="category-search" name="ice-cream-choice" />
-
-                                      <select class="form-control" id="category-result">
-                                      </select>
-
-                                    </div> --}}
-
                                 </div>
                                 <!-- /.form-group -->
                               </div>
