@@ -5,7 +5,7 @@ namespace App\Http\Controllers\Admin;
 use App\Post;
 use App\Comment;
 use App\Category;
-
+use App\Events\AddCategoryEvent;
 use App\Events\AddPostEvent;
 use App\Events\DeletePostEvent;
 use Illuminate\Http\Request;
@@ -58,19 +58,32 @@ class PostController extends Controller
     {
         $data = $request->validate([
             'title' => 'required',
-            'category_id' => 'required',
+            'category' => 'required',
             'user_id' => 'required',
             'description' => 'required',
             'image' => 'file|image|max:5000',
         ]);
+        $query = Category::where('title',$data['category'])->first();
+        $data['category_id'] = $query->id;
         if($request->hasfile('image')){
         $data['image'] = Storage::disk('public')
                             ->put('images',$data['image']);
         }
-        $post = Post::create($data);
+        else{
+            $data['image']=NULL;
+        }
+        $post = Post::create([
+            'title'=>$data['title'],
+            'category_id'=>$data['category_id'],
+            'user_id'=>$data['user_id'],
+            'description'=>$data['description'],
+            'image'=>$data['image']
+        ]);
         $postcount = count($post);
         event (new AddPostEvent($postcount));
-        return redirect(route('posts.index'))->with(['message'=>'Added new post']);
+        $categorycount = 0;
+        event (new AddCategoryEvent($categorycount));
+        return redirect()->route('posts.index')->with(['message'=>'Added new post']);
     }
     public function show(Post $post)
     {
