@@ -44,7 +44,7 @@
           <div class="row">
             <!-- post -->
             @forelse ($categories as $category)
-            @foreach ($category->latestpost as $post)
+            @foreach ($category->post->take(1) as $post)
 
             <div class="post col-xl-6">
                 <div class="post-thumbnail">
@@ -80,7 +80,7 @@
               Empty
             @endforelse
           </div>
-          {{-- {{ $categories->posts->links() }} --}}
+          {{ $categories->links() }}
 
           <!-- Pagination -->
           <nav aria-label="Page navigation example">
