@@ -57,6 +57,15 @@ $auth = Auth::user();
     <strong>{{ session('message') }}</strong>
 </div>
 @endif
+@if (Session::has('errorcategory'))
+<div class="alert alert-danger alert-dismissible fade show" role="alert">
+    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+        <span aria-hidden="true">&times;</span>
+        <span class="sr-only">Close</span>
+    </button>
+    <strong>{{ session('errorcategory') }}</strong>
+</div>
+@endif
 <!-- Button trigger modal -->
 @if($auth->usertype == '1')
 <div class="">
@@ -97,7 +106,6 @@ $auth = Auth::user();
 @endsection
 @push('scripts')
 @if(Session::has('message'))
-
 <script>
     $(document).ready(function()
     {
@@ -105,6 +113,19 @@ $auth = Auth::user();
         title: "Success!",
         text: "Operation Success",
         type: "success",
+        closeOnConfirm: false
+        })
+    });
+</script>
+@endif
+@if(Session::has('errorcategory'))
+<script>
+    $(document).ready(function()
+    {
+        swal({
+        title: "Error!",
+        text: "Please double check category field",
+        type: "error",
         closeOnConfirm: false
         })
     });

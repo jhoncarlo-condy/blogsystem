@@ -64,7 +64,7 @@
                  <div class="form-group">
                    <label for="">Title</label>
                    <input type="text"
-                     class="form-control" name="title" id="" aria-describedby="helpId" placeholder="Enter title here">
+                     class="form-control" name="title" id="" aria-describedby="helpId" placeholder="Enter title here" value="{{ old('title') }}">
                  </div>
                   <!-- /.form-group -->
                   <div class="form-group">

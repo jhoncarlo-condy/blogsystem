@@ -8,6 +8,7 @@
             <th>Title</th>
             <th>Description</th>
             <th>Posts Left</th>
+            <th>Created posts</th>
             @if($auth->usertype == '1')
             <th>Edit</th>
             <th>Delete</th>
@@ -21,6 +22,7 @@
     <td>{{ $category->title }}</td>
     <td>{{ $category->description }}</td>
     <td>{{ $category->blogmax }}</td>
+    <td>{{ count($category->post) }}</td>
     @if($auth->usertype != '1')
 
     @else

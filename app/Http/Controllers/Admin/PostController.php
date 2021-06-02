@@ -3,12 +3,13 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Post;
+use Throwable;
 use App\Comment;
 use App\Category;
-use App\Events\AddCategoryEvent;
 use App\Events\AddPostEvent;
-use App\Events\DeletePostEvent;
 use Illuminate\Http\Request;
+use App\Events\DeletePostEvent;
+use App\Events\AddCategoryEvent;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\StorePostRequest;
 use Illuminate\Support\Facades\Storage;
@@ -64,7 +65,14 @@ class PostController extends Controller
             'image' => 'file|image|max:5000',
         ]);
         $query = Category::where('title',$data['category'])->first();
-        $data['category_id'] = $query->id;
+        if(!$query)
+        {
+            return redirect()->route('posts.index')->with(['errorcategory'=>'Please double check category field']);
+        }
+        else {
+            $data['category_id'] = $query->id;
+        }
+
         if($request->hasfile('image')){
         $data['image'] = Storage::disk('public')
                             ->put('images',$data['image']);
