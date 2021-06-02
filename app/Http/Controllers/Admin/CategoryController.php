@@ -21,7 +21,7 @@ class CategoryController extends Controller
             'blogmax')
             ->orderby('id','desc')->paginate(5);
 
-        return view('admin.category')->with([
+        return view('admin.categories.category')->with([
             'categories'=> $categories
         ]);
     }
@@ -33,7 +33,7 @@ class CategoryController extends Controller
             'description',
             'blogmax')
             ->orderby('id','desc')->paginate(5);
-        return view('admin.realtimecategory')->with([
+        return view('admin.categories.realtimecategory')->with([
             'categories'=>$categories
         ]);
     }

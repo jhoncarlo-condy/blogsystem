@@ -24,7 +24,7 @@ class UserController extends Controller
             'email',
             'usertype')
             ->orderBy('id','desc')->paginate(5);
-        return view ('admin.users')->with([
+        return view ('admin.users.users')->with([
             'users'=> $users
         ]);
     }
@@ -37,7 +37,7 @@ class UserController extends Controller
             'email',
             'usertype')
             ->orderBy('id','desc')->paginate(5);
-        return view ('admin.realtimeuser')->with([
+        return view ('admin.users.realtimeuser')->with([
             'users'=> $users
         ]);
 
