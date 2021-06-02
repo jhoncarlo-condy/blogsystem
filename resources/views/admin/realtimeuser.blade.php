@@ -29,13 +29,36 @@
             </a>
     </td>
     <td>
-            <form id="deleteform" action="{{ route('users.destroy',$user->id) }}" method="POST">
-                @csrf
-                @method('DELETE')
-                <button type="submit"  style="border: 0; background: none;color:red;">
-                    <i class="fas fa-trash    "></i>
-                </button>
-            </form>
+        <a name="" style="color:red;" id="" href="#" role="button"
+        data-toggle="modal" data-target="#deleteModal{{ $user->id }}">
+           <i class="fas fa-trash"></i>
+       </a>
+       <!-- Modal -->
+       <div class="modal fade" data-backdrop="static" id="deleteModal{{ $user->id }}" tabindex="-1" role="dialog" aria-labelledby="modelTitleId" aria-hidden="true">
+           <div class="modal-dialog" role="document">
+               <div class="modal-content">
+                   <div class="modal-header">
+                       <h5 class="modal-title"><i class="fas fa-exclamation-triangle" style="color:yellow;"></i>Are you sure you want to delete?<i class="fas fa-exclamation-triangle" style="color:yellow;"></i></h5>
+                           <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                               <span aria-hidden="true">&times;</span>
+                           </button>
+                   </div>
+                   <div class="modal-body">
+                       <span>Note: All posts by this user will be deleted also.</span>
+                       <form id="deleteform"
+                       action="{{ route('users.destroy',$user->id) }}" method="POST">
+                           @csrf
+                           @method('DELETE')
+                           <div class="container text-right">
+                           <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                           <button type="submit" class="btn btn-danger">Delete</button>
+                           </div>
+                           </form>
+                   </div>
+
+               </div>
+           </div>
+       </div>
         </div>
         {{-- EDIT MODAL --}}
         <!-- Modal -->
