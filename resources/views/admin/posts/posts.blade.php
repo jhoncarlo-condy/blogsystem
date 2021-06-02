@@ -88,9 +88,10 @@ $auth = Auth::user();
         <tbody id="posttable">
             @include('admin.posts.realtimeposts')
         </tbody>
-        {{ $posts->links() }}
 
     </table>
+    {{ $posts->links() }}
+
 </div>
 
 @endsection
