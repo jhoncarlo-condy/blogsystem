@@ -51,3 +51,5 @@ $('.image-upload-wrap').bind('dragleave', function () {
 {{-- adminlte --}}
 <script src="https://cdnjs.cloudflare.com/ajax/libs/admin-lte/3.1.0-rc/js/adminlte.min.js" integrity="sha512-/jef8/XLtQr4dHl6m/uYPWSGXgUs3gTFszQrpd791b7zYMPB8PCLdXJlUVjikDjHddPugjG6iPwmn7MDGNPZ6w==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/admin-lte/3.1.0-rc/js/demo.min.js" integrity="sha512-3/HE6zD8Gcgn/U/CWUJ8DRWFJIo7J0y53TurBXwmuVNamtzh1p+2Pu60NlvXunrcsTc61RL9x3qxD40DIOLbsg==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+{{-- pusher --}}
+<script src="https://js.pusher.com/7.0/pusher.min.js"></script>

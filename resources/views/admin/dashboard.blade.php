@@ -1,59 +1,6 @@
 @extends('layouts.app')
 @push('scripts')
-<script src="https://js.pusher.com/7.0/pusher.min.js"></script>
-    <script>
-
-      // Enable pusher logging - don't include this in production
-      Pusher.logToConsole = true;
-
-      var pusher = new Pusher('deedc206526db9726e72', {
-        cluster: 'ap1'
-      });
-
-      var channel = pusher.subscribe('my-channel');
-        // category event
-        channel.bind('category-event', function(data)
-        {
-            var total  = data.categorycount + parseInt($("#categorycount").text());
-            $("#categorycount").text(total);
-        });
-        channel.bind('delete-category-event', function(data)
-        {
-            var total  = parseInt($("#categorycount").text() - data.deletecategory);
-            $("#categorycount").text(total);
-        });
-
-        // post event
-        channel.bind('post-event', function(data)
-        {
-            var total  = data.postcount + parseInt($("#postcount").text());
-            $("#postcount").text(total);
-        });
-        channel.bind('delete-post-event', function(data)
-        {
-            var total  =  parseInt($("#postcount").text()) - data.deletepost;
-            $("#postcount").text(total);
-        });
-
-        // user event
-        channel.bind('user-event', function(data)
-        {
-            var total  = data.usercount + parseInt($("#usercount").text());
-            $("#usercount").text(total);
-        });
-        channel.bind('delete-user-event', function(data)
-        {
-            var total  =  parseInt($("#usercount").text())-data.deleteuser;
-            $("#usercount").text(total);
-        });
-
-        // comment event
-        channel.bind('comment-event', function(data)
-        {
-            var total  = data.commentcount + parseInt($("#commentcount").text());
-            $("#commentcount").text(total);
-        });
-    </script>
+@include('common.pusher')
 @endpush
 @section('content-header')
 <section class="content-header">
