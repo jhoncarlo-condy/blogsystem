@@ -70,28 +70,8 @@ $auth = Auth::user();
   Add new user
 </button>
 @endif
-<div class="container">
-    <table class="table">
-        <thead class="thead-dark">
-            <tr>
-                <th>#</th>
-                <th>First Name</th>
-                <th>Last Name</th>
-                <th>E-mail</th>
-                <th>Usertype</th>
-                <th>View</th>
-                @if ($auth->usertype == '1')
-                <th>Edit</th>
-                <th>Delete</th>
-                @endif
-            </tr>
-        </thead>
-        <tbody id="usertable">
-            @include('admin.realtimeuser')
-        </tbody>
-
-    </table>
-    {{ $users->links() }}
+<div class="container" id="usertable">
+    @include('admin.realtimeuser')
 </div>
 
 <!-- ADD Modal -->
