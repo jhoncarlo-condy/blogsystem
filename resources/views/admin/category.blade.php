@@ -73,26 +73,8 @@ $auth = Auth::user();
   Add new category
 </button>
 @endif
-<div class="container">
-    <table class="table">
-        <thead class="thead-dark">
-            <tr>
-                <th>#</th>
-                <th>Title</th>
-                <th>Description</th>
-                <th>Posts Left</th>
-                @if($auth->usertype == '1')
-                <th>Edit</th>
-                <th>Delete</th>
-                @endif
-            </tr>
-        </thead>
-        <tbody id="categorytable">
-            @include('admin.realtimecategory')
-        </tbody>
-
-    </table>
-    {{ $categories->links() }}
+<div class="container"  id="categorytable">
+    @include('admin.realtimecategory')
 </div>
 
 <!-- ADD Modal -->

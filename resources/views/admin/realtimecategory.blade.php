@@ -1,6 +1,20 @@
 @php
     $auth = Auth::user();
 @endphp
+<table class="table">
+    <thead class="thead-dark">
+        <tr>
+            <th>#</th>
+            <th>Title</th>
+            <th>Description</th>
+            <th>Posts Left</th>
+            @if($auth->usertype == '1')
+            <th>Edit</th>
+            <th>Delete</th>
+            @endif
+        </tr>
+    </thead>
+    <tbody>
 @forelse ($categories as $key=>$category)
 <tr>
     <td scope="row">{{ $key+1}}</td>
@@ -97,3 +111,7 @@
 
 @endforelse
 
+</tbody>
+
+</table>
+{{ $categories->links() }}
