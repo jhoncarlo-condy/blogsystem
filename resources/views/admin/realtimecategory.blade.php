@@ -20,15 +20,38 @@
     </td>
     <td>
         {{-- delete category --}}
-            <form id="deleteform"
-            action="{{ route('categories.destroy',$category->id) }}" method="POST">
-                @csrf
-                @method('DELETE')
-                    <button type="submit"  style="border: 0; background: none;color:red;">
-                     <i class="fas fa-trash    "></i>
-                    </button>
-                <button  id="delete" disabled="disabled" type="submit" hidden="hidden"></button>
-            </form>
+            <!-- Button trigger modal -->
+
+            <a name="" style="color:red;" id="" href="#" role="button"
+             data-toggle="modal" data-target="#deleteModal{{ $category->id }}">
+                <i class="fas fa-trash"></i>
+            </a>
+            <!-- Modal -->
+            <div class="modal fade" data-backdrop="static" id="deleteModal{{ $category->id }}" tabindex="-1" role="dialog" aria-labelledby="modelTitleId" aria-hidden="true">
+                <div class="modal-dialog" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title"><i class="fas fa-exclamation-triangle" style="color:yellow;"></i>Are you sure you want to delete?<i class="fas fa-exclamation-triangle" style="color:yellow;"></i></h5>
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                    <span aria-hidden="true">&times;</span>
+                                </button>
+                        </div>
+                        <div class="modal-body">
+                            <span>Note: Make sure that there are no posts with the category you selected.</span>
+                            <form id="deleteform"
+                            action="{{ route('categories.destroy',$category->id) }}" method="POST">
+                                @csrf
+                                @method('DELETE')
+                                <div class="container text-right">
+                                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                                <button type="submit" class="btn btn-danger">Delete</button>
+                                </div>
+                                </form>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
             @endif
         </div>
     </td>
@@ -44,7 +67,7 @@
                             </button>
                     </div>
                     <div class="modal-body">
-                        <form  action="{{ route('categories.update', $category->id)  }}" id="editcategory" method="post">
+                        <form  action="{{ route('categories.update', $category->id)  }}" class="editcategory" method="post">
                             @method('PUT')
                             @csrf
                             <div class="form-group">
@@ -73,3 +96,4 @@
 
 
 @endforelse
+

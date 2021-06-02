@@ -223,7 +223,7 @@ $auth = Auth::user();
                 $(element).removeClass('is-invalid');
                 }
             });
-            $("#editcategory").validate(
+            $(".editcategory").validate(
             {
                 rules:
                 {
