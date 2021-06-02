@@ -44,14 +44,14 @@
             <div class="modal fade" data-backdrop="static" id="deleteModal{{ $category->id }}" tabindex="-1" role="dialog" aria-labelledby="modelTitleId" aria-hidden="true">
                 <div class="modal-dialog" role="document">
                     <div class="modal-content">
-                        <div class="modal-header">
-                            <h5 class="modal-title"><i class="fas fa-exclamation-triangle" style="color:yellow;"></i>Are you sure you want to delete?<i class="fas fa-exclamation-triangle" style="color:yellow;"></i></h5>
+                        <div class="modal-header"  style="background-color: yellow;">
+                            <h5 class="modal-title"><i class="fas fa-exclamation-triangle"></i>Are you sure you want to delete?<i class="fas fa-exclamation-triangle"></i></h5>
                                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                                     <span aria-hidden="true">&times;</span>
                                 </button>
                         </div>
                         <div class="modal-body">
-                            <span>Note: Make sure that there are no posts with the category you selected.</span>
+                            <span>Note: Make sure that there are no existing posts with the category you selected.</span>
                             <form id="deleteform"
                             action="{{ route('categories.destroy',$category->id) }}" method="POST">
                                 @csrf
@@ -85,12 +85,25 @@
                             @method('PUT')
                             @csrf
                             <div class="form-group">
-                              <label for="title"></label>
+                              <label for="title">Title</label>
                               <input type="text" class="form-control" name="title"  aria-describedby="helpId" placeholder="" value="{{ $category->title }}">
                             </div>
                             <div class="form-group">
-                              <label for="description"></label>
+                              <label for="description">Description</label>
                               <textarea class="form-control" name="description" col="60" rows="5" maxlength="100">{{ $category->description }}</textarea>
+                            </div>
+                            <div class="form-group">
+                              <label for="">Posts Left</label>
+                              <input type="text" class="form-control" name="" id="" aria-describedby="helpId" value="{{ $category->blogmax }}" disabled>
+                            </div>
+                            <div class="form-group">
+                                <label for="">Number of posts with this category</label>
+                                <input type="text" class="form-control" name="" id="" aria-describedby="helpId" value="{{ count($category->post) }}" disabled>
+                            </div>
+                            <div class="form-group">
+                                <label for="">Edit Max Blog Post</label>
+                                <input type="text" class="form-control" name="blogmax" id="" aria-describedby="helpId" value="{{ count($category->post) == 0 ? $category->blogmax : count($category->post)+$category->blogmax }}">
+                                <small><strong>Note:</strong>Must be greater that or equal to number of posts</small>
                             </div>
 
                     </div>
@@ -115,3 +128,4 @@
 
 </table>
 {{ $categories->links() }}
+

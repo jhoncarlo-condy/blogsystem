@@ -125,8 +125,8 @@ return [
     */
 
     'custom' => [
-        'attribute-name' => [
-            'rule-name' => 'custom-message',
+        'blogmax' => [
+            'gte' => 'Max blog post should be greater than or equal to number of posts',
         ],
     ],
 

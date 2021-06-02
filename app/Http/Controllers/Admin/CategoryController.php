@@ -2,10 +2,11 @@
 
 namespace App\Http\Controllers\Admin;
 
+use App\Post;
 use App\Category;
-use App\Events\AddCategoryEvent;
 use Illuminate\Http\Request;
 use App\Events\AddCountEvent;
+use App\Events\AddCategoryEvent;
 use App\Events\DeleteCategoryEvent;
 use App\Http\Controllers\Controller;
 
@@ -19,6 +20,7 @@ class CategoryController extends Controller
             'description',
             'blogmax')
             ->orderby('id','desc')->paginate(5);
+
         return view('admin.category')->with([
             'categories'=> $categories
         ]);
@@ -48,18 +50,14 @@ class CategoryController extends Controller
         event (new AddCategoryEvent($categorycount));
         return back()->with(['message'=>'Added new category']);
     }
-    public function edit(Category $category)
-    {
-        return view('category.index')->with([
-            'category'=>$category
-        ]);
-    }
+
     public function update(Request $request, Category $category)
     {
-        $data = $request->validate([
+        $posts = Post::where('category_id',$category->id)->count();
+            $data = $request->validate([
             'title' => 'required',
             'description' => 'required',
-
+            'blogmax'=>'required|gte:'.$posts.'|numeric'
         ]);
         $category->update($data);
         $categorycount = 0;
