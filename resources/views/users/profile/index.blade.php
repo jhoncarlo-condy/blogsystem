@@ -1,6 +1,10 @@
 @extends('users.layouts.app')
 @push('css')
 <style>
+    li.result:hover
+    {
+        cursor:pointer;
+    }
         .image img
         {
             width:400px;
@@ -120,22 +124,48 @@
 </style>
 @endpush
 @push('scripts')
+{{-- <script>
+   $(document).ready(function () {
+      $('select').selectize({
+          sortField: 'text'
+      });
+  });
+</script> --}}
 <script>
-    $(document).ready(function(){
-        $("#search").keyup(function(){
-            $("#result").html('');
-            var searchfield = $("#search").val();
+ $(document).ready(function(){
+     $(".search-card").hide();
+    $("#category-search").keyup(function(){
+        $(".card").show();
+        var query = $(this).val();
+        if(query.length>=3){
             $.ajax({
-                url: "search",
-                method: "get",
-                data:{name:searchfield},
+                url:"{{ url('search') }}",
+                data:{
+                    title: query
+                },
+                dataType:'json',
+                beforeSend:function(){
+                    $("#category-result").html('<li class="list-group-item">Loading...</li>');
+                },
                 success:function(data){
-                    $("#result").html(data);
-                }
+                    var _html = '';
+                    $.each(data.result,function(index,result){
+                        _html+='<li class="list-group-item result found" id="'+result.title+'">'+result.title+'</li>';
 
+                    });
+                    $("#category-result").html(_html);
+
+
+                }
             });
-        });
+        }
     });
+    $(document).on('click','.found',function(){
+      $("#category-search").val($(this).text());
+      $(".search-card").fadeOut();
+    });
+
+ });
 </script>
 @endpush
 @section('link')
@@ -282,9 +312,32 @@
                                     @foreach ($categories as $category)
                                     <option value="{{ $category->id }}">{{ $category->title }}</option>
                                     @endforeach
+                                  </select> --}}<br>
+                                  {{-- //Category select using dropdown
+                                  <select class="form-control" id="select-state" searchable="Search here.." placeholder="Select a category..">
+                                    <option value="" selected>Select a category..</option>
+                                    @foreach ($categories as $category)
+                                    <option value="{{ $category->id }}">{{ $category->title }}</option>
+                                    @endforeach
                                   </select> --}}
-                                    <input type="text" class="form-control" name="search" id="search" aria-describedby="helpId" placeholder="">
-                                    <div id="result"></div>
+                                  //Category select using input
+                                    <input type="text" class="form-control"
+                                    name="category" id="category-search"
+                                    aria-describedby="helpId" placeholder="Search category...">
+                                    <div class="card search-card">
+                                        <div class="card-header">Search Result</div>
+                                        <div class="list-group list-group-flush search-result" id="category-result">
+                                        </div>
+                                    </div>
+                                    {{-- //input with select --}}
+                                    {{-- <div class="form-group">
+                                      <label for="">Search Category</label>
+                                      <input class="form-control" list="category-result" id="category-search" name="ice-cream-choice" />
+
+                                      <select class="form-control" id="category-result">
+                                      </select>
+
+                                    </div> --}}
 
                                 </div>
                                 <!-- /.form-group -->
@@ -400,7 +453,7 @@
 @push('scripts')
 <script>
     $(document).ready(function() {
-        $('.select2').select2();
+        // $('.select2').select2();
         $('#summernote').summernote({
             placeholder: 'Enter some text here',
             height: 300,                 // set editor height

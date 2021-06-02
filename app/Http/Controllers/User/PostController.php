@@ -74,17 +74,34 @@ class PostController extends Controller
             'latest'=>$latest
         ]);
     }
-    public function store(StorePostRequest $request)
+    public function store(Request $request)
     {
-        $data = $request->validated();
+        $data = $request->validate([
+            'title' => 'required',
+            'category' => 'required|same:category',
+            'user_id' => 'required',
+            'description' => 'required',
+            'image' => 'file|image|max:5000',
+        ]);
+        $query = Category::where('title',$data['category'])->first();
+        $data['category_id'] = $query->id;
         if($request->hasfile('image'))
         {
         $data['image'] = Storage::disk('public')->put('images',$data['image']);
         }
-        $post = Post::create($data);
+        else {
+            $data['image'] = NULL;
+        }
+        $post = Post::create([
+            'title'=>$data['title'],
+            'category_id'=>$data['category_id'],
+            'user_id'=>$data['user_id'],
+            'description'=>$data['description'],
+            'image'=>$data['image']
+        ]);
         $postcount = count($post);
         event (new AddPostEvent($postcount));
-        return back()->with(['message'=>'Added new post']);
+        return redirect()->route('profile.index')->with(['message'=>'Added new post']);
 
     }
     public function show(Post $post)
