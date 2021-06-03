@@ -1,11 +1,17 @@
 <script>
     $(document).ready(function(){
+        var timer;
+        var x;
         $(".search-card").hide();
         $("#category-search").keyup(function(){
-           $(".card").show();
+           clearTimeout(timer);
            var query = $(this).val();
-           if(query.length>=3){
-               $.ajax({
+            timer = setTimeout(function() {
+                if(query.length>=3){
+                   $(".card").show();
+
+                if($("#category-search").val() == query){
+                    $.ajax({
                    url:"{{ url('search') }}",
                    data:{
                        title: query
@@ -31,7 +37,9 @@
 
                    }
                });
+                }
            }
+            }, 1200 );
            if(query == 0)
            {
                $(".search-card").fadeOut();

@@ -13,7 +13,7 @@ class SearchController extends Controller
         if($request->has('title')){
             $title = $request->title;
 
-            $result = Category::where('title','like','%'.$title.'%')->get();
+            $result = Category::where('title','like','%'.$title.'%')->take(3)->get();
                 return response()->json(['result'=>$result]);
 
             // return $result->toArray(['result'=>$result]);

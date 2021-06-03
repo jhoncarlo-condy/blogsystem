@@ -69,7 +69,10 @@
                       name="category" id="category-search"
                       aria-describedby="helpId" placeholder="Search category..." value="{{ $post->category->title }}">
                       <div class="card search-card">
-                          <div class="card-header" style="color:gray">Search Result</div>
+                        <div class="card-header" style="background-color:rgb(134, 125, 125)">Recent</div>
+                        <li class="list-group-item result found">{{ $post->category->title }}</li>
+
+                          <div class="card-header" style="background-color:rgb(134, 125, 125)">Search Result</div>
                           <div class="list-group list-group-flush search-result" id="category-result">
                           </div>
                       </div>
