@@ -154,4 +154,5 @@ class PostController extends Controller
         event (new DeletePostEvent($deletepost));
         return redirect()->route('posts.index')->with(['message' => 'Deleted Post Successfully']);
     }
+
 }

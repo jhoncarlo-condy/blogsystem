@@ -7,6 +7,7 @@ use App\Comment;
 use App\Category;
 use App\Events\AddPostEvent;
 use Illuminate\Http\Request;
+use App\Events\DeletePostEvent;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
 use App\Http\Requests\StorePostRequest;
@@ -144,5 +145,14 @@ class PostController extends Controller
         event (new AddPostEvent($postcount));
         return redirect()->route('post.show',$post->id)->with(['message'=>'Updating post success']);
 
+    }
+    public function destroy(Post $post)
+    {
+        Comment::select('post_id')
+            ->where('post_id',$post->id)
+            ->delete();
+        $deletepost = $post->delete();
+        event (new DeletePostEvent($deletepost));
+        return back()->with(['message' => 'Deleted Post Successfully']);
     }
 }

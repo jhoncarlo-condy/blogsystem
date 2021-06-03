@@ -62,6 +62,36 @@
                     @forelse ($posts as $post)
                     <div class="post">
                         <div class="user-block">
+                            <a name="" class="float-right" style="color:red;" id="" href="#" role="button"
+                            data-toggle="modal" data-target="#deleteModal{{ $post->id }}">
+                               <i class="fas fa-trash"></i>
+                           </a>
+                           <!-- Modal -->
+                           <div class="modal fade" data-backdrop="static" id="deleteModal{{ $post->id }}" tabindex="-1" role="dialog" aria-labelledby="modelTitleId" aria-hidden="true">
+                               <div class="modal-dialog modal-dialog-centered" role="document">
+                                   <div class="modal-content">
+                                       <div class="modal-header"  style="background-color: yellow;">
+                                           <h5 class="modal-title"><i class="fas fa-exclamation-triangle"></i>Are you sure you want to delete?<i class="fas fa-exclamation-triangle"></i></h5>
+                                               <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                   <span aria-hidden="true">&times;</span>
+                                               </button>
+                                       </div>
+                                       <div class="modal-body">
+                                           <span>Note: You cannot undo this action</span>
+                                           <form id="deleteform"
+                                           action="{{ route('post.destroy',$post->id) }}" method="POST">
+                                               @csrf
+                                               @method('DELETE')
+                                               <div class="container text-right">
+                                               <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                                               <button type="submit" class="btn btn-danger">Delete</button>
+                                               </div>
+                                               </form>
+                                       </div>
+
+                                   </div>
+                               </div>
+                           </div>
                             <img style="width:20px;height:20px;" class="rounded-circle" src="https://thumbs.dreamstime.com/b/default-avatar-profile-icon-vector-social-media-user-portrait-176256935.jpg" alt="user image">
                           <span class="username">
                             <a href="#">{{ $post->user->firsname ." ".$post->user->lastname }}</a>

@@ -1,5 +1,5 @@
 
-<header class="header">
+<header class="header" >
     <!-- Main Navbar-->
     <nav class="navbar navbar-expand-lg">
       <div class="search-area">
