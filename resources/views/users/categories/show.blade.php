@@ -8,6 +8,10 @@
 </li>
 <li class="nav-item"><a href="{{ route('category.index') }}" class="nav-link active">Categories</a>
 </li>
+@auth
+<li class="nav-item"><a href="{{ route('profile.index') }}" class="nav-link ">Profile</a>
+</li>
+@endauth
 @endsection
 @section('content')
 <section style="background: url('https://images.unsplash.com/photo-1481627834876-b7833e8f5570?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=541&q=80'); background-size: cover; background-position: center bottom" class="divider">
