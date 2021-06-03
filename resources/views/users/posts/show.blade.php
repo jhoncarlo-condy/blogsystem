@@ -99,7 +99,21 @@
                 <div class="edit-post float-right">
                    @if (Auth::user())
                    @if ($post->user_id == Auth::user()->id)
-                   <a name="" id="" class="btn btn-secondary" href="{{ route('post.edit',$post->id) }}" role="button">Edit Post</a>
+                    <a id="navbarDropdown" class="nav-link" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
+                        <i class="fas fa-ellipsis-v "></i>
+                    </a>
+
+                    <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
+                        <a class="dropdown-item" href="{{ route('post.edit',$post->id) }}">Edit</a>
+                        <a class="dropdown-item" role="button"
+                            data-toggle="modal" data-target="#deleteModal{{ $post->id }}">
+                               Delete
+                        </a>
+
+
+
+                    </div>
+                   {{-- <a name="" id="" class="btn btn-secondary" href="{{ route('post.edit',$post->id) }}" role="button">Edit Post</a> --}}
                    @else
                    @endif
                    @endif
@@ -311,4 +325,30 @@
 
     </div>
   </div>
+  <!-- Modal -->
+  <div class="modal fade" data-backdrop="static" id="deleteModal{{ $post->id }}" tabindex="-1" role="dialog" aria-labelledby="modelTitleId" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header"  style="background-color: yellow;">
+                <h5 class="modal-title"><i class="fas fa-exclamation-triangle"></i>Are you sure you want to delete?<i class="fas fa-exclamation-triangle"></i></h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+            </div>
+            <div class="modal-body">
+                <span>Note: You cannot undo this action</span>
+                <form id="deleteform"
+                action="{{ route('post.destroy',$post->id) }}" method="POST">
+                    @csrf
+                    @method('DELETE')
+                    <div class="container text-right">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                    <button type="submit" class="btn btn-danger">Delete</button>
+                    </div>
+                    </form>
+            </div>
+
+        </div>
+    </div>
+</div>
 @endsection

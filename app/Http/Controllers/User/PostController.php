@@ -153,6 +153,6 @@ class PostController extends Controller
             ->delete();
         $deletepost = $post->delete();
         event (new DeletePostEvent($deletepost));
-        return back()->with(['message' => 'Deleted Post Successfully']);
+        return redirect()->route('profile.index')->with(['message' => 'Deleted Post Successfully']);
     }
 }
